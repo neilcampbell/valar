@@ -1,0 +1,10 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: 1.0.0
+_src_path: gh:algorandfoundation/algokit-python-template
+author_email: contact@valar.solutions
+author_name: Valar Solutions GmbH
+contract_name: noticeboard
+deployment_language: python
+preset_name: production
+project_name: valar-smart-contracts
+

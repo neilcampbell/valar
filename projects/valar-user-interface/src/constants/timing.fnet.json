@@ -1,0 +1,5 @@
+{
+  "assumedBlockTime": 2.8,
+	"paramUpdate": 10000,
+  "openDrawerFetchInterval": 30000
+}

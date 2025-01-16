@@ -1,0 +1,5253 @@
+#pragma version 11
+
+smart_contracts.noticeboard.contract.Noticeboard.approval_program:
+    intcblock 0 1 6 8 880 956 4096
+    bytecblock 0x76616c5f 0x151f7c75 0x7374617465 0x01 "pla_manager" 0x64656c5f 0x76 0x64 "noticeboard_fees" 0x02 0x74635f736861323536 "noticeboard_terms_timing" "noticeboard_terms_node" 0x04 0x646c6c5f5f76616c 0x646c6c5f5f64656c 0x61737365745f 0x706172746e65725f "app_id_old" "app_id_new"
+    txn ApplicationID
+    bnz main_after_if_else@2
+    callsub __init__
+
+main_after_if_else@2:
+    callsub __puya_arc4_router__
+    return
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.__init__() -> void:
+__init__:
+    // smart_contracts/noticeboard/contract.py:481
+    // def __init__(self) -> None:
+    proto 0 0
+    // smart_contracts/noticeboard/contract.py:486
+    // self.pla_manager = Global.zero_address
+    bytec 4 // "pla_manager"
+    global ZeroAddress
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:488
+    // self.tc_sha256 = Sha256.from_bytes(op.bzero(32))
+    pushint 32 // 32
+    bzero
+    bytec 10 // "tc_sha256"
+    dig 1
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:490
+    // self.noticeboard_fees = NoticeboardFees.from_bytes(op.bzero(40))
+    pushint 40 // 40
+    bzero
+    bytec 8 // "noticeboard_fees"
+    swap
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:491
+    // self.noticeboard_terms_timing = NoticeboardTermsTiming.from_bytes(op.bzero(32))
+    bytec 11 // "noticeboard_terms_timing"
+    swap
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:492
+    // self.noticeboard_terms_node = NoticeboardTermsNodeLimits.from_bytes(op.bzero(24))
+    pushint 24 // 24
+    bzero
+    bytec 12 // "noticeboard_terms_node"
+    swap
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:494
+    // self.state = Bytes(STATE_NONE)
+    bytec_2 // "state"
+    pushbytes 0x00
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:496
+    // self.app_id_old = UInt64(0)
+    bytec 18 // "app_id_old"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:497
+    // self.app_id_new = UInt64(0)
+    bytec 19 // "app_id_new"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:500
+    // UsersDoubleLinkedList.from_bytes(op.bzero(72)),
+    pushint 72 // 72
+    bzero
+    // smart_contracts/noticeboard/contract.py:501
+    // key=DLL_VAL
+    bytec 14 // 0x646c6c5f5f76616c
+    // smart_contracts/noticeboard/contract.py:499-502
+    // self.dll_val = GlobalState(
+    //     UsersDoubleLinkedList.from_bytes(op.bzero(72)),
+    //     key=DLL_VAL
+    // )
+    dig 1
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:505
+    // key=DLL_DEL
+    bytec 15 // 0x646c6c5f5f64656c
+    // smart_contracts/noticeboard/contract.py:503-506
+    // self.dll_del = GlobalState(
+    //     UsersDoubleLinkedList.from_bytes(op.bzero(72)),
+    //     key=DLL_DEL
+    // )
+    swap
+    app_global_put
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.__puya_arc4_router__() -> uint64:
+__puya_arc4_router__:
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    proto 0 1
+    txn NumAppArgs
+    bz __puya_arc4_router___after_if_else@42
+    pushbytess 0x446dd830 0x2abf3efe 0xc19ec525 0x970c873a 0x9eb2d651 0x7baab6b0 0x6ff21dc6 0x500e2da8 0xbc4b0981 0x5abd6cc5 0x5a8d45e2 0x3172ca9d 0x8cac426c 0xcb7cac94 0xee92c643 0x2cf8d1bd 0x34b2cd03 0xc71c36e2 0x026acd05 0x561e219b 0xdf964d06 0x0c5307c5 0xb7675fdd 0xe5358d4c 0xd28e198f 0x07a8de8f 0xefb23084 0x4fb0604f 0x3174869d 0x83ecc470 0xa4b1ff9a 0x2ebe7679 0xd558b568 0xcdcb3428 0x766827ab 0x35f80859 0x29819511 // method "noticeboard_deploy(uint64)uint64", method "noticeboard_suspend()void", method "noticeboard_migrate(uint64)void", method "noticeboard_set(account,byte[32],(uint64,uint64,uint64,uint64,uint64),(uint64,uint64,uint64,uint64),(uint64,uint64,uint64))void", method "noticeboard_key_reg((uint64,uint64,uint64,byte[32],byte[32],byte[64],address),pay)void", method "noticeboard_optin_asa(asset,pay)void", method "noticeboard_config_asset(uint64,(bool,uint64,uint64,uint64),pay)void", method "noticeboard_income(uint64)void", method "template_load_init(byte,uint64)void", method "template_load_data(byte,uint64,byte[])void", method "partner_config(address,(uint64,uint64),bool,pay)void", method "gas()void", method "user_create(byte[4],pay)void", method "user_delete()void", method "ad_create(uint64,pay)uint64", method "ad_config(application,uint64,address,bool,uint64)void", method "ad_delete(application,uint64)void", method "ad_ready(address,application,uint64,bool)void", method "ad_self_disclose(application,uint64,(byte[30],byte[60],byte[2],uint64,byte[20]))void", method "ad_terms(application,uint64,byte[32],(uint64,uint64,uint64,uint64,uint64),(uint64,uint64,uint64,uint64,uint64),(uint64,uint64),((uint64,uint64)[2]),(uint64,uint64),uint64,pay)void", method "ad_income(application,uint64,uint64)uint64", method "ad_asa_close(application,uint64,uint64)void", method "contract_create(address,uint64,uint64,address,application,uint64,uint64,byte[32],address,pay,txn)uint64", method "keys_confirm(application,uint64,address,application,uint64)void", method "keys_not_confirmed(address,application,uint64,address,application,uint64)void", method "keys_not_submitted(address,application,uint64,address,application,uint64)void", method "keys_submit(address,application,uint64,address,application,uint64,(uint64,uint64,uint64,byte[32],byte[32],byte[64],address))void", method "breach_limits(address,application,uint64,address,application,uint64)void", method "breach_pay(address,application,uint64,address,application,uint64)void", method "breach_suspended(address,application,uint64,address,application,uint64)void", method "contract_claim(address,application,uint64,address,application,uint64)(uint64,uint64,uint64)", method "contract_expired(address,application,uint64,address,application,uint64)void", method "contract_withdraw(application,uint64,address,application,uint64)void", method "contract_delete(application,uint64,address,application,uint64)(uint64,uint64)", method "contract_report_expiry_soon(address,application,uint64,address,application,uint64)void", method "get_noticeboard_asset(uint64)(bool,uint64,uint64,uint64)", method "get_noticeboard_user(address)(byte[4],byte[8],address,address,uint64[110],uint64)"
+    txna ApplicationArgs 0
+    match __puya_arc4_router___noticeboard_deploy_route@2 __puya_arc4_router___noticeboard_suspend_route@3 __puya_arc4_router___noticeboard_migrate_route@4 __puya_arc4_router___noticeboard_set_route@5 __puya_arc4_router___noticeboard_key_reg_route@6 __puya_arc4_router___noticeboard_optin_asa_route@7 __puya_arc4_router___noticeboard_config_asset_route@8 __puya_arc4_router___noticeboard_income_route@9 __puya_arc4_router___template_load_init_route@10 __puya_arc4_router___template_load_data_route@11 __puya_arc4_router___partner_config_route@12 __puya_arc4_router___gas_route@13 __puya_arc4_router___user_create_route@14 __puya_arc4_router___user_delete_route@15 __puya_arc4_router___ad_create_route@16 __puya_arc4_router___ad_config_route@17 __puya_arc4_router___ad_delete_route@18 __puya_arc4_router___ad_ready_route@19 __puya_arc4_router___ad_self_disclose_route@20 __puya_arc4_router___ad_terms_route@21 __puya_arc4_router___ad_income_route@22 __puya_arc4_router___ad_asa_close_route@23 __puya_arc4_router___contract_create_route@24 __puya_arc4_router___keys_confirm_route@25 __puya_arc4_router___keys_not_confirmed_route@26 __puya_arc4_router___keys_not_submitted_route@27 __puya_arc4_router___keys_submit_route@28 __puya_arc4_router___breach_limits_route@29 __puya_arc4_router___breach_pay_route@30 __puya_arc4_router___breach_suspended_route@31 __puya_arc4_router___contract_claim_route@32 __puya_arc4_router___contract_expired_route@33 __puya_arc4_router___contract_withdraw_route@34 __puya_arc4_router___contract_delete_route@35 __puya_arc4_router___contract_report_expiry_soon_route@36 __puya_arc4_router___get_noticeboard_asset_route@37 __puya_arc4_router___get_noticeboard_user_route@38
+    intc_0 // 0
+    retsub
+
+__puya_arc4_router___noticeboard_deploy_route@2:
+    // smart_contracts/noticeboard/contract.py:517
+    // @arc4.abimethod(create="require")
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    !
+    assert // can only call when creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/noticeboard/contract.py:517
+    // @arc4.abimethod(create="require")
+    callsub noticeboard_deploy
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___noticeboard_suspend_route@3:
+    // smart_contracts/noticeboard/contract.py:546
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    callsub noticeboard_suspend
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___noticeboard_migrate_route@4:
+    // smart_contracts/noticeboard/contract.py:566
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/noticeboard/contract.py:566
+    // @arc4.abimethod()
+    callsub noticeboard_migrate
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___noticeboard_set_route@5:
+    // smart_contracts/noticeboard/contract.py:596
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Accounts
+    txna ApplicationArgs 2
+    txna ApplicationArgs 3
+    txna ApplicationArgs 4
+    txna ApplicationArgs 5
+    // smart_contracts/noticeboard/contract.py:596
+    // @arc4.abimethod()
+    callsub noticeboard_set
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___noticeboard_key_reg_route@6:
+    // smart_contracts/noticeboard/contract.py:647
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txn GroupIndex
+    intc_1 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    // smart_contracts/noticeboard/contract.py:647
+    // @arc4.abimethod()
+    callsub noticeboard_key_reg
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___noticeboard_optin_asa_route@7:
+    // smart_contracts/noticeboard/contract.py:683
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Assets
+    txn GroupIndex
+    intc_1 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    // smart_contracts/noticeboard/contract.py:683
+    // @arc4.abimethod()
+    callsub noticeboard_optin_asa
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___noticeboard_config_asset_route@8:
+    // smart_contracts/noticeboard/contract.py:715
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    txn GroupIndex
+    intc_1 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    // smart_contracts/noticeboard/contract.py:715
+    // @arc4.abimethod()
+    callsub noticeboard_config_asset
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___noticeboard_income_route@9:
+    // smart_contracts/noticeboard/contract.py:756
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/noticeboard/contract.py:756
+    // @arc4.abimethod()
+    callsub noticeboard_income
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___template_load_init_route@10:
+    // smart_contracts/noticeboard/contract.py:789
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    // smart_contracts/noticeboard/contract.py:789
+    // @arc4.abimethod()
+    callsub template_load_init
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___template_load_data_route@11:
+    // smart_contracts/noticeboard/contract.py:819
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    extract 2 0
+    // smart_contracts/noticeboard/contract.py:819
+    // @arc4.abimethod()
+    callsub template_load_data
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___partner_config_route@12:
+    // smart_contracts/noticeboard/contract.py:852
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    txna ApplicationArgs 3
+    txn GroupIndex
+    intc_1 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    // smart_contracts/noticeboard/contract.py:852
+    // @arc4.abimethod()
+    callsub partner_config
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___gas_route@13:
+    // smart_contracts/noticeboard/contract.py:896
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___user_create_route@14:
+    // smart_contracts/noticeboard/contract.py:910
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txn GroupIndex
+    intc_1 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    // smart_contracts/noticeboard/contract.py:910
+    // @arc4.abimethod()
+    callsub user_create
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___user_delete_route@15:
+    // smart_contracts/noticeboard/contract.py:986
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    callsub user_delete
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___ad_create_route@16:
+    // smart_contracts/noticeboard/contract.py:1042
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txn GroupIndex
+    intc_1 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    // smart_contracts/noticeboard/contract.py:1042
+    // @arc4.abimethod()
+    callsub ad_create
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___ad_config_route@17:
+    // smart_contracts/noticeboard/contract.py:1122
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    txna ApplicationArgs 4
+    txna ApplicationArgs 5
+    btoi
+    // smart_contracts/noticeboard/contract.py:1122
+    // @arc4.abimethod()
+    callsub ad_config
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___ad_delete_route@18:
+    // smart_contracts/noticeboard/contract.py:1170
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    txna ApplicationArgs 2
+    btoi
+    // smart_contracts/noticeboard/contract.py:1170
+    // @arc4.abimethod()
+    callsub ad_delete
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___ad_ready_route@19:
+    // smart_contracts/noticeboard/contract.py:1212
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txnas Applications
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    // smart_contracts/noticeboard/contract.py:1212
+    // @arc4.abimethod()
+    callsub ad_ready
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___ad_self_disclose_route@20:
+    // smart_contracts/noticeboard/contract.py:1249
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    // smart_contracts/noticeboard/contract.py:1249
+    // @arc4.abimethod()
+    callsub ad_self_disclose
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___ad_terms_route@21:
+    // smart_contracts/noticeboard/contract.py:1285
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    txna ApplicationArgs 4
+    txna ApplicationArgs 5
+    txna ApplicationArgs 6
+    txna ApplicationArgs 7
+    txna ApplicationArgs 8
+    txna ApplicationArgs 9
+    btoi
+    txn GroupIndex
+    intc_1 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    // smart_contracts/noticeboard/contract.py:1285
+    // @arc4.abimethod()
+    callsub ad_terms
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___ad_income_route@22:
+    // smart_contracts/noticeboard/contract.py:1402
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    btoi
+    // smart_contracts/noticeboard/contract.py:1402
+    // @arc4.abimethod()
+    callsub ad_income
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___ad_asa_close_route@23:
+    // smart_contracts/noticeboard/contract.py:1442
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    btoi
+    // smart_contracts/noticeboard/contract.py:1442
+    // @arc4.abimethod()
+    callsub ad_asa_close
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_create_route@24:
+    // smart_contracts/noticeboard/contract.py:1482
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    txna ApplicationArgs 5
+    btoi
+    txnas Applications
+    txna ApplicationArgs 6
+    btoi
+    txna ApplicationArgs 7
+    btoi
+    txna ApplicationArgs 8
+    txna ApplicationArgs 9
+    txn GroupIndex
+    pushint 2 // 2
+    -
+    dup
+    gtxns TypeEnum
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    txn GroupIndex
+    intc_1 // 1
+    -
+    // smart_contracts/noticeboard/contract.py:1482
+    // @arc4.abimethod()
+    callsub contract_create
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___keys_confirm_route@25:
+    // smart_contracts/noticeboard/contract.py:1605
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    txna ApplicationArgs 4
+    btoi
+    txnas Applications
+    txna ApplicationArgs 5
+    btoi
+    // smart_contracts/noticeboard/contract.py:1605
+    // @arc4.abimethod()
+    callsub keys_confirm
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___keys_not_confirmed_route@26:
+    // smart_contracts/noticeboard/contract.py:1649
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txnas Applications
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    txna ApplicationArgs 5
+    btoi
+    txnas Applications
+    txna ApplicationArgs 6
+    btoi
+    // smart_contracts/noticeboard/contract.py:1649
+    // @arc4.abimethod()
+    callsub keys_not_confirmed
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___keys_not_submitted_route@27:
+    // smart_contracts/noticeboard/contract.py:1697
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txnas Applications
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    txna ApplicationArgs 5
+    btoi
+    txnas Applications
+    txna ApplicationArgs 6
+    btoi
+    // smart_contracts/noticeboard/contract.py:1697
+    // @arc4.abimethod()
+    callsub keys_not_submitted
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___keys_submit_route@28:
+    // smart_contracts/noticeboard/contract.py:1745
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txnas Applications
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    txna ApplicationArgs 5
+    btoi
+    txnas Applications
+    txna ApplicationArgs 6
+    btoi
+    txna ApplicationArgs 7
+    // smart_contracts/noticeboard/contract.py:1745
+    // @arc4.abimethod()
+    callsub keys_submit
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___breach_limits_route@29:
+    // smart_contracts/noticeboard/contract.py:1797
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txnas Applications
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    txna ApplicationArgs 5
+    btoi
+    txnas Applications
+    txna ApplicationArgs 6
+    btoi
+    // smart_contracts/noticeboard/contract.py:1797
+    // @arc4.abimethod()
+    callsub breach_limits
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___breach_pay_route@30:
+    // smart_contracts/noticeboard/contract.py:1844
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txnas Applications
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    txna ApplicationArgs 5
+    btoi
+    txnas Applications
+    txna ApplicationArgs 6
+    btoi
+    // smart_contracts/noticeboard/contract.py:1844
+    // @arc4.abimethod()
+    callsub breach_pay
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___breach_suspended_route@31:
+    // smart_contracts/noticeboard/contract.py:1891
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txnas Applications
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    txna ApplicationArgs 5
+    btoi
+    txnas Applications
+    txna ApplicationArgs 6
+    btoi
+    // smart_contracts/noticeboard/contract.py:1891
+    // @arc4.abimethod()
+    callsub breach_suspended
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_claim_route@32:
+    // smart_contracts/noticeboard/contract.py:1937
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txnas Applications
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    txna ApplicationArgs 5
+    btoi
+    txnas Applications
+    txna ApplicationArgs 6
+    btoi
+    // smart_contracts/noticeboard/contract.py:1937
+    // @arc4.abimethod()
+    callsub contract_claim
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_expired_route@33:
+    // smart_contracts/noticeboard/contract.py:1982
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txnas Applications
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    txna ApplicationArgs 5
+    btoi
+    txnas Applications
+    txna ApplicationArgs 6
+    btoi
+    // smart_contracts/noticeboard/contract.py:1982
+    // @arc4.abimethod()
+    callsub contract_expired
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_withdraw_route@34:
+    // smart_contracts/noticeboard/contract.py:2028
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    txna ApplicationArgs 4
+    btoi
+    txnas Applications
+    txna ApplicationArgs 5
+    btoi
+    // smart_contracts/noticeboard/contract.py:2028
+    // @arc4.abimethod()
+    callsub contract_withdraw
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_delete_route@35:
+    // smart_contracts/noticeboard/contract.py:2071
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    txna ApplicationArgs 4
+    btoi
+    txnas Applications
+    txna ApplicationArgs 5
+    btoi
+    // smart_contracts/noticeboard/contract.py:2071
+    // @arc4.abimethod()
+    callsub contract_delete
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_report_expiry_soon_route@36:
+    // smart_contracts/noticeboard/contract.py:2123
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txnas Applications
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    txna ApplicationArgs 5
+    btoi
+    txnas Applications
+    txna ApplicationArgs 6
+    btoi
+    // smart_contracts/noticeboard/contract.py:2123
+    // @arc4.abimethod()
+    callsub contract_report_expiry_soon
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___get_noticeboard_asset_route@37:
+    // smart_contracts/noticeboard/contract.py:2171-2174
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // # ----- ----- ----- Read-only functions ----- ----- ----
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // @arc4.abimethod(readonly=True)
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/noticeboard/contract.py:2171-2174
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // # ----- ----- ----- Read-only functions ----- ----- ----
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // @arc4.abimethod(readonly=True)
+    callsub get_noticeboard_asset
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___get_noticeboard_user_route@38:
+    // smart_contracts/noticeboard/contract.py:2189
+    // @arc4.abimethod(readonly=True)
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    // smart_contracts/noticeboard/contract.py:2189
+    // @arc4.abimethod(readonly=True)
+    callsub get_noticeboard_user
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___after_if_else@42:
+    // smart_contracts/noticeboard/contract.py:115-116
+    // # ------- Smart contract -------
+    // class Noticeboard(ARC4Contract, avm_version=11):
+    intc_0 // 0
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.noticeboard_deploy(app_id_old: uint64) -> bytes:
+noticeboard_deploy:
+    // smart_contracts/noticeboard/contract.py:517-521
+    // @arc4.abimethod(create="require")
+    // def noticeboard_deploy(
+    //     self,
+    //     app_id_old: UInt64,
+    // ) -> arc4.UInt64:
+    proto 1 1
+    // smart_contracts/noticeboard/contract.py:536-537
+    // # Set global variables
+    // self.app_id_old = app_id_old
+    bytec 18 // "app_id_old"
+    frame_dig -1
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:539
+    // self.pla_manager = Global.creator_address
+    bytec 4 // "pla_manager"
+    global CreatorAddress
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:541-542
+    // # Change state to DEPLOYED
+    // self.state = Bytes(STATE_DEPLOYED)
+    bytec_2 // "state"
+    bytec_3 // 0x01
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:544
+    // return arc4.UInt64(Global.current_application_id.id)
+    global CurrentApplicationID
+    itob
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.noticeboard_suspend() -> void:
+noticeboard_suspend:
+    // smart_contracts/noticeboard/contract.py:546-549
+    // @arc4.abimethod()
+    // def noticeboard_suspend(
+    //     self,
+    // ) -> None:
+    proto 0 0
+    // smart_contracts/noticeboard/contract.py:555
+    // assert self.state == Bytes(STATE_SET), ERROR_NOT_STATE_SET
+    intc_0 // 0
+    bytec_2 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 9 // 0x02
+    ==
+    assert // Cannot be called from other state than SET.
+    // smart_contracts/noticeboard/contract.py:557
+    // Txn.sender == self.pla_manager or
+    txn Sender
+    intc_0 // 0
+    bytec 4 // "pla_manager"
+    app_global_get_ex
+    assert // check self.pla_manager exists
+    ==
+    // smart_contracts/noticeboard/contract.py:557-558
+    // Txn.sender == self.pla_manager or
+    // Txn.sender == Global.creator_address
+    bnz noticeboard_suspend_bool_true@2
+    // smart_contracts/noticeboard/contract.py:558
+    // Txn.sender == Global.creator_address
+    txn Sender
+    global CreatorAddress
+    ==
+    // smart_contracts/noticeboard/contract.py:557-558
+    // Txn.sender == self.pla_manager or
+    // Txn.sender == Global.creator_address
+    bz noticeboard_suspend_bool_false@3
+
+noticeboard_suspend_bool_true@2:
+    intc_1 // 1
+    b noticeboard_suspend_bool_merge@4
+
+noticeboard_suspend_bool_false@3:
+    intc_0 // 0
+
+noticeboard_suspend_bool_merge@4:
+    // smart_contracts/noticeboard/contract.py:556-559
+    // assert (
+    //     Txn.sender == self.pla_manager or
+    //     Txn.sender == Global.creator_address
+    // ), ERROR_CALLED_BY_NOT_PLA_MANAGER_OR_CREATOR
+    assert // Can only be called by platform manager or creator.
+    // smart_contracts/noticeboard/contract.py:561-562
+    // # Change state to SUSPENDED
+    // self.state = Bytes(STATE_SUSPENDED)
+    bytec_2 // "state"
+    pushbytes 0x03
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:564
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.noticeboard_migrate(app_id_new: uint64) -> void:
+noticeboard_migrate:
+    // smart_contracts/noticeboard/contract.py:566-570
+    // @arc4.abimethod()
+    // def noticeboard_migrate(
+    //     self,
+    //     app_id_new: UInt64,
+    // ) -> None:
+    proto 1 0
+    // smart_contracts/noticeboard/contract.py:583
+    // assert self.state == Bytes(STATE_SUSPENDED), ERROR_NOT_STATE_SUSPENDED
+    intc_0 // 0
+    bytec_2 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    pushbytes 0x03
+    ==
+    assert // Cannot be called from other state than SUSPENDED.
+    // smart_contracts/noticeboard/contract.py:585
+    // Txn.sender == self.pla_manager or
+    txn Sender
+    intc_0 // 0
+    bytec 4 // "pla_manager"
+    app_global_get_ex
+    assert // check self.pla_manager exists
+    ==
+    // smart_contracts/noticeboard/contract.py:585-586
+    // Txn.sender == self.pla_manager or
+    // Txn.sender == Global.creator_address
+    bnz noticeboard_migrate_bool_true@2
+    // smart_contracts/noticeboard/contract.py:586
+    // Txn.sender == Global.creator_address
+    txn Sender
+    global CreatorAddress
+    ==
+    // smart_contracts/noticeboard/contract.py:585-586
+    // Txn.sender == self.pla_manager or
+    // Txn.sender == Global.creator_address
+    bz noticeboard_migrate_bool_false@3
+
+noticeboard_migrate_bool_true@2:
+    intc_1 // 1
+    b noticeboard_migrate_bool_merge@4
+
+noticeboard_migrate_bool_false@3:
+    intc_0 // 0
+
+noticeboard_migrate_bool_merge@4:
+    // smart_contracts/noticeboard/contract.py:584-587
+    // assert (
+    //     Txn.sender == self.pla_manager or
+    //     Txn.sender == Global.creator_address
+    // ), ERROR_CALLED_BY_NOT_PLA_MANAGER_OR_CREATOR
+    assert // Can only be called by platform manager or creator.
+    // smart_contracts/noticeboard/contract.py:589
+    // self.app_id_new = app_id_new
+    bytec 19 // "app_id_new"
+    frame_dig -1
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:591-592
+    // # Change state to RETIRED
+    // self.state = Bytes(STATE_RETIRED)
+    bytec_2 // "state"
+    bytec 13 // 0x04
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:594
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.noticeboard_set(pla_manager: bytes, tc_sha256: bytes, noticeboard_fees: bytes, noticeboard_terms_timing: bytes, noticeboard_terms_node: bytes) -> void:
+noticeboard_set:
+    // smart_contracts/noticeboard/contract.py:596-604
+    // @arc4.abimethod()
+    // def noticeboard_set(
+    //     self,
+    //     pla_manager: Account,
+    //     tc_sha256 : Sha256,
+    //     noticeboard_fees : NoticeboardFees,
+    //     noticeboard_terms_timing : NoticeboardTermsTiming,
+    //     noticeboard_terms_node : NoticeboardTermsNodeLimits,
+    // ) -> None:
+    proto 5 0
+    // smart_contracts/noticeboard/contract.py:622
+    // assert self.state != Bytes(STATE_RETIRED), ERROR_CALLED_FROM_STATE_RETIRED
+    intc_0 // 0
+    bytec_2 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 13 // 0x04
+    !=
+    assert // Cannot be called from state RETIRED.
+    // smart_contracts/noticeboard/contract.py:624
+    // Txn.sender == self.pla_manager or
+    txn Sender
+    intc_0 // 0
+    bytec 4 // "pla_manager"
+    app_global_get_ex
+    assert // check self.pla_manager exists
+    ==
+    // smart_contracts/noticeboard/contract.py:624-625
+    // Txn.sender == self.pla_manager or
+    // Txn.sender == Global.creator_address
+    bnz noticeboard_set_bool_true@2
+    // smart_contracts/noticeboard/contract.py:625
+    // Txn.sender == Global.creator_address
+    txn Sender
+    global CreatorAddress
+    ==
+    // smart_contracts/noticeboard/contract.py:624-625
+    // Txn.sender == self.pla_manager or
+    // Txn.sender == Global.creator_address
+    bz noticeboard_set_bool_false@3
+
+noticeboard_set_bool_true@2:
+    intc_1 // 1
+    b noticeboard_set_bool_merge@4
+
+noticeboard_set_bool_false@3:
+    intc_0 // 0
+
+noticeboard_set_bool_merge@4:
+    // smart_contracts/noticeboard/contract.py:623-626
+    // assert (
+    //     Txn.sender == self.pla_manager or
+    //     Txn.sender == Global.creator_address
+    // ), ERROR_CALLED_BY_NOT_PLA_MANAGER_OR_CREATOR
+    assert // Can only be called by platform manager or creator.
+    // smart_contracts/noticeboard/contract.py:628
+    // self.pla_manager = pla_manager
+    bytec 4 // "pla_manager"
+    frame_dig -5
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:629
+    // self.tc_sha256 = tc_sha256.copy()
+    bytec 10 // "tc_sha256"
+    frame_dig -4
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:631-632
+    // # Sanity check on commission to prevent calculation errors
+    // assert noticeboard_fees.commission_min <= COMMISSION_MAX, ERROR_COMMISSION_MAX
+    frame_dig -3
+    extract 0 8 // on error: Index access is out of bounds
+    pushbytes 0x00000000000f4240
+    b<=
+    assert // Validator ad commission must be smaller or equal to the maximum possible platform commission.
+    // smart_contracts/noticeboard/contract.py:634
+    // self.noticeboard_fees = noticeboard_fees.copy()
+    bytec 8 // "noticeboard_fees"
+    frame_dig -3
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:635
+    // self.noticeboard_terms_timing = noticeboard_terms_timing.copy()
+    bytec 11 // "noticeboard_terms_timing"
+    frame_dig -2
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:636-637
+    // # Check the maximum number of allowed delegators is below memory limit
+    // assert noticeboard_terms_node.cnt_del_max_max <= UInt64(MAXIMUM_NUMBER_OF_DELEGATOR_CONTRACTS_PER_VALIDATOR_AD), ERROR_NO_MEMORY_FOR_MORE_DELEGATORS  # noqa: E501
+    frame_dig -1
+    extract 16 8 // on error: Index access is out of bounds
+    pushint 14 // 14
+    itob
+    dig 1
+    b>=
+    assert // Validator ad does not have enough memory to store that many active delegators.
+    // smart_contracts/noticeboard/contract.py:638-639
+    // # Check the maximum number of allowed delegators is at least one
+    // assert noticeboard_terms_node.cnt_del_max_max >= UInt64(1), ERROR_THERE_CAN_BE_AT_LEAST_ONE_DELEGATOR
+    intc_1 // 1
+    itob
+    b>=
+    assert // There can be at least one delegator.
+    // smart_contracts/noticeboard/contract.py:640
+    // self.noticeboard_terms_node = noticeboard_terms_node.copy()
+    bytec 12 // "noticeboard_terms_node"
+    frame_dig -1
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:642-643
+    // # Change state to SET
+    // self.state = Bytes(STATE_SET)
+    bytec_2 // "state"
+    bytec 9 // 0x02
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:645
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.noticeboard_key_reg(key_reg_info: bytes, txn: uint64) -> void:
+noticeboard_key_reg:
+    // smart_contracts/noticeboard/contract.py:647-652
+    // @arc4.abimethod()
+    // def noticeboard_key_reg(
+    //     self,
+    //     key_reg_info : KeyRegTxnInfo,
+    //     txn : gtxn.PaymentTransaction,
+    // ) -> None:
+    proto 2 0
+    // smart_contracts/noticeboard/contract.py:664
+    // assert Txn.sender == self.pla_manager, ERROR_CALLED_BY_NOT_PLA_MANAGER
+    txn Sender
+    intc_0 // 0
+    bytec 4 // "pla_manager"
+    app_global_get_ex
+    assert // check self.pla_manager exists
+    ==
+    assert // Can only be called by platform manager.
+    // smart_contracts/noticeboard/contract.py:666-667
+    // # Check if payment for covering the fee was made to this contract
+    // assert txn.receiver == Global.current_application_address, ERROR_RECEIVER
+    frame_dig -1
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert // Transaction must be to this contract.
+    // smart_contracts/noticeboard/contract.py:668
+    // key_reg_txn_fee = txn.amount
+    frame_dig -1
+    gtxns Amount
+    // smart_contracts/noticeboard/contract.py:670-679
+    // # Issue the key registration transaction
+    // itxn.KeyRegistration(
+    //     vote_key = key_reg_info.vote_pk.bytes,
+    //     selection_key = key_reg_info.selection_pk.bytes,
+    //     vote_first = key_reg_info.vote_first.native,
+    //     vote_last = key_reg_info.vote_last.native,
+    //     vote_key_dilution = key_reg_info.vote_key_dilution.native,
+    //     state_proof_key = key_reg_info.state_proof_pk.bytes,
+    //     fee = key_reg_txn_fee,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/noticeboard/contract.py:672
+    // vote_key = key_reg_info.vote_pk.bytes,
+    frame_dig -2
+    extract 24 32 // on error: Index access is out of bounds
+    // smart_contracts/noticeboard/contract.py:673
+    // selection_key = key_reg_info.selection_pk.bytes,
+    frame_dig -2
+    extract 56 32 // on error: Index access is out of bounds
+    // smart_contracts/noticeboard/contract.py:674
+    // vote_first = key_reg_info.vote_first.native,
+    frame_dig -2
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/noticeboard/contract.py:675
+    // vote_last = key_reg_info.vote_last.native,
+    frame_dig -2
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/noticeboard/contract.py:676
+    // vote_key_dilution = key_reg_info.vote_key_dilution.native,
+    frame_dig -2
+    extract 16 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/noticeboard/contract.py:677
+    // state_proof_key = key_reg_info.state_proof_pk.bytes,
+    frame_dig -2
+    extract 88 64 // on error: Index access is out of bounds
+    itxn_field StateProofPK
+    itxn_field VoteKeyDilution
+    itxn_field VoteLast
+    itxn_field VoteFirst
+    itxn_field SelectionPK
+    itxn_field VotePK
+    // smart_contracts/noticeboard/contract.py:670-671
+    // # Issue the key registration transaction
+    // itxn.KeyRegistration(
+    pushint 2 // keyreg
+    itxn_field TypeEnum
+    itxn_field Fee
+    // smart_contracts/noticeboard/contract.py:670-679
+    // # Issue the key registration transaction
+    // itxn.KeyRegistration(
+    //     vote_key = key_reg_info.vote_pk.bytes,
+    //     selection_key = key_reg_info.selection_pk.bytes,
+    //     vote_first = key_reg_info.vote_first.native,
+    //     vote_last = key_reg_info.vote_last.native,
+    //     vote_key_dilution = key_reg_info.vote_key_dilution.native,
+    //     state_proof_key = key_reg_info.state_proof_pk.bytes,
+    //     fee = key_reg_txn_fee,
+    // ).submit()
+    itxn_submit
+    // smart_contracts/noticeboard/contract.py:681
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.noticeboard_optin_asa(asa: uint64, txn: uint64) -> void:
+noticeboard_optin_asa:
+    // smart_contracts/noticeboard/contract.py:683-688
+    // @arc4.abimethod()
+    // def noticeboard_optin_asa(
+    //     self,
+    //     asa : Asset,
+    //     txn : gtxn.PaymentTransaction,
+    // ) -> None:
+    proto 2 0
+    // smart_contracts/noticeboard/contract.py:700
+    // assert Txn.sender == self.pla_manager, ERROR_CALLED_BY_NOT_PLA_MANAGER
+    txn Sender
+    intc_0 // 0
+    bytec 4 // "pla_manager"
+    app_global_get_ex
+    assert // check self.pla_manager exists
+    ==
+    assert // Can only be called by platform manager.
+    // smart_contracts/noticeboard/contract.py:702-703
+    // # Check if payment for covering the MBR increase was made to this contract
+    // assert txn.receiver == Global.current_application_address, ERROR_RECEIVER
+    frame_dig -1
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert // Transaction must be to this contract.
+    // smart_contracts/noticeboard/contract.py:704
+    // assert txn.amount == Global.asset_opt_in_min_balance, ERROR_AMOUNT_ASA_OPTIN_MBR
+    frame_dig -1
+    gtxns Amount
+    global AssetOptInMinBalance
+    ==
+    assert // Sent amount doesn't match the MBR increase for opting into an ASA.
+    // smart_contracts/noticeboard/contract.py:706-711
+    // # Opt in to the asset
+    // itxn.AssetTransfer(
+    //     xfer_asset=asa,
+    //     asset_receiver=Global.current_application_address,
+    //     asset_amount=0,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/noticeboard/contract.py:709
+    // asset_receiver=Global.current_application_address,
+    global CurrentApplicationAddress
+    // smart_contracts/noticeboard/contract.py:710
+    // asset_amount=0,
+    intc_0 // 0
+    itxn_field AssetAmount
+    itxn_field AssetReceiver
+    frame_dig -2
+    itxn_field XferAsset
+    // smart_contracts/noticeboard/contract.py:706-707
+    // # Opt in to the asset
+    // itxn.AssetTransfer(
+    pushint 4 // axfer
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/noticeboard/contract.py:706-711
+    // # Opt in to the asset
+    // itxn.AssetTransfer(
+    //     xfer_asset=asa,
+    //     asset_receiver=Global.current_application_address,
+    //     asset_amount=0,
+    // ).submit()
+    itxn_submit
+    // smart_contracts/noticeboard/contract.py:713
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.noticeboard_config_asset(asset_id: uint64, asset_info: bytes, txn: uint64) -> void:
+noticeboard_config_asset:
+    // smart_contracts/noticeboard/contract.py:715-721
+    // @arc4.abimethod()
+    // def noticeboard_config_asset(
+    //     self,
+    //     asset_id : UInt64,
+    //     asset_info : NoticeboardAssetInfo,
+    //     txn : gtxn.PaymentTransaction,
+    // ) -> None:
+    proto 3 0
+    // smart_contracts/noticeboard/contract.py:736
+    // assert Txn.sender == self.pla_manager, ERROR_CALLED_BY_NOT_PLA_MANAGER
+    txn Sender
+    intc_0 // 0
+    bytec 4 // "pla_manager"
+    app_global_get_ex
+    assert // check self.pla_manager exists
+    ==
+    assert // Can only be called by platform manager.
+    // smart_contracts/noticeboard/contract.py:737
+    // assert self.state != Bytes(STATE_RETIRED), ERROR_CALLED_FROM_STATE_RETIRED
+    intc_0 // 0
+    bytec_2 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 13 // 0x04
+    !=
+    assert // Cannot be called from state RETIRED.
+    // smart_contracts/noticeboard/contract.py:739
+    // mbr_cur = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/noticeboard/contract.py:741
+    // if asset_id != ALGO_ASA_ID:
+    frame_dig -3
+    bz noticeboard_config_asset_after_if_else@2
+    // smart_contracts/noticeboard/contract.py:743
+    // assert Global.current_application_address.is_opted_in(asset), ERROR_PLATFORM_NOT_OPTED_IN_ASA
+    global CurrentApplicationAddress
+    frame_dig -3
+    asset_holding_get AssetBalance
+    bury 1
+    assert // Platform is not opted into the ASA.
+
+noticeboard_config_asset_after_if_else@2:
+    // smart_contracts/noticeboard/contract.py:745
+    // self.assets[asset_id] = asset_info.copy()
+    frame_dig -3
+    itob
+    bytec 16 // 0x61737365745f
+    swap
+    concat
+    frame_dig -2
+    box_put
+    // smart_contracts/noticeboard/contract.py:747
+    // mbr_new = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/noticeboard/contract.py:749-750
+    // # Check if payment for covering the potential MBR was made to this contract
+    // assert txn.receiver == Global.current_application_address, ERROR_RECEIVER
+    frame_dig -1
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert // Transaction must be to this contract.
+    // smart_contracts/noticeboard/contract.py:751
+    // mbr_pay_amount = mbr_new - mbr_cur
+    frame_dig 0
+    -
+    // smart_contracts/noticeboard/contract.py:752
+    // assert txn.amount == mbr_pay_amount, ERROR_MBR_INCREASE_NOT_PAID
+    frame_dig -1
+    gtxns Amount
+    ==
+    assert // Increase for the MBR was not paid.
+    // smart_contracts/noticeboard/contract.py:754
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.noticeboard_income(asset_id: uint64) -> void:
+noticeboard_income:
+    // smart_contracts/noticeboard/contract.py:756-760
+    // @arc4.abimethod()
+    // def noticeboard_income(
+    //     self,
+    //     asset_id : UInt64,
+    // ) -> None:
+    proto 1 0
+    // smart_contracts/noticeboard/contract.py:770
+    // assert Txn.sender == self.pla_manager, ERROR_CALLED_BY_NOT_PLA_MANAGER
+    txn Sender
+    intc_0 // 0
+    bytec 4 // "pla_manager"
+    app_global_get_ex
+    assert // check self.pla_manager exists
+    ==
+    assert // Can only be called by platform manager.
+    // smart_contracts/noticeboard/contract.py:772
+    // if asset_id != ALGO_ASA_ID:
+    frame_dig -1
+    bz noticeboard_income_else_body@3
+    // smart_contracts/noticeboard/contract.py:774
+    // bal = asset.balance(Global.current_application_address)
+    global CurrentApplicationAddress
+    frame_dig -1
+    asset_holding_get AssetBalance
+    assert // account opted into asset
+    // smart_contracts/noticeboard/contract.py:775-779
+    // itxn.AssetTransfer(
+    //     xfer_asset=asset,
+    //     asset_receiver=self.pla_manager,
+    //     asset_amount=bal,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/noticeboard/contract.py:777
+    // asset_receiver=self.pla_manager,
+    intc_0 // 0
+    bytec 4 // "pla_manager"
+    app_global_get_ex
+    assert // check self.pla_manager exists
+    itxn_field AssetReceiver
+    itxn_field AssetAmount
+    frame_dig -1
+    itxn_field XferAsset
+    // smart_contracts/noticeboard/contract.py:775
+    // itxn.AssetTransfer(
+    pushint 4 // axfer
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/noticeboard/contract.py:775-779
+    // itxn.AssetTransfer(
+    //     xfer_asset=asset,
+    //     asset_receiver=self.pla_manager,
+    //     asset_amount=bal,
+    // ).submit()
+    itxn_submit
+    b noticeboard_income_after_if_else@5
+
+noticeboard_income_else_body@3:
+    // smart_contracts/noticeboard/contract.py:781
+    // bal = Global.current_application_address.balance - Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctBalance
+    assert // account funded
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    -
+    // smart_contracts/noticeboard/contract.py:782-785
+    // itxn.Payment(
+    //     receiver=self.pla_manager,
+    //     amount=bal,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/noticeboard/contract.py:783
+    // receiver=self.pla_manager,
+    intc_0 // 0
+    bytec 4 // "pla_manager"
+    app_global_get_ex
+    assert // check self.pla_manager exists
+    itxn_field Receiver
+    itxn_field Amount
+    // smart_contracts/noticeboard/contract.py:782
+    // itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/noticeboard/contract.py:782-785
+    // itxn.Payment(
+    //     receiver=self.pla_manager,
+    //     amount=bal,
+    // ).submit()
+    itxn_submit
+
+noticeboard_income_after_if_else@5:
+    // smart_contracts/noticeboard/contract.py:787
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.template_load_init(name: bytes, template_size: uint64) -> void:
+template_load_init:
+    // smart_contracts/noticeboard/contract.py:789-794
+    // @arc4.abimethod()
+    // def template_load_init(
+    //     self,
+    //     name: arc4.Byte,
+    //     template_size: UInt64,
+    // ) -> None:
+    proto 2 0
+    // smart_contracts/noticeboard/contract.py:806
+    // assert Txn.sender == self.pla_manager, ERROR_CALLED_BY_NOT_PLA_MANAGER
+    txn Sender
+    intc_0 // 0
+    bytec 4 // "pla_manager"
+    app_global_get_ex
+    assert // check self.pla_manager exists
+    ==
+    assert // Can only be called by platform manager.
+    // smart_contracts/noticeboard/contract.py:808
+    // assert self.state == Bytes(STATE_DEPLOYED), ERROR_NOT_STATE_DEPLOYED
+    intc_0 // 0
+    bytec_2 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec_3 // 0x01
+    ==
+    assert // Cannot be called from other state than DEPLOYED.
+    // smart_contracts/noticeboard/contract.py:810
+    // if name.bytes == BOX_VALIDATOR_AD_TEMPLATE_KEY:
+    frame_dig -2
+    bytec 6 // 0x76
+    ==
+    bz template_load_init_else_body@2
+    // smart_contracts/noticeboard/contract.py:811
+    // assert self.template_val.create(size=template_size)
+    bytec 6 // 0x76
+    frame_dig -1
+    box_create
+    assert
+    b template_load_init_after_if_else@6
+
+template_load_init_else_body@2:
+    // smart_contracts/noticeboard/contract.py:812
+    // elif name.bytes == BOX_DELEGATOR_CONTRACT_TEMPLATE_KEY:
+    frame_dig -2
+    bytec 7 // 0x64
+    ==
+    assert // Unexpected name for box for a contract template.
+    // smart_contracts/noticeboard/contract.py:813
+    // assert self.template_del.create(size=template_size)
+    bytec 7 // 0x64
+    frame_dig -1
+    box_create
+    assert
+
+template_load_init_after_if_else@6:
+    // smart_contracts/noticeboard/contract.py:817
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.template_load_data(name: bytes, offset: uint64, data: bytes) -> void:
+template_load_data:
+    // smart_contracts/noticeboard/contract.py:819-825
+    // @arc4.abimethod()
+    // def template_load_data(
+    //     self,
+    //     name: arc4.Byte,
+    //     offset: UInt64,
+    //     data: Bytes,
+    // ) -> None:
+    proto 3 0
+    // smart_contracts/noticeboard/contract.py:839
+    // assert Txn.sender == self.pla_manager, ERROR_CALLED_BY_NOT_PLA_MANAGER
+    txn Sender
+    intc_0 // 0
+    bytec 4 // "pla_manager"
+    app_global_get_ex
+    assert // check self.pla_manager exists
+    ==
+    assert // Can only be called by platform manager.
+    // smart_contracts/noticeboard/contract.py:841
+    // assert self.state == Bytes(STATE_DEPLOYED), ERROR_NOT_STATE_DEPLOYED
+    intc_0 // 0
+    bytec_2 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec_3 // 0x01
+    ==
+    assert // Cannot be called from other state than DEPLOYED.
+    // smart_contracts/noticeboard/contract.py:843
+    // if name.bytes == BOX_VALIDATOR_AD_TEMPLATE_KEY:
+    frame_dig -3
+    bytec 6 // 0x76
+    ==
+    bz template_load_data_else_body@2
+    // smart_contracts/noticeboard/contract.py:844
+    // self.template_val.replace(offset, data)
+    bytec 6 // 0x76
+    frame_dig -2
+    frame_dig -1
+    box_replace
+    b template_load_data_after_if_else@6
+
+template_load_data_else_body@2:
+    // smart_contracts/noticeboard/contract.py:845
+    // elif name.bytes == BOX_DELEGATOR_CONTRACT_TEMPLATE_KEY:
+    frame_dig -3
+    bytec 7 // 0x64
+    ==
+    assert // Unexpected name for box for a contract template.
+    // smart_contracts/noticeboard/contract.py:846
+    // self.template_del.replace(offset, data)
+    bytec 7 // 0x64
+    frame_dig -2
+    frame_dig -1
+    box_replace
+
+template_load_data_after_if_else@6:
+    // smart_contracts/noticeboard/contract.py:850
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.partner_config(partner_address: bytes, partner_commissions: bytes, partner_delete: bytes, txn: uint64) -> void:
+partner_config:
+    // smart_contracts/noticeboard/contract.py:852-859
+    // @arc4.abimethod()
+    // def partner_config(
+    //     self,
+    //     partner_address: arc4.Address,
+    //     partner_commissions: PartnerCommissions,
+    //     partner_delete: arc4.Bool,
+    //     txn : gtxn.PaymentTransaction,
+    // ) -> None:
+    proto 4 0
+    // smart_contracts/noticeboard/contract.py:875
+    // assert Txn.sender == self.pla_manager, ERROR_CALLED_BY_NOT_PLA_MANAGER
+    txn Sender
+    intc_0 // 0
+    bytec 4 // "pla_manager"
+    app_global_get_ex
+    assert // check self.pla_manager exists
+    ==
+    assert // Can only be called by platform manager.
+    // smart_contracts/noticeboard/contract.py:877
+    // assert self.state != Bytes(STATE_RETIRED), ERROR_CALLED_FROM_STATE_RETIRED
+    intc_0 // 0
+    bytec_2 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 13 // 0x04
+    !=
+    assert // Cannot be called from state RETIRED.
+    // smart_contracts/noticeboard/contract.py:879
+    // if not partner_delete.native:
+    frame_dig -2
+    intc_0 // 0
+    getbit
+    bnz partner_config_else_body@2
+    // smart_contracts/noticeboard/contract.py:880
+    // mbr_cur = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/noticeboard/contract.py:882-883
+    // # Create or modify a partner
+    // self.partners[partner_address] = partner_commissions.copy()
+    bytec 17 // 0x706172746e65725f
+    frame_dig -4
+    concat
+    frame_dig -3
+    box_put
+    // smart_contracts/noticeboard/contract.py:885
+    // mbr_new = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/noticeboard/contract.py:887-888
+    // # Check if payment for covering the (potential) MBR increase was made to this contract
+    // assert txn.receiver == Global.current_application_address, ERROR_RECEIVER
+    frame_dig -1
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert // Transaction must be to this contract.
+    // smart_contracts/noticeboard/contract.py:889
+    // mbr_pay_amount = (mbr_new - mbr_cur)
+    swap
+    -
+    // smart_contracts/noticeboard/contract.py:890
+    // assert txn.amount == mbr_pay_amount, ERROR_PARTNER_CREATION_FEE_NOT_PAID
+    frame_dig -1
+    gtxns Amount
+    ==
+    assert // Fee for MBR increase for creating partner on platform was not paid.
+    b partner_config_after_if_else@3
+
+partner_config_else_body@2:
+    // smart_contracts/noticeboard/contract.py:892
+    // assert op.Box.delete(Bytes(BOX_PARTNERS_PREFIX) + partner_address.bytes), ERROR_PARTNER_NOT_DELETED
+    bytec 17 // 0x706172746e65725f
+    frame_dig -4
+    concat
+    box_del
+    assert // Error while deleting partner box.
+
+partner_config_after_if_else@3:
+    // smart_contracts/noticeboard/contract.py:894
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.user_create(user_role: bytes, txn: uint64) -> void:
+user_create:
+    // smart_contracts/noticeboard/contract.py:910-915
+    // @arc4.abimethod()
+    // def user_create(
+    //     self,
+    //     user_role : UserRole,
+    //     txn : gtxn.PaymentTransaction,
+    // ) -> None:
+    proto 2 0
+    intc_0 // 0
+    dupn 2
+    pushbytes ""
+    // smart_contracts/noticeboard/contract.py:930
+    // assert self.state == Bytes(STATE_SET), ERROR_NOT_STATE_SET
+    intc_0 // 0
+    bytec_2 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 9 // 0x02
+    ==
+    assert // Cannot be called from other state than SET.
+    // smart_contracts/noticeboard/contract.py:932
+    // mbr_cur = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/noticeboard/contract.py:934-935
+    // # Cannot create a user if it already exists on the platform
+    // user = arc4.Address(Txn.sender)
+    txn Sender
+    dup
+    // smart_contracts/noticeboard/contract.py:936
+    // assert user not in self.users, ERROR_USER_ALREADY_EXISTS
+    box_len
+    bury 1
+    !
+    assert // User already exists on the platform.
+    // smart_contracts/noticeboard/contract.py:938-939
+    // # Define the user
+    // if user_role.bytes == Bytes(ROLE_VAL):
+    frame_dig -2
+    bytec_0 // 0x76616c5f
+    ==
+    bz user_create_else_body@2
+    // smart_contracts/noticeboard/contract.py:940
+    // user_fee = self.noticeboard_fees.val_user_reg.native
+    intc_0 // 0
+    bytec 8 // "noticeboard_fees"
+    app_global_get_ex
+    assert // check self.noticeboard_fees exists
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    frame_bury 3
+    // smart_contracts/noticeboard/contract.py:941
+    // dll_name = DllName.from_bytes(DLL_VAL)
+    bytec 14 // 0x646c6c5f5f76616c
+    frame_bury 1
+    bytec 14 // 0x646c6c5f5f76616c
+    // smart_contracts/noticeboard/contract.py:942
+    // dll = GlobalState(UsersDoubleLinkedList, key=dll_name.bytes)
+    frame_bury 0
+    b user_create_after_if_else@6
+
+user_create_else_body@2:
+    // smart_contracts/noticeboard/contract.py:943
+    // elif user_role.bytes == Bytes(ROLE_DEL):
+    frame_dig -2
+    bytec 5 // 0x64656c5f
+    ==
+    assert // Requested user role does not exist.
+    // smart_contracts/noticeboard/contract.py:944
+    // user_fee = self.noticeboard_fees.del_user_reg.native
+    intc_0 // 0
+    bytec 8 // "noticeboard_fees"
+    app_global_get_ex
+    assert // check self.noticeboard_fees exists
+    extract 16 8 // on error: Index access is out of bounds
+    btoi
+    frame_bury 3
+    // smart_contracts/noticeboard/contract.py:945
+    // dll_name = DllName.from_bytes(DLL_DEL)
+    bytec 15 // 0x646c6c5f5f64656c
+    frame_bury 1
+    bytec 15 // 0x646c6c5f5f64656c
+    // smart_contracts/noticeboard/contract.py:946
+    // dll = GlobalState(UsersDoubleLinkedList, key=dll_name.bytes)
+    frame_bury 0
+
+user_create_after_if_else@6:
+    // smart_contracts/noticeboard/contract.py:950-951
+    // # Add the user to the appropriate double linked list according to the role
+    // if dll.value.user_first == arc4.Address(Global.zero_address):
+    intc_0 // 0
+    frame_dig 0
+    app_global_get_ex
+    assert // check GlobalState exists
+    extract 8 32 // on error: Index access is out of bounds
+    global ZeroAddress
+    ==
+    bz user_create_else_body@8
+    // smart_contracts/noticeboard/contract.py:952
+    // prev_user = arc4.Address(Global.zero_address)
+    global ZeroAddress
+    // smart_contracts/noticeboard/contract.py:953
+    // next_user = arc4.Address(Global.zero_address)
+    dup
+    frame_bury 2
+    // smart_contracts/noticeboard/contract.py:954
+    // dll.value.user_first = user
+    intc_0 // 0
+    frame_dig 0
+    dup
+    cover 2
+    app_global_get_ex
+    assert // check GlobalState exists
+    frame_dig 5
+    dup
+    cover 3
+    replace2 8
+    dig 1
+    swap
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:955
+    // dll.value.user_last = user
+    intc_0 // 0
+    dig 1
+    app_global_get_ex
+    assert // check GlobalState exists
+    uncover 2
+    replace2 40
+    app_global_put
+    b user_create_after_if_else@9
+
+user_create_else_body@8:
+    // smart_contracts/noticeboard/contract.py:957
+    // prev_user = dll.value.user_last
+    intc_0 // 0
+    frame_dig 0
+    dup
+    cover 2
+    app_global_get_ex
+    assert // check GlobalState exists
+    extract 40 32 // on error: Index access is out of bounds
+    dup
+    uncover 2
+    // smart_contracts/noticeboard/contract.py:958
+    // next_user = arc4.Address(Global.zero_address)
+    global ZeroAddress
+    frame_bury 2
+    // smart_contracts/noticeboard/contract.py:959
+    // dll.value.user_last = user
+    intc_0 // 0
+    dig 1
+    app_global_get_ex
+    assert // check GlobalState exists
+    frame_dig 5
+    dup
+    cover 3
+    replace2 40
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:961
+    // self.users[prev_user].next_user = user
+    dig 1
+    box_get
+    assert // check self.users entry exists
+    swap
+    replace2 44
+    box_put
+
+user_create_after_if_else@9:
+    // smart_contracts/noticeboard/contract.py:964
+    // dll.value.cnt_users.native + UInt64(1)
+    intc_0 // 0
+    frame_dig 0
+    dup
+    cover 2
+    app_global_get_ex
+    assert // check GlobalState exists
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    intc_1 // 1
+    +
+    // smart_contracts/noticeboard/contract.py:963-965
+    // dll.value.cnt_users = arc4.UInt64(
+    //     dll.value.cnt_users.native + UInt64(1)
+    // )
+    itob
+    // smart_contracts/noticeboard/contract.py:963
+    // dll.value.cnt_users = arc4.UInt64(
+    intc_0 // 0
+    dig 2
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/noticeboard/contract.py:963-965
+    // dll.value.cnt_users = arc4.UInt64(
+    //     dll.value.cnt_users.native + UInt64(1)
+    // )
+    swap
+    replace2 0
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:973
+    // app_ids=NoticeboardAppList.from_bytes(op.bzero(8*110)),
+    intc 4 // 880
+    bzero
+    // smart_contracts/noticeboard/contract.py:967-975
+    // # Create the user
+    // self.users[user] = UserInfo(
+    //     role=user_role.copy(),
+    //     dll_name=dll_name.copy(),
+    //     prev_user=prev_user,
+    //     next_user=next_user,
+    //     app_ids=NoticeboardAppList.from_bytes(op.bzero(8*110)),
+    //     cnt_app_ids=arc4.UInt64(0),
+    // )
+    frame_dig -2
+    frame_dig 1
+    concat
+    uncover 2
+    concat
+    frame_dig 2
+    concat
+    swap
+    concat
+    // smart_contracts/noticeboard/contract.py:974
+    // cnt_app_ids=arc4.UInt64(0),
+    pushbytes 0x0000000000000000
+    // smart_contracts/noticeboard/contract.py:967-975
+    // # Create the user
+    // self.users[user] = UserInfo(
+    //     role=user_role.copy(),
+    //     dll_name=dll_name.copy(),
+    //     prev_user=prev_user,
+    //     next_user=next_user,
+    //     app_ids=NoticeboardAppList.from_bytes(op.bzero(8*110)),
+    //     cnt_app_ids=arc4.UInt64(0),
+    // )
+    concat
+    frame_dig 5
+    swap
+    box_put
+    // smart_contracts/noticeboard/contract.py:977
+    // mbr_new = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/noticeboard/contract.py:979-980
+    // # Check if payment for covering the potential MBR was made to this contract
+    // assert txn.receiver == Global.current_application_address, ERROR_RECEIVER
+    frame_dig -1
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert // Transaction must be to this contract.
+    // smart_contracts/noticeboard/contract.py:981
+    // mbr_pay_amount = (mbr_new - mbr_cur) + user_fee
+    frame_dig 4
+    -
+    frame_dig 3
+    +
+    // smart_contracts/noticeboard/contract.py:982
+    // assert txn.amount == mbr_pay_amount, ERROR_USER_REGISTRATION_FEE_NOT_PAID
+    frame_dig -1
+    gtxns Amount
+    ==
+    assert // User did not pay for the increase in MBR and user registration fee.
+    // smart_contracts/noticeboard/contract.py:984
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.user_delete() -> void:
+user_delete:
+    // smart_contracts/noticeboard/contract.py:986-989
+    // @arc4.abimethod()
+    // def user_delete(
+    //     self,
+    // ) -> None:
+    proto 0 0
+    // smart_contracts/noticeboard/contract.py:994
+    // mbr_cur = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/noticeboard/contract.py:996
+    // user = arc4.Address(Txn.sender)
+    txn Sender
+    dupn 2
+    // smart_contracts/noticeboard/contract.py:998
+    // prev_user = self.users[user].prev_user
+    box_get
+    assert // check self.users entry exists
+    extract 12 32 // on error: Index access is out of bounds
+    dup
+    uncover 2
+    // smart_contracts/noticeboard/contract.py:999
+    // next_user = self.users[user].next_user
+    dup
+    box_get
+    assert // check self.users entry exists
+    extract 44 32 // on error: Index access is out of bounds
+    cover 2
+    // smart_contracts/noticeboard/contract.py:1001
+    // assert self.users[user].cnt_app_ids.native == UInt64(0), ERROR_USER_HAS_ACTIVE_CONTRACTS
+    dup
+    box_get
+    assert // check self.users entry exists
+    intc 5 // 956
+    intc_3 // 8
+    extract3 // on error: Index access is out of bounds
+    btoi
+    !
+    assert // User has one or more active smart contracts.
+    // smart_contracts/noticeboard/contract.py:1003-1004
+    // # Remove the user from the double linked list it belongs to according to its role
+    // dll = GlobalState(UsersDoubleLinkedList, key=self.users[user].dll_name.bytes)
+    box_get
+    assert // check self.users entry exists
+    extract 4 8 // on error: Index access is out of bounds
+    swap
+    // smart_contracts/noticeboard/contract.py:1005
+    // if prev_user == arc4.Address(Global.zero_address) and next_user == arc4.Address(Global.zero_address):
+    global ZeroAddress
+    ==
+    bz user_delete_else_body@3
+    frame_dig 3
+    global ZeroAddress
+    ==
+    bz user_delete_else_body@3
+    // smart_contracts/noticeboard/contract.py:1006-1007
+    // # There is just one account in the list
+    // dll.value.user_first = arc4.Address(Global.zero_address)
+    intc_0 // 0
+    frame_dig 4
+    dup
+    cover 2
+    app_global_get_ex
+    assert // check GlobalState exists
+    global ZeroAddress
+    replace2 8
+    dig 1
+    swap
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:1008
+    // dll.value.user_last = arc4.Address(Global.zero_address)
+    intc_0 // 0
+    dig 1
+    app_global_get_ex
+    assert // check GlobalState exists
+    global ZeroAddress
+    replace2 40
+    app_global_put
+    b user_delete_after_if_else@10
+
+user_delete_else_body@3:
+    // smart_contracts/noticeboard/contract.py:1009
+    // elif prev_user == arc4.Address(Global.zero_address):
+    frame_dig 2
+    global ZeroAddress
+    ==
+    bz user_delete_else_body@5
+    // smart_contracts/noticeboard/contract.py:1010-1011
+    // # Deleting the first account in the list
+    // dll.value.user_first = next_user
+    intc_0 // 0
+    frame_dig 4
+    dup
+    cover 2
+    app_global_get_ex
+    assert // check GlobalState exists
+    frame_dig 3
+    dup
+    cover 2
+    replace2 8
+    uncover 2
+    swap
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:1012
+    // self.users[next_user].prev_user = arc4.Address(Global.zero_address)
+    dup
+    box_get
+    assert // check self.users entry exists
+    global ZeroAddress
+    replace2 12
+    box_put
+    b user_delete_after_if_else@10
+
+user_delete_else_body@5:
+    // smart_contracts/noticeboard/contract.py:1013
+    // elif next_user == arc4.Address(Global.zero_address):
+    frame_dig 3
+    global ZeroAddress
+    ==
+    bz user_delete_else_body@7
+    // smart_contracts/noticeboard/contract.py:1014-1015
+    // # Deleting the last account in the list
+    // dll.value.user_last = prev_user
+    intc_0 // 0
+    frame_dig 4
+    dup
+    cover 2
+    app_global_get_ex
+    assert // check GlobalState exists
+    frame_dig 2
+    dup
+    cover 2
+    replace2 40
+    uncover 2
+    swap
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:1016
+    // self.users[prev_user].next_user = arc4.Address(Global.zero_address)
+    dup
+    box_get
+    assert // check self.users entry exists
+    global ZeroAddress
+    replace2 44
+    box_put
+    b user_delete_after_if_else@10
+
+user_delete_else_body@7:
+    // smart_contracts/noticeboard/contract.py:1018-1019
+    // # Deleting other accounts in the list
+    // self.users[prev_user].next_user = next_user
+    frame_dig 2
+    dup
+    box_get
+    assert // check self.users entry exists
+    frame_dig 3
+    dup
+    cover 2
+    replace2 44
+    dig 2
+    swap
+    box_put
+    // smart_contracts/noticeboard/contract.py:1020
+    // self.users[next_user].prev_user = prev_user
+    dup
+    box_get
+    assert // check self.users entry exists
+    uncover 2
+    replace2 12
+    box_put
+
+user_delete_after_if_else@10:
+    // smart_contracts/noticeboard/contract.py:1022
+    // dll.value.cnt_users.native - UInt64(1)
+    intc_0 // 0
+    frame_dig 4
+    dup
+    cover 2
+    app_global_get_ex
+    assert // check GlobalState exists
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    intc_1 // 1
+    -
+    // smart_contracts/noticeboard/contract.py:1021-1023
+    // dll.value.cnt_users = arc4.UInt64(
+    //     dll.value.cnt_users.native - UInt64(1)
+    // )
+    itob
+    // smart_contracts/noticeboard/contract.py:1021
+    // dll.value.cnt_users = arc4.UInt64(
+    intc_0 // 0
+    dig 2
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/noticeboard/contract.py:1021-1023
+    // dll.value.cnt_users = arc4.UInt64(
+    //     dll.value.cnt_users.native - UInt64(1)
+    // )
+    swap
+    replace2 0
+    app_global_put
+    // smart_contracts/noticeboard/contract.py:1025
+    // assert op.Box.delete(user.bytes), ERROR_USER_BOX_NOT_DELETED
+    frame_dig 1
+    dup
+    box_del
+    assert // Failed to delete user box.
+    // smart_contracts/noticeboard/contract.py:1027
+    // mbr_new = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/noticeboard/contract.py:1029-1030
+    // # Send the freed MBR to the user
+    // mbr_freed_amount = mbr_cur - mbr_new
+    frame_dig 0
+    swap
+    -
+    // smart_contracts/noticeboard/contract.py:1031-1034
+    // itxn.Payment(
+    //     receiver=user.native,
+    //     amount=mbr_freed_amount,
+    // ).submit()
+    itxn_begin
+    itxn_field Amount
+    itxn_field Receiver
+    // smart_contracts/noticeboard/contract.py:1031
+    // itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/noticeboard/contract.py:1031-1034
+    // itxn.Payment(
+    //     receiver=user.native,
+    //     amount=mbr_freed_amount,
+    // ).submit()
+    itxn_submit
+    // smart_contracts/noticeboard/contract.py:1036
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.ad_create(val_app_idx: uint64, txn: uint64) -> bytes:
+ad_create:
+    // smart_contracts/noticeboard/contract.py:1042-1047
+    // @arc4.abimethod()
+    // def ad_create(
+    //     self,
+    //     val_app_idx: UInt64,
+    //     txn: gtxn.PaymentTransaction,
+    // ) -> arc4.UInt64:
+    proto 2 1
+    intc_0 // 0
+    // smart_contracts/noticeboard/contract.py:1066
+    // assert self.state == Bytes(STATE_SET), ERROR_NOT_STATE_SET
+    dup
+    bytec_2 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 9 // 0x02
+    ==
+    assert // Cannot be called from other state than SET.
+    // smart_contracts/noticeboard/contract.py:1068
+    // val_owner = arc4.Address(Txn.sender)
+    txn Sender
+    dup
+    // smart_contracts/noticeboard/contract.py:1069
+    // assert self.users[val_owner].role.bytes == Bytes(ROLE_VAL), ERROR_USER_NOT_VALIDATOR
+    box_get
+    assert // check self.users entry exists
+    extract 0 4 // on error: Index access is out of bounds
+    bytec_0 // 0x76616c5f
+    ==
+    assert // User is not registered as validator on the platform.
+    // smart_contracts/noticeboard/contract.py:1071
+    // mbr_cur = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/noticeboard/contract.py:1075
+    // if self.template_val.length > UInt64(4096):
+    bytec 6 // 0x76
+    box_len
+    assert // check self.template_val exists
+    intc 6 // 4096
+    >
+    bz ad_create_else_body@2
+    // smart_contracts/noticeboard/contract.py:1077
+    // self.template_val.extract(UInt64(0), UInt64(4096)),
+    bytec 6 // 0x76
+    intc_0 // 0
+    intc 6 // 4096
+    box_extract
+    frame_bury 0
+    // smart_contracts/noticeboard/contract.py:1078
+    // self.template_val.extract(UInt64(4096), self.template_val.length - UInt64(4096)),
+    bytec 6 // 0x76
+    box_len
+    assert // check self.template_val exists
+    intc 6 // 4096
+    -
+    bytec 6 // 0x76
+    intc 6 // 4096
+    uncover 2
+    box_extract
+    b ad_create_after_if_else@3
+
+ad_create_else_body@2:
+    // smart_contracts/noticeboard/contract.py:1082
+    // self.template_val.extract(UInt64(0), self.template_val.length),
+    bytec 6 // 0x76
+    box_len
+    assert // check self.template_val exists
+    bytec 6 // 0x76
+    intc_0 // 0
+    uncover 2
+    box_extract
+    frame_bury 0
+    // smart_contracts/noticeboard/contract.py:1083
+    // Bytes(),
+    pushbytes 0x
+
+ad_create_after_if_else@3:
+    // smart_contracts/noticeboard/contract.py:1086-1096
+    // val_app_id, txn_create = arc4.abi_call(
+    //     ValidatorAd.ad_create,
+    //     val_owner,
+    //     approval_program=approval_program,
+    //     clear_state_program=compiled.clear_state_program,
+    //     global_num_uint=compiled.global_uints,
+    //     global_num_bytes=compiled.global_bytes,
+    //     local_num_uint=compiled.local_uints,
+    //     local_num_bytes=compiled.local_bytes,
+    //     extra_program_pages=compiled.extra_program_pages,
+    // )
+    itxn_begin
+    // smart_contracts/noticeboard/contract.py:1073-1074
+    // # Create a new validator ad
+    // compiled = compile_contract(ValidatorAd)
+    intc_1 // 1
+    itxn_field ExtraProgramPages
+    pushint 11 // 11
+    itxn_field GlobalNumByteSlice
+    intc_2 // 6
+    itxn_field GlobalNumUint
+    pushbytes base64(C4EBQw==)
+    itxn_field ClearStateProgramPages
+    frame_dig 0
+    itxn_field ApprovalProgramPages
+    itxn_field ApprovalProgramPages
+    // smart_contracts/noticeboard/contract.py:1086-1096
+    // val_app_id, txn_create = arc4.abi_call(
+    //     ValidatorAd.ad_create,
+    //     val_owner,
+    //     approval_program=approval_program,
+    //     clear_state_program=compiled.clear_state_program,
+    //     global_num_uint=compiled.global_uints,
+    //     global_num_bytes=compiled.global_bytes,
+    //     local_num_uint=compiled.local_uints,
+    //     local_num_bytes=compiled.local_bytes,
+    //     extra_program_pages=compiled.extra_program_pages,
+    // )
+    pushbytes 0x734ecd77 // method "ad_create(address)uint64"
+    itxn_field ApplicationArgs
+    frame_dig 1
+    dup
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_1 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/noticeboard/contract.py:1097
+    // val_app = Application(val_app_id.native)
+    dup
+    btoi
+    // smart_contracts/noticeboard/contract.py:1099
+    // self._store_user_app(val_owner, val_app_id, val_app_idx)
+    uncover 2
+    dig 2
+    frame_dig -2
+    callsub _store_user_app
+    // smart_contracts/noticeboard/contract.py:1101-1102
+    // # Fund the created ad with MBR
+    // contract_fund_pay = Global.min_balance
+    global MinBalance
+    // smart_contracts/noticeboard/contract.py:1103-1106
+    // itxn.Payment(
+    //     receiver=val_app.address,
+    //     amount=contract_fund_pay,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/noticeboard/contract.py:1104
+    // receiver=val_app.address,
+    swap
+    app_params_get AppAddress
+    assert // application exists
+    dig 1
+    itxn_field Amount
+    itxn_field Receiver
+    // smart_contracts/noticeboard/contract.py:1103
+    // itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/noticeboard/contract.py:1103-1106
+    // itxn.Payment(
+    //     receiver=val_app.address,
+    //     amount=contract_fund_pay,
+    // ).submit()
+    itxn_submit
+    // smart_contracts/noticeboard/contract.py:1108-1111
+    // # Check if ALGO payment is enough to cover validator setup fee and
+    // # MBR increase on Noticeboard due to ad creation and
+    // # for MBR funding of the new validator ad.
+    // assert txn.receiver == Global.current_application_address, ERROR_RECEIVER
+    frame_dig -1
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert // Transaction must be to this contract.
+    // smart_contracts/noticeboard/contract.py:1112
+    // mbr_new = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/noticeboard/contract.py:1114
+    // self.noticeboard_fees.val_ad_creation.native +
+    intc_0 // 0
+    bytec 8 // "noticeboard_fees"
+    app_global_get_ex
+    assert // check self.noticeboard_fees exists
+    extract 24 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/noticeboard/contract.py:1115
+    // (mbr_new - mbr_cur) +
+    swap
+    frame_dig 2
+    -
+    // smart_contracts/noticeboard/contract.py:1114-1115
+    // self.noticeboard_fees.val_ad_creation.native +
+    // (mbr_new - mbr_cur) +
+    +
+    // smart_contracts/noticeboard/contract.py:1114-1116
+    // self.noticeboard_fees.val_ad_creation.native +
+    // (mbr_new - mbr_cur) +
+    // contract_fund_pay
+    +
+    // smart_contracts/noticeboard/contract.py:1118
+    // assert txn.amount == pay_amount, ERROR_AD_CREATION_INCORRECT_PAY_AMOUNT
+    frame_dig -1
+    gtxns Amount
+    ==
+    assert // During ad creation, incorrect amount of ALGO was paid.
+    // smart_contracts/noticeboard/contract.py:1120
+    // return val_app_id
+    frame_bury 0
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard._store_user_app(user: bytes, app_id: bytes, app_idx: uint64) -> void:
+_store_user_app:
+    // smart_contracts/noticeboard/contract.py:2225-2231
+    // @subroutine
+    // def _store_user_app(
+    //     self,
+    //     user: arc4.Address,
+    //     app_id: arc4.UInt64,
+    //     app_idx: UInt64,
+    // ) -> None:
+    proto 3 0
+    // smart_contracts/noticeboard/contract.py:2237-2238
+    // # Check if delegator has place to store the new contract and store it
+    // assert self.users[user].app_ids[app_idx].native == UInt64(0), ERROR_USER_APP_LIST_INDEX_TAKEN
+    frame_dig -3
+    box_get
+    assert // check self.users entry exists
+    pushint 76 // 76
+    intc 4 // 880
+    extract3 // on error: Index access is out of bounds
+    frame_dig -1
+    intc_3 // 8
+    *
+    swap
+    dig 1
+    intc_3 // 8
+    extract3 // on error: Index access is out of bounds
+    btoi
+    !
+    assert // Cannot store app on the index because it is taken.
+    // smart_contracts/noticeboard/contract.py:2239
+    // self.users[user].app_ids[app_idx] = app_id
+    frame_dig -3
+    box_get
+    assert // check self.users entry exists
+    dup
+    pushint 76 // 76
+    intc 4 // 880
+    extract3 // on error: Index access is out of bounds
+    frame_dig -1
+    pushint 110 // 110
+    <
+    assert // Index access is out of bounds
+    uncover 2
+    frame_dig -2
+    replace3
+    replace2 76
+    frame_dig -3
+    swap
+    box_put
+    // smart_contracts/noticeboard/contract.py:2241
+    // self.users[user].cnt_app_ids.native + UInt64(1)
+    frame_dig -3
+    box_get
+    assert // check self.users entry exists
+    intc 5 // 956
+    intc_3 // 8
+    extract3 // on error: Index access is out of bounds
+    btoi
+    intc_1 // 1
+    +
+    // smart_contracts/noticeboard/contract.py:2240-2242
+    // self.users[user].cnt_app_ids = arc4.UInt64(
+    //     self.users[user].cnt_app_ids.native + UInt64(1)
+    // )
+    itob
+    // smart_contracts/noticeboard/contract.py:2240
+    // self.users[user].cnt_app_ids = arc4.UInt64(
+    frame_dig -3
+    box_get
+    assert // check self.users entry exists
+    // smart_contracts/noticeboard/contract.py:2240-2242
+    // self.users[user].cnt_app_ids = arc4.UInt64(
+    //     self.users[user].cnt_app_ids.native + UInt64(1)
+    // )
+    intc 5 // 956
+    uncover 2
+    replace3
+    frame_dig -3
+    swap
+    box_put
+    // smart_contracts/noticeboard/contract.py:2244
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.ad_config(val_app: uint64, val_app_idx: uint64, val_manager: bytes, live: bytes, cnt_del_max: uint64) -> void:
+ad_config:
+    // smart_contracts/noticeboard/contract.py:1122-1130
+    // @arc4.abimethod()
+    // def ad_config(
+    //     self,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    //     val_manager: arc4.Address,
+    //     live : arc4.Bool,
+    //     cnt_del_max : UInt64,
+    // ) -> None:
+    proto 5 0
+    // smart_contracts/noticeboard/contract.py:1152
+    // val_owner = arc4.Address(Txn.sender)
+    txn Sender
+    // smart_contracts/noticeboard/contract.py:1153
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    dup
+    frame_dig -5
+    frame_dig -4
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1155-1156
+    // # Check if requested maximum is below the allowed limit for node performance safety
+    // assert cnt_del_max <= self.noticeboard_terms_node.cnt_del_max_max, ERROR_UNSAFE_NUMBER_OF_DELEGATORS
+    intc_0 // 0
+    bytec 12 // "noticeboard_terms_node"
+    app_global_get_ex
+    assert // check self.noticeboard_terms_node exists
+    extract 16 8 // on error: Index access is out of bounds
+    frame_dig -1
+    itob
+    swap
+    dig 1
+    b>=
+    assert // Requested number of maximum delegator is unsafe for node performance.
+    // smart_contracts/noticeboard/contract.py:1158-1166
+    // # Configure ad
+    // app_txn = arc4.abi_call(  # noqa: F841
+    //     ValidatorAd.ad_config,
+    //     val_owner,
+    //     val_manager,
+    //     live,
+    //     cnt_del_max,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    frame_dig -5
+    itxn_field ApplicationID
+    pushbytes 0x93f04fe6 // method "ad_config(address,address,bool,uint64)void"
+    itxn_field ApplicationArgs
+    swap
+    itxn_field ApplicationArgs
+    frame_dig -3
+    itxn_field ApplicationArgs
+    frame_dig -2
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    // smart_contracts/noticeboard/contract.py:1168
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard._assert_user_and_app(user: bytes, app: uint64, app_idx: uint64, role: bytes) -> void:
+_assert_user_and_app:
+    // smart_contracts/noticeboard/contract.py:2204-2214
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // # ----- ----- ----- Internal functions ----- ----- -----
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // @subroutine
+    // def _assert_user_and_app(
+    //     self,
+    //     user: arc4.Address,
+    //     app: Application,
+    //     app_idx: UInt64,
+    //     role: Bytes,
+    // ) -> None:
+    proto 4 0
+    // smart_contracts/noticeboard/contract.py:2220
+    // assert self.users[user].role.bytes == role, ERROR_USER_UNEXPECTED_ROLE
+    frame_dig -4
+    box_get
+    assert // check self.users entry exists
+    extract 0 4 // on error: Index access is out of bounds
+    frame_dig -1
+    ==
+    assert // User does not have the expected role on the platform.
+    // smart_contracts/noticeboard/contract.py:2221
+    // assert self.users[user].app_ids[app_idx] == app.id, ERROR_APP_NOT_WITH_USER
+    frame_dig -4
+    box_get
+    assert // check self.users entry exists
+    pushint 76 // 76
+    intc 4 // 880
+    extract3 // on error: Index access is out of bounds
+    frame_dig -2
+    intc_3 // 8
+    *
+    intc_3 // 8
+    extract3 // on error: Index access is out of bounds
+    frame_dig -3
+    itob
+    b==
+    assert // Requested app is not under the given user.
+    // smart_contracts/noticeboard/contract.py:2223
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.ad_delete(val_app: uint64, val_app_idx: uint64) -> void:
+ad_delete:
+    // smart_contracts/noticeboard/contract.py:1170-1175
+    // @arc4.abimethod()
+    // def ad_delete(
+    //     self,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    // ) -> None:
+    proto 2 0
+    // smart_contracts/noticeboard/contract.py:1189
+    // val_owner = arc4.Address(Txn.sender)
+    txn Sender
+    // smart_contracts/noticeboard/contract.py:1190
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    dup
+    frame_dig -2
+    frame_dig -1
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1192
+    // mbr_cur = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/noticeboard/contract.py:1194-1199
+    // # Delete ad
+    // app_txn = arc4.abi_call(  # noqa: F841
+    //     ValidatorAd.ad_delete,
+    //     val_owner,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    pushint 5 // DeleteApplication
+    itxn_field OnCompletion
+    frame_dig -2
+    itxn_field ApplicationID
+    pushbytes 0x8039e324 // method "ad_delete(address)void"
+    itxn_field ApplicationArgs
+    dig 1
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    // smart_contracts/noticeboard/contract.py:1201
+    // self._remove_user_app(val_owner, arc4.UInt64(val_app.id), val_app_idx)
+    frame_dig -2
+    itob
+    dig 2
+    swap
+    frame_dig -1
+    callsub _remove_user_app
+    // smart_contracts/noticeboard/contract.py:1203
+    // mbr_new = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/noticeboard/contract.py:1205-1208
+    // itxn.Payment(
+    //     receiver=val_owner.native,
+    //     amount=mbr_cur-mbr_new,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/noticeboard/contract.py:1207
+    // amount=mbr_cur-mbr_new,
+    -
+    itxn_field Amount
+    itxn_field Receiver
+    // smart_contracts/noticeboard/contract.py:1205
+    // itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/noticeboard/contract.py:1205-1208
+    // itxn.Payment(
+    //     receiver=val_owner.native,
+    //     amount=mbr_cur-mbr_new,
+    // ).submit()
+    itxn_submit
+    // smart_contracts/noticeboard/contract.py:1210
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard._remove_user_app(user: bytes, app_id: bytes, app_idx: uint64) -> void:
+_remove_user_app:
+    // smart_contracts/noticeboard/contract.py:2246-2252
+    // @subroutine
+    // def _remove_user_app(
+    //     self,
+    //     user: arc4.Address,
+    //     app_id: arc4.UInt64,
+    //     app_idx: UInt64,
+    // ) -> None:
+    proto 3 0
+    // smart_contracts/noticeboard/contract.py:2257
+    // assert self.users[user].app_ids[app_idx].native == app_id, ERROR_USER_APP_CANNOT_REMOVE_FROM_LIST
+    frame_dig -3
+    box_get
+    assert // check self.users entry exists
+    pushint 76 // 76
+    intc 4 // 880
+    extract3 // on error: Index access is out of bounds
+    frame_dig -1
+    intc_3 // 8
+    *
+    swap
+    dig 1
+    intc_3 // 8
+    extract3 // on error: Index access is out of bounds
+    btoi
+    itob
+    frame_dig -2
+    b==
+    assert // Cannot remove app from the index because it does not match.
+    // smart_contracts/noticeboard/contract.py:2258
+    // self.users[user].app_ids[app_idx] = arc4.UInt64(UInt64(0))
+    intc_0 // 0
+    itob
+    frame_dig -3
+    box_get
+    assert // check self.users entry exists
+    dup
+    pushint 76 // 76
+    intc 4 // 880
+    extract3 // on error: Index access is out of bounds
+    frame_dig -1
+    pushint 110 // 110
+    <
+    assert // Index access is out of bounds
+    uncover 3
+    uncover 3
+    replace3
+    replace2 76
+    frame_dig -3
+    swap
+    box_put
+    // smart_contracts/noticeboard/contract.py:2260
+    // self.users[user].cnt_app_ids.native - UInt64(1)
+    frame_dig -3
+    box_get
+    assert // check self.users entry exists
+    intc 5 // 956
+    intc_3 // 8
+    extract3 // on error: Index access is out of bounds
+    btoi
+    intc_1 // 1
+    -
+    // smart_contracts/noticeboard/contract.py:2259-2261
+    // self.users[user].cnt_app_ids = arc4.UInt64(
+    //     self.users[user].cnt_app_ids.native - UInt64(1)
+    // )
+    itob
+    // smart_contracts/noticeboard/contract.py:2259
+    // self.users[user].cnt_app_ids = arc4.UInt64(
+    frame_dig -3
+    box_get
+    assert // check self.users entry exists
+    // smart_contracts/noticeboard/contract.py:2259-2261
+    // self.users[user].cnt_app_ids = arc4.UInt64(
+    //     self.users[user].cnt_app_ids.native - UInt64(1)
+    // )
+    intc 5 // 956
+    uncover 2
+    replace3
+    frame_dig -3
+    swap
+    box_put
+    // smart_contracts/noticeboard/contract.py:2263
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.ad_ready(val_owner: bytes, val_app: uint64, val_app_idx: uint64, ready: bytes) -> void:
+ad_ready:
+    // smart_contracts/noticeboard/contract.py:1212-1219
+    // @arc4.abimethod()
+    // def ad_ready(
+    //     self,
+    //     val_owner: arc4.Address,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    //     ready: arc4.Bool,
+    // ) -> None:
+    proto 4 0
+    // smart_contracts/noticeboard/contract.py:1236
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    frame_dig -4
+    frame_dig -3
+    frame_dig -2
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1238-1239
+    // # Set manager readiness
+    // val_manager = arc4.Address(Txn.sender)
+    txn Sender
+    // smart_contracts/noticeboard/contract.py:1240-1245
+    // app_txn = arc4.abi_call(  # noqa: F841
+    //     ValidatorAd.ad_ready,
+    //     val_manager,
+    //     ready,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    frame_dig -3
+    itxn_field ApplicationID
+    pushbytes 0xa693de02 // method "ad_ready(address,bool)void"
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    frame_dig -1
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    // smart_contracts/noticeboard/contract.py:1247
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.ad_self_disclose(val_app: uint64, val_app_idx: uint64, val_info: bytes) -> void:
+ad_self_disclose:
+    // smart_contracts/noticeboard/contract.py:1249-1255
+    // @arc4.abimethod()
+    // def ad_self_disclose(
+    //     self,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    //     val_info: ValidatorSelfDisclosure,
+    // ) -> None:
+    proto 3 0
+    // smart_contracts/noticeboard/contract.py:1270
+    // assert self.state == Bytes(STATE_SET), ERROR_NOT_STATE_SET
+    intc_0 // 0
+    bytec_2 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 9 // 0x02
+    ==
+    assert // Cannot be called from other state than SET.
+    // smart_contracts/noticeboard/contract.py:1272
+    // val_owner = arc4.Address(Txn.sender)
+    txn Sender
+    // smart_contracts/noticeboard/contract.py:1273
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    dup
+    frame_dig -3
+    frame_dig -2
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1275-1281
+    // # Set self-disclose info
+    // app_txn = arc4.abi_call(  # noqa: F841
+    //     ValidatorAd.ad_self_disclose,
+    //     val_owner,
+    //     val_info,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    frame_dig -3
+    itxn_field ApplicationID
+    pushbytes 0xef423551 // method "ad_self_disclose(address,(byte[30],byte[60],byte[2],uint64,byte[20]))void"
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    frame_dig -1
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    // smart_contracts/noticeboard/contract.py:1283
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.ad_terms(val_app: uint64, val_app_idx: uint64, tc_sha256: bytes, terms_time: bytes, terms_price: bytes, terms_stake: bytes, terms_reqs: bytes, terms_warn: bytes, mbr_delegator_template_box: uint64, txn: uint64) -> void:
+ad_terms:
+    // smart_contracts/noticeboard/contract.py:1285-1298
+    // @arc4.abimethod()
+    // def ad_terms(
+    //     self,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    //     tc_sha256: Sha256,
+    //     terms_time: ValidatorTermsTiming,
+    //     terms_price: ValidatorTermsPricing,
+    //     terms_stake: ValidatorTermsStakeLimits,
+    //     terms_reqs: ValidatorTermsGating,
+    //     terms_warn: ValidatorTermsWarnings,
+    //     mbr_delegator_template_box: UInt64,
+    //     txn: gtxn.PaymentTransaction,
+    // ) -> None:
+    proto 10 0
+    pushbytes ""
+    dupn 2
+    // smart_contracts/noticeboard/contract.py:1330
+    // assert self.state == Bytes(STATE_SET), ERROR_NOT_STATE_SET
+    intc_0 // 0
+    bytec_2 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 9 // 0x02
+    ==
+    assert // Cannot be called from other state than SET.
+    // smart_contracts/noticeboard/contract.py:1332
+    // val_owner = arc4.Address(Txn.sender)
+    txn Sender
+    dup
+    // smart_contracts/noticeboard/contract.py:1333
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    frame_dig -10
+    frame_dig -9
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1335-1336
+    // # Check compliance of requested validator ad terms
+    // assert tc_sha256.bytes == self.tc_sha256.bytes, ERROR_TERMS_AND_CONDITIONS_DONT_MATCH
+    intc_0 // 0
+    bytec 10 // "tc_sha256"
+    app_global_get_ex
+    assert // check self.tc_sha256 exists
+    frame_dig -8
+    ==
+    assert // Terms and conditions do not match the ones defined by the platform.
+    // smart_contracts/noticeboard/contract.py:1337
+    // self._assert_terms_time(terms_time)
+    frame_dig -7
+    callsub _assert_terms_time
+    frame_bury -7
+    // smart_contracts/noticeboard/contract.py:1338
+    // self._assert_terms_price(terms_price)
+    frame_dig -6
+    callsub _assert_terms_price
+    frame_bury -6
+    // smart_contracts/noticeboard/contract.py:1339
+    // self._assert_terms_stake(terms_stake)
+    frame_dig -5
+    callsub _assert_terms_stake
+    frame_bury -5
+    // smart_contracts/noticeboard/contract.py:1341-1342
+    // # If validator ad is in created state, first also load ad template to its box storage
+    // ad_state = op.AppGlobal.get_ex_bytes(val_app, b"state")
+    frame_dig -10
+    bytec_2 // 0x7374617465
+    app_global_get_ex
+    // smart_contracts/noticeboard/contract.py:1343
+    // assert ad_state[1], ERROR_VALIDATOR_AD_DOES_NOT_HAVE_STATE # Error should not be possible
+    assert // App does not have state.
+    // smart_contracts/noticeboard/contract.py:1344
+    // if ad_state[0] == VALIDATOR_AD_STATE_CREATED:
+    bytec_3 // 0x01
+    ==
+    bz ad_terms_after_if_else@13
+    // smart_contracts/noticeboard/contract.py:1347
+    // receiver=val_app.address,
+    frame_dig -10
+    app_params_get AppAddress
+    assert // application exists
+    // smart_contracts/noticeboard/contract.py:1350-1356
+    // txn_load_init = arc4.abi_call(  # noqa: F841
+    //     ValidatorAd.template_load_init,
+    //     val_owner,
+    //     self.template_del.length,
+    //     mbr_template_txn,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    frame_dig -2
+    itxn_field Amount
+    itxn_field Receiver
+    // smart_contracts/noticeboard/contract.py:1345-1346
+    // # Load delegator contract template
+    // mbr_template_txn = itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/noticeboard/contract.py:1350-1356
+    // txn_load_init = arc4.abi_call(  # noqa: F841
+    //     ValidatorAd.template_load_init,
+    //     val_owner,
+    //     self.template_del.length,
+    //     mbr_template_txn,
+    //     app_id=val_app.id,
+    // )
+    itxn_next
+    // smart_contracts/noticeboard/contract.py:1353
+    // self.template_del.length,
+    bytec 7 // 0x64
+    box_len
+    assert // check self.template_del exists
+    itob
+    frame_dig -10
+    itxn_field ApplicationID
+    // smart_contracts/noticeboard/contract.py:1350-1356
+    // txn_load_init = arc4.abi_call(  # noqa: F841
+    //     ValidatorAd.template_load_init,
+    //     val_owner,
+    //     self.template_del.length,
+    //     mbr_template_txn,
+    //     app_id=val_app.id,
+    // )
+    pushbytes 0xe0a4b723 // method "template_load_init(address,uint64,pay)void"
+    itxn_field ApplicationArgs
+    frame_dig 3
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    // smart_contracts/noticeboard/contract.py:1358
+    // chunks = op.shr(self.template_del.length, 10) + UInt64(1)
+    bytec 7 // 0x64
+    box_len
+    assert // check self.template_del exists
+    pushint 10 // 10
+    shr
+    intc_1 // 1
+    +
+    frame_bury 0
+    // smart_contracts/noticeboard/contract.py:1359
+    // for idx in urange(chunks):
+    intc_0 // 0
+    frame_bury 1
+
+ad_terms_for_header@4:
+    // smart_contracts/noticeboard/contract.py:1359
+    // for idx in urange(chunks):
+    frame_dig 1
+    frame_dig 0
+    <
+    bz ad_terms_after_for@11
+    // smart_contracts/noticeboard/contract.py:1360
+    // offset = idx * UInt64(1024)
+    frame_dig 1
+    dup
+    pushint 1024 // 1024
+    *
+    frame_bury 2
+    // smart_contracts/noticeboard/contract.py:1361
+    // if idx == chunks - UInt64(1):
+    frame_dig 0
+    intc_1 // 1
+    -
+    ==
+    bz ad_terms_else_body@7
+    // smart_contracts/noticeboard/contract.py:1362
+    // chunk_size = self.template_del.length - idx * UInt64(1024)
+    bytec 7 // 0x64
+    box_len
+    assert // check self.template_del exists
+    frame_dig 2
+    -
+    b ad_terms_after_if_else@8
+
+ad_terms_else_body@7:
+    // smart_contracts/noticeboard/contract.py:1364
+    // chunk_size = UInt64(1024)
+    pushint 1024 // 1024
+
+ad_terms_after_if_else@8:
+    // smart_contracts/noticeboard/contract.py:1365
+    // data = self.template_del.extract(offset, chunk_size)
+    bytec 7 // 0x64
+    frame_dig 2
+    dup
+    cover 2
+    uncover 3
+    box_extract
+    // smart_contracts/noticeboard/contract.py:1366-1372
+    // template_load_data = arc4.abi_call(  # noqa: F841
+    //     ValidatorAd.template_load_data,
+    //     val_owner,
+    //     offset,
+    //     data,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    // smart_contracts/noticeboard/contract.py:1369
+    // offset,
+    swap
+    itob
+    // smart_contracts/noticeboard/contract.py:1370
+    // data,
+    dig 1
+    len
+    itob
+    extract 6 2
+    uncover 2
+    concat
+    frame_dig -10
+    itxn_field ApplicationID
+    // smart_contracts/noticeboard/contract.py:1366-1372
+    // template_load_data = arc4.abi_call(  # noqa: F841
+    //     ValidatorAd.template_load_data,
+    //     val_owner,
+    //     offset,
+    //     data,
+    //     app_id=val_app.id,
+    // )
+    pushbytes 0x9d64c6e9 // method "template_load_data(address,uint64,byte[])void"
+    itxn_field ApplicationArgs
+    frame_dig 3
+    itxn_field ApplicationArgs
+    swap
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    // smart_contracts/noticeboard/contract.py:1359
+    // for idx in urange(chunks):
+    frame_dig 1
+    intc_1 // 1
+    +
+    frame_bury 1
+    b ad_terms_for_header@4
+
+ad_terms_after_for@11:
+    // smart_contracts/noticeboard/contract.py:1374-1378
+    // template_load_end = arc4.abi_call(  # noqa: F841
+    //     ValidatorAd.template_load_end,
+    //     val_owner,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    frame_dig -10
+    itxn_field ApplicationID
+    pushbytes 0xdbe1605f // method "template_load_end(address)void"
+    itxn_field ApplicationArgs
+    frame_dig 3
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+
+ad_terms_after_if_else@13:
+    // smart_contracts/noticeboard/contract.py:1380-1381
+    // # Check if payment for increase of MBR of ValidatorAd was made to this contract
+    // assert txn.receiver == Global.current_application_address, ERROR_RECEIVER
+    frame_dig -1
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert // Transaction must be to this contract.
+    // smart_contracts/noticeboard/contract.py:1383
+    // receiver=val_app.address,
+    frame_dig -10
+    app_params_get AppAddress
+    assert // application exists
+    // smart_contracts/noticeboard/contract.py:1384
+    // amount=txn.amount - mbr_delegator_template_box,
+    frame_dig -1
+    gtxns Amount
+    frame_dig -2
+    -
+    // smart_contracts/noticeboard/contract.py:1386-1398
+    // # Set ad terms
+    // txn_set = arc4.abi_call(  # noqa: F841
+    //     ValidatorAd.ad_terms,
+    //     val_owner,
+    //     tc_sha256.copy(),
+    //     terms_time.copy(),
+    //     terms_price.copy(),
+    //     terms_stake.copy(),
+    //     terms_reqs.copy(),
+    //     terms_warn.copy(),
+    //     asa_optin_txn,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    itxn_field Amount
+    itxn_field Receiver
+    // smart_contracts/noticeboard/contract.py:1382
+    // asa_optin_txn = itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/noticeboard/contract.py:1386-1398
+    // # Set ad terms
+    // txn_set = arc4.abi_call(  # noqa: F841
+    //     ValidatorAd.ad_terms,
+    //     val_owner,
+    //     tc_sha256.copy(),
+    //     terms_time.copy(),
+    //     terms_price.copy(),
+    //     terms_stake.copy(),
+    //     terms_reqs.copy(),
+    //     terms_warn.copy(),
+    //     asa_optin_txn,
+    //     app_id=val_app.id,
+    // )
+    itxn_next
+    frame_dig -10
+    itxn_field ApplicationID
+    pushbytes 0xad036de5 // method "ad_terms(address,byte[32],(uint64,uint64,uint64,uint64,uint64),(uint64,uint64,uint64,uint64,uint64),(uint64,uint64),((uint64,uint64)[2]),(uint64,uint64),pay)void"
+    itxn_field ApplicationArgs
+    frame_dig 3
+    itxn_field ApplicationArgs
+    frame_dig -8
+    itxn_field ApplicationArgs
+    frame_dig -7
+    itxn_field ApplicationArgs
+    frame_dig -6
+    itxn_field ApplicationArgs
+    frame_dig -5
+    itxn_field ApplicationArgs
+    frame_dig -4
+    itxn_field ApplicationArgs
+    frame_dig -3
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    // smart_contracts/noticeboard/contract.py:1400
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard._assert_terms_time(terms_time: bytes) -> bytes:
+_assert_terms_time:
+    // smart_contracts/noticeboard/contract.py:2265-2269
+    // @subroutine
+    // def _assert_terms_time(
+    //     self,
+    //     terms_time: ValidatorTermsTiming,
+    // ) -> None:
+    proto 1 1
+    // smart_contracts/noticeboard/contract.py:2271
+    // assert terms_time.rounds_duration_min >= self.noticeboard_terms_timing.rounds_duration_min_min, ERROR_AD_MIN_DURATION_TOO_SHORT  # noqa: E501
+    frame_dig -1
+    extract 16 8 // on error: Index access is out of bounds
+    intc_0 // 0
+    bytec 11 // "noticeboard_terms_timing"
+    app_global_get_ex
+    assert // check self.noticeboard_terms_timing exists
+    extract 0 8 // on error: Index access is out of bounds
+    b>=
+    assert // Ad minimum accepted duration must be larger than the minimum on the platform.
+    // smart_contracts/noticeboard/contract.py:2272
+    // assert terms_time.rounds_duration_max <= self.noticeboard_terms_timing.rounds_duration_max_max, ERROR_AD_MAX_DURATION_TOO_LONG  # noqa: E501
+    frame_dig -1
+    extract 24 8 // on error: Index access is out of bounds
+    intc_0 // 0
+    bytec 11 // "noticeboard_terms_timing"
+    app_global_get_ex
+    assert // check self.noticeboard_terms_timing exists
+    extract 8 8 // on error: Index access is out of bounds
+    b<=
+    assert // Ad maximum accepted duration must be smaller than the maximum on the platform.
+    // smart_contracts/noticeboard/contract.py:2274
+    // return
+    frame_dig -1
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard._assert_terms_price(terms_price: bytes) -> bytes:
+_assert_terms_price:
+    // smart_contracts/noticeboard/contract.py:2276-2280
+    // @subroutine
+    // def _assert_terms_price(
+    //     self,
+    //     terms_price: ValidatorTermsPricing,
+    // ) -> None:
+    proto 1 1
+    // smart_contracts/noticeboard/contract.py:2282-2283
+    // # Confirm minimum commission
+    // assert terms_price.commission.native <= COMMISSION_MAX, ERROR_COMMISSION_MAX
+    frame_dig -1
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    dup
+    pushint 1000000 // 1000000
+    <=
+    assert // Validator ad commission must be smaller or equal to the maximum possible platform commission.
+    // smart_contracts/noticeboard/contract.py:2284
+    // assert terms_price.commission.native >= self.noticeboard_fees.commission_min, ERROR_COMMISSION_MIN
+    intc_0 // 0
+    bytec 8 // "noticeboard_fees"
+    app_global_get_ex
+    assert // check self.noticeboard_fees exists
+    extract 0 8 // on error: Index access is out of bounds
+    swap
+    itob
+    b<=
+    assert // Validator ad commission must be at least the amount defined at the platform.
+    // smart_contracts/noticeboard/contract.py:2286-2287
+    // # Confirm that the payment asset is accepted at the platform
+    // asset_info = self.assets[terms_price.fee_asset_id.native].copy()  # Will fail if asset does not exist on the platform  # noqa: E501
+    frame_dig -1
+    extract 32 8 // on error: Index access is out of bounds
+    btoi
+    itob
+    bytec 16 // 0x61737365745f
+    swap
+    concat
+    box_get
+    assert // check self.assets entry exists
+    // smart_contracts/noticeboard/contract.py:2288
+    // assert asset_info.accepted.native, ERROR_ASSET_NOT_ALLOWED
+    dup
+    intc_0 // 0
+    getbit
+    pushbytes 0x00
+    intc_0 // 0
+    uncover 2
+    setbit
+    intc_0 // 0
+    getbit
+    assert // Validator ad payment asset must be allowed by the platform.
+    // smart_contracts/noticeboard/contract.py:2290-2291
+    // # Confirm minimum pricing for this asset
+    // assert terms_price.fee_round_min >= asset_info.fee_round_min_min, ERROR_AD_FEE_ROUND_MIN_TOO_SMALL
+    frame_dig -1
+    extract 8 8 // on error: Index access is out of bounds
+    dig 1
+    extract 1 8 // on error: Index access is out of bounds
+    b>=
+    assert // Ad fee_round_min must be larger than the minimum on the platform.
+    // smart_contracts/noticeboard/contract.py:2292
+    // assert terms_price.fee_round_var >= asset_info.fee_round_var_min, ERROR_AD_FEE_ROUND_VAR_TOO_SMALL
+    frame_dig -1
+    extract 16 8 // on error: Index access is out of bounds
+    dig 1
+    extract 9 8 // on error: Index access is out of bounds
+    b>=
+    assert // Ad fee_round_var duration must be larger than the minimum on the platform.
+    // smart_contracts/noticeboard/contract.py:2293
+    // assert terms_price.fee_setup >= asset_info.fee_setup_min, ERROR_AD_FEE_SETUP_TOO_SMALL
+    frame_dig -1
+    extract 24 8 // on error: Index access is out of bounds
+    swap
+    extract 17 8 // on error: Index access is out of bounds
+    b>=
+    assert // Ad fee_setup must be larger than the minimum on the platform.
+    // smart_contracts/noticeboard/contract.py:2295
+    // return
+    frame_dig -1
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard._assert_terms_stake(terms_stake: bytes) -> bytes:
+_assert_terms_stake:
+    // smart_contracts/noticeboard/contract.py:2297-2301
+    // @subroutine
+    // def _assert_terms_stake(
+    //     self,
+    //     terms_stake: ValidatorTermsStakeLimits,
+    // ) -> None:
+    proto 1 1
+    // smart_contracts/noticeboard/contract.py:2303
+    // assert terms_stake.stake_max <= self.noticeboard_terms_node.stake_max_max, ERROR_AD_STAKE_MAX_TOO_LARGE
+    frame_dig -1
+    extract 0 8 // on error: Index access is out of bounds
+    intc_0 // 0
+    bytec 12 // "noticeboard_terms_node"
+    app_global_get_ex
+    assert // check self.noticeboard_terms_node exists
+    extract 0 8 // on error: Index access is out of bounds
+    dig 1
+    b>=
+    assert // Ad stake_max must be smaller than the maximum on the platform.
+    // smart_contracts/noticeboard/contract.py:2304
+    // assert terms_stake.stake_max >= self.noticeboard_terms_node.stake_max_min, ERROR_AD_STAKE_MAX_TOO_SMALL
+    intc_0 // 0
+    bytec 12 // "noticeboard_terms_node"
+    app_global_get_ex
+    assert // check self.noticeboard_terms_node exists
+    extract 8 8 // on error: Index access is out of bounds
+    b>=
+    assert // Ad stake_max must be larger than the minimum on the platform.
+    // smart_contracts/noticeboard/contract.py:2306
+    // return
+    frame_dig -1
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.ad_income(val_app: uint64, val_app_idx: uint64, asset_id: uint64) -> bytes:
+ad_income:
+    // smart_contracts/noticeboard/contract.py:1402-1408
+    // @arc4.abimethod()
+    // def ad_income(
+    //     self,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    //     asset_id: UInt64,
+    // ) -> arc4.UInt64:
+    proto 3 1
+    // smart_contracts/noticeboard/contract.py:1429
+    // val_owner = arc4.Address(Txn.sender)
+    txn Sender
+    // smart_contracts/noticeboard/contract.py:1430
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    dup
+    frame_dig -3
+    frame_dig -2
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1432-1438
+    // # Withdraw income
+    // income, app_txn = arc4.abi_call(
+    //     ValidatorAd.ad_income,
+    //     val_owner,
+    //     asset_id,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    // smart_contracts/noticeboard/contract.py:1436
+    // asset_id,
+    frame_dig -1
+    itob
+    frame_dig -3
+    itxn_field ApplicationID
+    // smart_contracts/noticeboard/contract.py:1432-1438
+    // # Withdraw income
+    // income, app_txn = arc4.abi_call(
+    //     ValidatorAd.ad_income,
+    //     val_owner,
+    //     asset_id,
+    //     app_id=val_app.id,
+    // )
+    pushbytes 0x8bb07b5f // method "ad_income(address,uint64)uint64"
+    itxn_field ApplicationArgs
+    swap
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_1 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/noticeboard/contract.py:1440
+    // return income
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.ad_asa_close(val_app: uint64, val_app_idx: uint64, asset_id: uint64) -> void:
+ad_asa_close:
+    // smart_contracts/noticeboard/contract.py:1442-1448
+    // @arc4.abimethod()
+    // def ad_asa_close(
+    //     self,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    //     asset_id: UInt64,
+    // ) -> None:
+    proto 3 0
+    // smart_contracts/noticeboard/contract.py:1464
+    // val_owner = arc4.Address(Txn.sender)
+    txn Sender
+    // smart_contracts/noticeboard/contract.py:1465
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    dup
+    frame_dig -3
+    frame_dig -2
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1467-1473
+    // # Remove ASA
+    // app_txn = arc4.abi_call(  # noqa: F841
+    //     ValidatorAd.ad_asa_close,
+    //     val_owner,
+    //     asset_id,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    // smart_contracts/noticeboard/contract.py:1471
+    // asset_id,
+    frame_dig -1
+    itob
+    frame_dig -3
+    itxn_field ApplicationID
+    // smart_contracts/noticeboard/contract.py:1467-1473
+    // # Remove ASA
+    // app_txn = arc4.abi_call(  # noqa: F841
+    //     ValidatorAd.ad_asa_close,
+    //     val_owner,
+    //     asset_id,
+    //     app_id=val_app.id,
+    // )
+    pushbytes 0x30a38659 // method "ad_asa_close(address,uint64)void"
+    itxn_field ApplicationArgs
+    swap
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    // smart_contracts/noticeboard/contract.py:1475
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.contract_create(del_beneficiary: bytes, rounds_duration: uint64, stake_max: uint64, val_owner: bytes, val_app: uint64, val_app_idx: uint64, del_app_idx: uint64, tc_sha256: bytes, partner_address: bytes, mbr_txn: uint64, txn: uint64) -> bytes:
+contract_create:
+    // smart_contracts/noticeboard/contract.py:1482-1496
+    // @arc4.abimethod()
+    // def contract_create(
+    //     self,
+    //     del_beneficiary: arc4.Address,
+    //     rounds_duration: UInt64,
+    //     stake_max: UInt64,
+    //     val_owner: arc4.Address,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    //     del_app_idx: UInt64,
+    //     tc_sha256: Sha256,
+    //     partner_address: arc4.Address,
+    //     mbr_txn: gtxn.PaymentTransaction,
+    //     txn: gtxn.Transaction,
+    // ) -> arc4.UInt64:
+    proto 11 1
+    intc_0 // 0
+    dupn 4
+    pushbytes ""
+    dupn 8
+    // smart_contracts/noticeboard/contract.py:1537
+    // assert self.state == Bytes(STATE_SET), ERROR_NOT_STATE_SET
+    intc_0 // 0
+    bytec_2 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 9 // 0x02
+    ==
+    assert // Cannot be called from other state than SET.
+    // smart_contracts/noticeboard/contract.py:1539
+    // del_manager = arc4.Address(Txn.sender)
+    txn Sender
+    dup
+    // smart_contracts/noticeboard/contract.py:1540
+    // assert self.users[del_manager].role.bytes == Bytes(ROLE_DEL), ERROR_USER_NOT_DELEGATOR
+    box_get
+    assert // check self.users entry exists
+    extract 0 4 // on error: Index access is out of bounds
+    bytec 5 // 0x64656c5f
+    ==
+    assert // User is not a registered delegator on the platform.
+    // smart_contracts/noticeboard/contract.py:1542
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    frame_dig -8
+    frame_dig -7
+    frame_dig -6
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1544
+    // assert tc_sha256.bytes == self.tc_sha256.bytes, ERROR_TERMS_AND_CONDITIONS_DONT_MATCH
+    intc_0 // 0
+    bytec 10 // "tc_sha256"
+    app_global_get_ex
+    assert // check self.tc_sha256 exists
+    frame_dig -4
+    ==
+    assert // Terms and conditions do not match the ones defined by the platform.
+    // smart_contracts/noticeboard/contract.py:1546
+    // val_tc = op.AppGlobal.get_ex_bytes(val_app, b"tc_sha256")
+    frame_dig -7
+    bytec 10 // 0x74635f736861323536
+    app_global_get_ex
+    pop
+    // smart_contracts/noticeboard/contract.py:1547
+    // assert val_tc[0] == self.tc_sha256.bytes, ERROR_VALIDATOR_AD_DOES_NOT_COMPLY_WITH_TC
+    intc_0 // 0
+    bytec 10 // "tc_sha256"
+    app_global_get_ex
+    assert // check self.tc_sha256 exists
+    ==
+    assert // Validator ad does not comply with platform's terms and conditions.
+    // smart_contracts/noticeboard/contract.py:1549-1550
+    // # Check MBR payment and forward it to the validator ad contract
+    // assert mbr_txn.receiver == Global.current_application_address, ERROR_RECEIVER
+    frame_dig -2
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert // Transaction must be to this contract.
+    // smart_contracts/noticeboard/contract.py:1553
+    // receiver=val_app.address,
+    frame_dig -7
+    app_params_get AppAddress
+    assert // application exists
+    // smart_contracts/noticeboard/contract.py:1554
+    // amount=mbr_txn.amount-self.noticeboard_fees.del_contract_creation.native,
+    frame_dig -2
+    gtxns Amount
+    intc_0 // 0
+    bytec 8 // "noticeboard_fees"
+    app_global_get_ex
+    assert // check self.noticeboard_fees exists
+    extract 32 8 // on error: Index access is out of bounds
+    btoi
+    -
+    // smart_contracts/noticeboard/contract.py:1557-1558
+    // # Check payment and forward it to the validator ad contract
+    // if txn.type == TransactionType.Payment:
+    frame_dig -1
+    gtxns TypeEnum
+    dup
+    intc_1 // pay
+    ==
+    bz contract_create_else_body@2
+    // smart_contracts/noticeboard/contract.py:1559
+    // assert txn.receiver == Global.current_application_address, ERROR_RECEIVER
+    frame_dig -1
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert // Transaction must be to this contract.
+    // smart_contracts/noticeboard/contract.py:1561
+    // type=TransactionType.Payment,
+    intc_1 // pay
+    frame_bury 12
+    // smart_contracts/noticeboard/contract.py:1562
+    // receiver=val_app.address,
+    frame_dig -7
+    app_params_get AppAddress
+    assert // application exists
+    intc_1 // 1
+    frame_bury 8
+    // smart_contracts/noticeboard/contract.py:1563
+    // amount=txn.amount,
+    frame_dig -1
+    gtxns Amount
+    frame_bury 10
+    intc_1 // 1
+    frame_bury 5
+    // smart_contracts/noticeboard/contract.py:1560
+    // txn_forward = itxn.InnerTransaction(
+    intc_0 // 0
+    frame_bury 9
+    intc_0 // 0
+    frame_bury 6
+    intc_0 // 0
+    frame_bury 7
+    frame_bury 4
+    b contract_create_after_if_else@6
+
+contract_create_else_body@2:
+    // smart_contracts/noticeboard/contract.py:1565
+    // elif txn.type == TransactionType.AssetTransfer:
+    frame_dig 17
+    pushint 4 // axfer
+    ==
+    assert // Transaction type must be either Payment or AssetTransfer.
+    // smart_contracts/noticeboard/contract.py:1566
+    // assert txn.asset_receiver == Global.current_application_address, ERROR_RECEIVER
+    frame_dig -1
+    gtxns AssetReceiver
+    global CurrentApplicationAddress
+    ==
+    assert // Transaction must be to this contract.
+    // smart_contracts/noticeboard/contract.py:1568
+    // type=TransactionType.AssetTransfer,
+    pushint 4 // axfer
+    frame_bury 12
+    // smart_contracts/noticeboard/contract.py:1569
+    // xfer_asset=txn.xfer_asset,
+    frame_dig -1
+    gtxns XferAsset
+    frame_bury 13
+    intc_1 // 1
+    frame_bury 9
+    // smart_contracts/noticeboard/contract.py:1570
+    // asset_receiver=val_app.address,
+    frame_dig -7
+    app_params_get AppAddress
+    assert // application exists
+    intc_1 // 1
+    frame_bury 7
+    // smart_contracts/noticeboard/contract.py:1571
+    // asset_amount=txn.asset_amount,
+    frame_dig -1
+    gtxns AssetAmount
+    frame_bury 11
+    intc_1 // 1
+    frame_bury 6
+    // smart_contracts/noticeboard/contract.py:1567
+    // txn_forward = itxn.InnerTransaction(
+    intc_0 // 0
+    frame_bury 8
+    intc_0 // 0
+    frame_bury 5
+    frame_bury 3
+
+contract_create_after_if_else@6:
+    // smart_contracts/noticeboard/contract.py:1576-1577
+    // # Check if there is commission for the partner
+    // if partner_address in self.partners:
+    bytec 17 // 0x706172746e65725f
+    frame_dig -3
+    concat
+    dup
+    frame_bury 2
+    box_len
+    bury 1
+    bz contract_create_else_body@8
+    // smart_contracts/noticeboard/contract.py:1579
+    // partner_commissions = self.partners[partner_address].copy()
+    frame_dig 2
+    box_get
+    swap
+    frame_bury 1
+    assert // check self.partners entry exists
+    frame_dig -3
+    frame_bury 0
+    b contract_create_after_if_else@9
+
+contract_create_else_body@8:
+    // smart_contracts/noticeboard/contract.py:1581
+    // partner = arc4.Address(Global.zero_address)
+    global ZeroAddress
+    frame_bury 0
+    // smart_contracts/noticeboard/contract.py:1582-1585
+    // partner_commissions = PartnerCommissions(
+    //     commission_setup = arc4.UInt64(0),
+    //     commission_operational = arc4.UInt64(0),
+    // )
+    pushbytes 0x00000000000000000000000000000000
+    frame_bury 1
+
+contract_create_after_if_else@9:
+    // smart_contracts/noticeboard/contract.py:1587-1599
+    // # Create delegator contract
+    // del_app_id, app_txn = arc4.abi_call(
+    //     ValidatorAd.contract_create,
+    //     del_manager,
+    //     del_beneficiary,
+    //     rounds_duration,
+    //     stake_max,
+    //     partner,
+    //     partner_commissions,
+    //     mbr_txn_forward,
+    //     txn_forward,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    frame_dig 16
+    itxn_field Amount
+    frame_dig 15
+    itxn_field Receiver
+    // smart_contracts/noticeboard/contract.py:1552
+    // type=TransactionType.Payment,
+    intc_1 // pay
+    itxn_field TypeEnum
+    // smart_contracts/noticeboard/contract.py:1551
+    // mbr_txn_forward = itxn.InnerTransaction(
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/noticeboard/contract.py:1597
+    // txn_forward,
+    itxn_next
+    frame_dig 7
+    intc_1 // 1
+    >=
+    bz contract_create_next_field@12
+    frame_dig 3
+    itxn_field AssetReceiver
+
+contract_create_next_field@12:
+    frame_dig 6
+    intc_1 // 1
+    >=
+    // smart_contracts/noticeboard/contract.py:1597
+    // txn_forward,
+    bz contract_create_next_field@14
+    frame_dig 11
+    itxn_field AssetAmount
+
+contract_create_next_field@14:
+    frame_dig 9
+    intc_1 // 1
+    >=
+    // smart_contracts/noticeboard/contract.py:1597
+    // txn_forward,
+    bz contract_create_next_field@16
+    frame_dig 13
+    itxn_field XferAsset
+
+contract_create_next_field@16:
+    frame_dig 5
+    intc_1 // 1
+    >=
+    // smart_contracts/noticeboard/contract.py:1597
+    // txn_forward,
+    bz contract_create_next_field@18
+    frame_dig 10
+    itxn_field Amount
+
+contract_create_next_field@18:
+    frame_dig 8
+    intc_1 // 1
+    >=
+    // smart_contracts/noticeboard/contract.py:1597
+    // txn_forward,
+    bz contract_create_next_field@20
+    frame_dig 4
+    itxn_field Receiver
+
+contract_create_next_field@20:
+    frame_dig 12
+    itxn_field TypeEnum
+    // smart_contracts/noticeboard/contract.py:1560
+    // txn_forward = itxn.InnerTransaction(
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/noticeboard/contract.py:1587-1599
+    // # Create delegator contract
+    // del_app_id, app_txn = arc4.abi_call(
+    //     ValidatorAd.contract_create,
+    //     del_manager,
+    //     del_beneficiary,
+    //     rounds_duration,
+    //     stake_max,
+    //     partner,
+    //     partner_commissions,
+    //     mbr_txn_forward,
+    //     txn_forward,
+    //     app_id=val_app.id,
+    // )
+    itxn_next
+    // smart_contracts/noticeboard/contract.py:1592
+    // rounds_duration,
+    frame_dig -10
+    itob
+    // smart_contracts/noticeboard/contract.py:1593
+    // stake_max,
+    frame_dig -9
+    itob
+    frame_dig -7
+    itxn_field ApplicationID
+    // smart_contracts/noticeboard/contract.py:1587-1599
+    // # Create delegator contract
+    // del_app_id, app_txn = arc4.abi_call(
+    //     ValidatorAd.contract_create,
+    //     del_manager,
+    //     del_beneficiary,
+    //     rounds_duration,
+    //     stake_max,
+    //     partner,
+    //     partner_commissions,
+    //     mbr_txn_forward,
+    //     txn_forward,
+    //     app_id=val_app.id,
+    // )
+    pushbytes 0xc47f3b93 // method "contract_create(address,address,uint64,uint64,address,(uint64,uint64),pay,txn)uint64"
+    itxn_field ApplicationArgs
+    frame_dig 14
+    dup
+    cover 3
+    itxn_field ApplicationArgs
+    frame_dig -11
+    itxn_field ApplicationArgs
+    swap
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    frame_dig 0
+    itxn_field ApplicationArgs
+    frame_dig 1
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    gitxn 2 LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_1 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/noticeboard/contract.py:1601
+    // self._store_user_app(del_manager, del_app_id, del_app_idx)
+    swap
+    dig 1
+    frame_dig -5
+    callsub _store_user_app
+    // smart_contracts/noticeboard/contract.py:1603
+    // return del_app_id
+    frame_bury 0
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.keys_confirm(del_app: uint64, del_app_idx: uint64, val_owner: bytes, val_app: uint64, val_app_idx: uint64) -> void:
+keys_confirm:
+    // smart_contracts/noticeboard/contract.py:1605-1613
+    // @arc4.abimethod()
+    // def keys_confirm(
+    //     self,
+    //     del_app: Application,
+    //     del_app_idx : UInt64,
+    //     val_owner: arc4.Address,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    // ) -> None:
+    proto 5 0
+    // smart_contracts/noticeboard/contract.py:1633
+    // del_manager = arc4.Address(Txn.sender)
+    txn Sender
+    // smart_contracts/noticeboard/contract.py:1634
+    // self._assert_user_and_app(del_manager, del_app, del_app_idx, Bytes(ROLE_DEL))
+    dup
+    frame_dig -5
+    frame_dig -4
+    bytec 5 // 0x64656c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1636
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    frame_dig -3
+    frame_dig -2
+    frame_dig -1
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1638-1645
+    // # Confirms the keys and pays the operational fee to the validator ad
+    // app_txn = arc4.abi_call(  # noqa: F841
+    // # arc4.abi_call(
+    //     ValidatorAd.keys_confirm,
+    //     del_manager,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    frame_dig -2
+    itxn_field ApplicationID
+    frame_dig -5
+    itxn_field Applications
+    pushbytes 0x800fd2a1 // method "keys_confirm(address,application)void"
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:1643
+    // del_app,
+    bytec_3 // 0x01
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:1638-1645
+    // # Confirms the keys and pays the operational fee to the validator ad
+    // app_txn = arc4.abi_call(  # noqa: F841
+    // # arc4.abi_call(
+    //     ValidatorAd.keys_confirm,
+    //     del_manager,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    // smart_contracts/noticeboard/contract.py:1647
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.keys_not_confirmed(del_manager: bytes, del_app: uint64, del_app_idx: uint64, val_owner: bytes, val_app: uint64, val_app_idx: uint64) -> void:
+keys_not_confirmed:
+    // smart_contracts/noticeboard/contract.py:1649-1658
+    // @arc4.abimethod()
+    // def keys_not_confirmed(
+    //     self,
+    //     del_manager: arc4.Address,
+    //     del_app: Application,
+    //     del_app_idx : UInt64,
+    //     val_owner: arc4.Address,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    // ) -> None:
+    proto 6 0
+    // smart_contracts/noticeboard/contract.py:1682
+    // self._assert_user_and_app(del_manager, del_app, del_app_idx, Bytes(ROLE_DEL))
+    frame_dig -6
+    frame_dig -5
+    frame_dig -4
+    bytec 5 // 0x64656c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1684
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    frame_dig -3
+    frame_dig -2
+    frame_dig -1
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1686-1691
+    // # Reports the keys have not been confirmed
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.keys_not_confirmed,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    frame_dig -2
+    itxn_field ApplicationID
+    frame_dig -5
+    itxn_field Applications
+    pushbytes 0xe03402ed // method "keys_not_confirmed(application)(address,byte[100])"
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:1689
+    // del_app,
+    bytec_3 // 0x01
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:1686-1691
+    // # Reports the keys have not been confirmed
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.keys_not_confirmed,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_1 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/noticeboard/contract.py:1693
+    // try_send_note(res.del_manager.native, res.msg.bytes)
+    dup
+    extract 0 32 // on error: Index access is out of bounds
+    swap
+    extract 32 100 // on error: Index access is out of bounds
+    callsub try_send_note
+    // smart_contracts/noticeboard/contract.py:1695
+    // return
+    retsub
+
+
+// smart_contracts.helpers.common.try_send_note(account: bytes, msg: bytes) -> void:
+try_send_note:
+    // smart_contracts/helpers/common.py:708-712
+    // @subroutine
+    // def try_send_note(
+    //     account: Account,
+    //     msg: Bytes,
+    // ) -> None:
+    proto 2 0
+    // smart_contracts/helpers/common.py:725
+    // if op.balance(account) >= Global.min_balance:
+    frame_dig -2
+    balance
+    global MinBalance
+    >=
+    bz try_send_note_after_if_else@3
+    // smart_contracts/helpers/common.py:726-730
+    // itxn.Payment(
+    //     receiver=account,
+    //     amount=0,
+    //     note=msg,
+    // ).submit()
+    itxn_begin
+    frame_dig -1
+    itxn_field Note
+    // smart_contracts/helpers/common.py:728
+    // amount=0,
+    intc_0 // 0
+    itxn_field Amount
+    frame_dig -2
+    itxn_field Receiver
+    // smart_contracts/helpers/common.py:726
+    // itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/helpers/common.py:726-730
+    // itxn.Payment(
+    //     receiver=account,
+    //     amount=0,
+    //     note=msg,
+    // ).submit()
+    itxn_submit
+
+try_send_note_after_if_else@3:
+    // smart_contracts/helpers/common.py:732
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.keys_not_submitted(del_manager: bytes, del_app: uint64, del_app_idx: uint64, val_owner: bytes, val_app: uint64, val_app_idx: uint64) -> void:
+keys_not_submitted:
+    // smart_contracts/noticeboard/contract.py:1697-1706
+    // @arc4.abimethod()
+    // def keys_not_submitted(
+    //     self,
+    //     del_manager: arc4.Address,
+    //     del_app: Application,
+    //     del_app_idx : UInt64,
+    //     val_owner: arc4.Address,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    // ) -> None:
+    proto 6 0
+    // smart_contracts/noticeboard/contract.py:1729
+    // self._assert_user_and_app(del_manager, del_app, del_app_idx, Bytes(ROLE_DEL))
+    frame_dig -6
+    frame_dig -5
+    frame_dig -4
+    bytec 5 // 0x64656c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1731
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    frame_dig -3
+    frame_dig -2
+    frame_dig -1
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1734-1739
+    // # Reports the keys have not been submitted
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.keys_not_submitted,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    frame_dig -2
+    itxn_field ApplicationID
+    frame_dig -5
+    itxn_field Applications
+    pushbytes 0x4dd09b26 // method "keys_not_submitted(application)(address,byte[100])"
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:1737
+    // del_app,
+    bytec_3 // 0x01
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:1734-1739
+    // # Reports the keys have not been submitted
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.keys_not_submitted,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_1 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/noticeboard/contract.py:1741
+    // try_send_note(res.del_manager.native, res.msg.bytes)
+    dup
+    extract 0 32 // on error: Index access is out of bounds
+    swap
+    extract 32 100 // on error: Index access is out of bounds
+    callsub try_send_note
+    // smart_contracts/noticeboard/contract.py:1743
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.keys_submit(del_manager: bytes, del_app: uint64, del_app_idx: uint64, val_owner: bytes, val_app: uint64, val_app_idx: uint64, key_reg_txn_info: bytes) -> void:
+keys_submit:
+    // smart_contracts/noticeboard/contract.py:1745-1755
+    // @arc4.abimethod()
+    // def keys_submit(
+    //     self,
+    //     del_manager: arc4.Address,
+    //     del_app: Application,
+    //     del_app_idx : UInt64,
+    //     val_owner: arc4.Address,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    //     key_reg_txn_info : KeyRegTxnInfo,
+    // ) -> None:
+    proto 7 0
+    // smart_contracts/noticeboard/contract.py:1780
+    // self._assert_user_and_app(del_manager, del_app, del_app_idx, Bytes(ROLE_DEL))
+    frame_dig -7
+    frame_dig -6
+    frame_dig -5
+    bytec 5 // 0x64656c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1782
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    frame_dig -4
+    frame_dig -3
+    frame_dig -2
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1784-1791
+    // # Submits the keys
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.keys_submit,
+    //     arc4.Address(Txn.sender),
+    //     del_app,
+    //     key_reg_txn_info.copy(),
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    // smart_contracts/noticeboard/contract.py:1787
+    // arc4.Address(Txn.sender),
+    txn Sender
+    frame_dig -3
+    itxn_field ApplicationID
+    frame_dig -6
+    itxn_field Applications
+    // smart_contracts/noticeboard/contract.py:1784-1791
+    // # Submits the keys
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.keys_submit,
+    //     arc4.Address(Txn.sender),
+    //     del_app,
+    //     key_reg_txn_info.copy(),
+    //     app_id=val_app.id,
+    // )
+    pushbytes 0x39908de9 // method "keys_submit(address,application,(uint64,uint64,uint64,byte[32],byte[32],byte[64],address))(address,byte[100])"
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:1788
+    // del_app,
+    bytec_3 // 0x01
+    itxn_field ApplicationArgs
+    frame_dig -1
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:1784-1791
+    // # Submits the keys
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.keys_submit,
+    //     arc4.Address(Txn.sender),
+    //     del_app,
+    //     key_reg_txn_info.copy(),
+    //     app_id=val_app.id,
+    // )
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_1 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/noticeboard/contract.py:1793
+    // try_send_note(res.del_manager.native, res.msg.bytes)
+    dup
+    extract 0 32 // on error: Index access is out of bounds
+    swap
+    extract 32 100 // on error: Index access is out of bounds
+    callsub try_send_note
+    // smart_contracts/noticeboard/contract.py:1795
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.breach_limits(del_manager: bytes, del_app: uint64, del_app_idx: uint64, val_owner: bytes, val_app: uint64, val_app_idx: uint64) -> void:
+breach_limits:
+    // smart_contracts/noticeboard/contract.py:1797-1806
+    // @arc4.abimethod()
+    // def breach_limits(
+    //     self,
+    //     del_manager: arc4.Address,
+    //     del_app: Application,
+    //     del_app_idx : UInt64,
+    //     val_owner: arc4.Address,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    // ) -> None:
+    proto 6 0
+    // smart_contracts/noticeboard/contract.py:1828
+    // self._assert_user_and_app(del_manager, del_app, del_app_idx, Bytes(ROLE_DEL))
+    frame_dig -6
+    frame_dig -5
+    frame_dig -4
+    bytec 5 // 0x64656c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1830
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    frame_dig -3
+    frame_dig -2
+    frame_dig -1
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1833-1838
+    // # Reports a breach in limits
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.breach_limits,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    frame_dig -2
+    itxn_field ApplicationID
+    frame_dig -5
+    itxn_field Applications
+    pushbytes 0x49dfee1a // method "breach_limits(application)(bool,(uint64,uint64,uint64),address,byte[100])"
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:1836
+    // del_app,
+    bytec_3 // 0x01
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:1833-1838
+    // # Reports a breach in limits
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.breach_limits,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_1 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/noticeboard/contract.py:1840
+    // try_send_note(res.del_manager.native, res.msg.bytes)
+    dup
+    extract 25 32 // on error: Index access is out of bounds
+    swap
+    extract 57 100 // on error: Index access is out of bounds
+    callsub try_send_note
+    // smart_contracts/noticeboard/contract.py:1842
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.breach_pay(del_manager: bytes, del_app: uint64, del_app_idx: uint64, val_owner: bytes, val_app: uint64, val_app_idx: uint64) -> void:
+breach_pay:
+    // smart_contracts/noticeboard/contract.py:1844-1853
+    // @arc4.abimethod()
+    // def breach_pay(
+    //     self,
+    //     del_manager: arc4.Address,
+    //     del_app: Application,
+    //     del_app_idx : UInt64,
+    //     val_owner: arc4.Address,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    // ) -> None:
+    proto 6 0
+    // smart_contracts/noticeboard/contract.py:1876
+    // self._assert_user_and_app(del_manager, del_app, del_app_idx, Bytes(ROLE_DEL))
+    frame_dig -6
+    frame_dig -5
+    frame_dig -4
+    bytec 5 // 0x64656c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1878
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    frame_dig -3
+    frame_dig -2
+    frame_dig -1
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1880-1885
+    // # Reports a breach in payment method
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.breach_pay,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    frame_dig -2
+    itxn_field ApplicationID
+    frame_dig -5
+    itxn_field Applications
+    pushbytes 0xf9b68e32 // method "breach_pay(application)(address,byte[100])"
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:1883
+    // del_app,
+    bytec_3 // 0x01
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:1880-1885
+    // # Reports a breach in payment method
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.breach_pay,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_1 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/noticeboard/contract.py:1887
+    // try_send_note(res.del_manager.native, res.msg.bytes)
+    dup
+    extract 0 32 // on error: Index access is out of bounds
+    swap
+    extract 32 100 // on error: Index access is out of bounds
+    callsub try_send_note
+    // smart_contracts/noticeboard/contract.py:1889
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.breach_suspended(del_manager: bytes, del_app: uint64, del_app_idx: uint64, val_owner: bytes, val_app: uint64, val_app_idx: uint64) -> void:
+breach_suspended:
+    // smart_contracts/noticeboard/contract.py:1891-1900
+    // @arc4.abimethod()
+    // def breach_suspended(
+    //     self,
+    //     del_manager: arc4.Address,
+    //     del_app: Application,
+    //     del_app_idx : UInt64,
+    //     val_owner: arc4.Address,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    // ) -> None:
+    proto 6 0
+    // smart_contracts/noticeboard/contract.py:1922
+    // self._assert_user_and_app(del_manager, del_app, del_app_idx, Bytes(ROLE_DEL))
+    frame_dig -6
+    frame_dig -5
+    frame_dig -4
+    bytec 5 // 0x64656c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1924
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    frame_dig -3
+    frame_dig -2
+    frame_dig -1
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1926-1931
+    // # Reports a breach in suspended
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.breach_suspended,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    frame_dig -2
+    itxn_field ApplicationID
+    frame_dig -5
+    itxn_field Applications
+    pushbytes 0xf811fcb7 // method "breach_suspended(application)((uint64,uint64,uint64),address,byte[100])"
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:1929
+    // del_app,
+    bytec_3 // 0x01
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:1926-1931
+    // # Reports a breach in suspended
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.breach_suspended,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_1 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/noticeboard/contract.py:1933
+    // try_send_note(res.del_manager.native, res.msg.bytes)
+    dup
+    extract 24 32 // on error: Index access is out of bounds
+    swap
+    extract 56 100 // on error: Index access is out of bounds
+    callsub try_send_note
+    // smart_contracts/noticeboard/contract.py:1935
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.contract_claim(del_manager: bytes, del_app: uint64, del_app_idx: uint64, val_owner: bytes, val_app: uint64, val_app_idx: uint64) -> bytes:
+contract_claim:
+    // smart_contracts/noticeboard/contract.py:1937-1946
+    // @arc4.abimethod()
+    // def contract_claim(
+    //     self,
+    //     del_manager: arc4.Address,
+    //     del_app: Application,
+    //     del_app_idx : UInt64,
+    //     val_owner: arc4.Address,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    // ) -> EarningsDistribution:
+    proto 6 1
+    // smart_contracts/noticeboard/contract.py:1969
+    // self._assert_user_and_app(del_manager, del_app, del_app_idx, Bytes(ROLE_DEL))
+    frame_dig -6
+    frame_dig -5
+    frame_dig -4
+    bytec 5 // 0x64656c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1971
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    frame_dig -3
+    frame_dig -2
+    frame_dig -1
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:1973-1978
+    // # Claims operational fee
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.contract_claim,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    frame_dig -2
+    itxn_field ApplicationID
+    frame_dig -5
+    itxn_field Applications
+    pushbytes 0xace03631 // method "contract_claim(application)(uint64,uint64,uint64)"
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:1976
+    // del_app,
+    bytec_3 // 0x01
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:1973-1978
+    // # Claims operational fee
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.contract_claim,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_1 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/noticeboard/contract.py:1980
+    // return res.copy()
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.contract_expired(del_manager: bytes, del_app: uint64, del_app_idx: uint64, val_owner: bytes, val_app: uint64, val_app_idx: uint64) -> void:
+contract_expired:
+    // smart_contracts/noticeboard/contract.py:1982-1991
+    // @arc4.abimethod()
+    // def contract_expired(
+    //     self,
+    //     del_manager: arc4.Address,
+    //     del_app: Application,
+    //     del_app_idx : UInt64,
+    //     val_owner: arc4.Address,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    // ) -> None:
+    proto 6 0
+    // smart_contracts/noticeboard/contract.py:2013
+    // self._assert_user_and_app(del_manager, del_app, del_app_idx, Bytes(ROLE_DEL))
+    frame_dig -6
+    frame_dig -5
+    frame_dig -4
+    bytec 5 // 0x64656c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:2015
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    frame_dig -3
+    frame_dig -2
+    frame_dig -1
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:2017-2022
+    // # Reports contract has expired
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.contract_expired,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    frame_dig -2
+    itxn_field ApplicationID
+    frame_dig -5
+    itxn_field Applications
+    pushbytes 0x458ccb0c // method "contract_expired(application)(address,byte[100])"
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:2020
+    // del_app,
+    bytec_3 // 0x01
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:2017-2022
+    // # Reports contract has expired
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.contract_expired,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_1 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/noticeboard/contract.py:2024
+    // try_send_note(res.del_manager.native, res.msg.bytes)
+    dup
+    extract 0 32 // on error: Index access is out of bounds
+    swap
+    extract 32 100 // on error: Index access is out of bounds
+    callsub try_send_note
+    // smart_contracts/noticeboard/contract.py:2026
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.contract_withdraw(del_app: uint64, del_app_idx: uint64, val_owner: bytes, val_app: uint64, val_app_idx: uint64) -> void:
+contract_withdraw:
+    // smart_contracts/noticeboard/contract.py:2028-2036
+    // @arc4.abimethod()
+    // def contract_withdraw(
+    //     self,
+    //     del_app: Application,
+    //     del_app_idx : UInt64,
+    //     val_owner: arc4.Address,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    // ) -> None:
+    proto 5 0
+    // smart_contracts/noticeboard/contract.py:2056
+    // del_manager = arc4.Address(Txn.sender)
+    txn Sender
+    // smart_contracts/noticeboard/contract.py:2057
+    // self._assert_user_and_app(del_manager, del_app, del_app_idx, Bytes(ROLE_DEL))
+    dup
+    frame_dig -5
+    frame_dig -4
+    bytec 5 // 0x64656c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:2059
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    frame_dig -3
+    frame_dig -2
+    frame_dig -1
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:2061-2067
+    // # Gracefully withdraw from contract prematurely
+    // app_txn = arc4.abi_call(  # noqa: F841
+    //     ValidatorAd.contract_withdraw,
+    //     del_manager,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    frame_dig -2
+    itxn_field ApplicationID
+    frame_dig -5
+    itxn_field Applications
+    pushbytes 0xc68d2db5 // method "contract_withdraw(address,application)void"
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:2065
+    // del_app,
+    bytec_3 // 0x01
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:2061-2067
+    // # Gracefully withdraw from contract prematurely
+    // app_txn = arc4.abi_call(  # noqa: F841
+    //     ValidatorAd.contract_withdraw,
+    //     del_manager,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    // smart_contracts/noticeboard/contract.py:2069
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.contract_delete(del_app: uint64, del_app_idx: uint64, val_owner: bytes, val_app: uint64, val_app_idx: uint64) -> bytes:
+contract_delete:
+    // smart_contracts/noticeboard/contract.py:2071-2079
+    // @arc4.abimethod()
+    // def contract_delete(
+    //     self,
+    //     del_app: Application,
+    //     del_app_idx : UInt64,
+    //     val_owner: arc4.Address,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    // ) -> ContractDeleteReturn:
+    proto 5 1
+    // smart_contracts/noticeboard/contract.py:2106
+    // del_manager = arc4.Address(Txn.sender)
+    txn Sender
+    // smart_contracts/noticeboard/contract.py:2107
+    // self._assert_user_and_app(del_manager, del_app, del_app_idx, Bytes(ROLE_DEL))
+    dup
+    frame_dig -5
+    frame_dig -4
+    bytec 5 // 0x64656c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:2109
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    frame_dig -3
+    frame_dig -2
+    frame_dig -1
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:2111-2117
+    // # Deletes the delegator contract
+    // remaining_balance, app_txn = arc4.abi_call(
+    //     ValidatorAd.contract_delete,
+    //     del_manager,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    frame_dig -2
+    itxn_field ApplicationID
+    frame_dig -5
+    itxn_field Applications
+    pushbytes 0x0bf7d855 // method "contract_delete(address,application)(uint64,uint64)"
+    itxn_field ApplicationArgs
+    dup
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:2115
+    // del_app,
+    bytec_3 // 0x01
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:2111-2117
+    // # Deletes the delegator contract
+    // remaining_balance, app_txn = arc4.abi_call(
+    //     ValidatorAd.contract_delete,
+    //     del_manager,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_1 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/noticeboard/contract.py:2119
+    // self._remove_user_app(del_manager, arc4.UInt64(del_app.id), del_app_idx)
+    frame_dig -5
+    itob
+    uncover 2
+    swap
+    frame_dig -4
+    callsub _remove_user_app
+    // smart_contracts/noticeboard/contract.py:2121
+    // return remaining_balance
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.contract_report_expiry_soon(del_manager: bytes, del_app: uint64, del_app_idx: uint64, val_owner: bytes, val_app: uint64, val_app_idx: uint64) -> void:
+contract_report_expiry_soon:
+    // smart_contracts/noticeboard/contract.py:2123-2132
+    // @arc4.abimethod()
+    // def contract_report_expiry_soon(
+    //     self,
+    //     del_manager: arc4.Address,
+    //     del_app: Application,
+    //     del_app_idx : UInt64,
+    //     val_owner: arc4.Address,
+    //     val_app: Application,
+    //     val_app_idx: UInt64,
+    // ) -> None:
+    proto 6 0
+    // smart_contracts/noticeboard/contract.py:2154
+    // self._assert_user_and_app(del_manager, del_app, del_app_idx, Bytes(ROLE_DEL))
+    frame_dig -6
+    frame_dig -5
+    frame_dig -4
+    bytec 5 // 0x64656c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:2156
+    // self._assert_user_and_app(val_owner, val_app, val_app_idx, Bytes(ROLE_VAL))
+    frame_dig -3
+    frame_dig -2
+    frame_dig -1
+    bytec_0 // 0x76616c5f
+    callsub _assert_user_and_app
+    // smart_contracts/noticeboard/contract.py:2158-2165
+    // # Reports contract will soon expire
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.contract_report_expiry_soon,
+    //     self.noticeboard_terms_timing.before_expiry.native,
+    //     self.noticeboard_terms_timing.report_period.native,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    itxn_begin
+    // smart_contracts/noticeboard/contract.py:2161
+    // self.noticeboard_terms_timing.before_expiry.native,
+    intc_0 // 0
+    bytec 11 // "noticeboard_terms_timing"
+    app_global_get_ex
+    assert // check self.noticeboard_terms_timing exists
+    extract 16 8 // on error: Index access is out of bounds
+    btoi
+    itob
+    // smart_contracts/noticeboard/contract.py:2162
+    // self.noticeboard_terms_timing.report_period.native,
+    intc_0 // 0
+    bytec 11 // "noticeboard_terms_timing"
+    app_global_get_ex
+    assert // check self.noticeboard_terms_timing exists
+    extract 24 8 // on error: Index access is out of bounds
+    btoi
+    itob
+    frame_dig -2
+    itxn_field ApplicationID
+    frame_dig -5
+    itxn_field Applications
+    // smart_contracts/noticeboard/contract.py:2158-2165
+    // # Reports contract will soon expire
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.contract_report_expiry_soon,
+    //     self.noticeboard_terms_timing.before_expiry.native,
+    //     self.noticeboard_terms_timing.report_period.native,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    pushbytes 0x169361b9 // method "contract_report_expiry_soon(uint64,uint64,application)(address,byte[100])"
+    itxn_field ApplicationArgs
+    swap
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:2163
+    // del_app,
+    bytec_3 // 0x01
+    itxn_field ApplicationArgs
+    // smart_contracts/noticeboard/contract.py:2158-2165
+    // # Reports contract will soon expire
+    // res, app_txn = arc4.abi_call(
+    //     ValidatorAd.contract_report_expiry_soon,
+    //     self.noticeboard_terms_timing.before_expiry.native,
+    //     self.noticeboard_terms_timing.report_period.native,
+    //     del_app,
+    //     app_id=val_app.id,
+    // )
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_1 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/noticeboard/contract.py:2167
+    // try_send_note(res.del_manager.native, res.msg.bytes)
+    dup
+    extract 0 32 // on error: Index access is out of bounds
+    swap
+    extract 32 100 // on error: Index access is out of bounds
+    callsub try_send_note
+    // smart_contracts/noticeboard/contract.py:2169
+    // return
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.get_noticeboard_asset(asset_id: uint64) -> bytes:
+get_noticeboard_asset:
+    // smart_contracts/noticeboard/contract.py:2171-2178
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // # ----- ----- ----- Read-only functions ----- ----- ----
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // @arc4.abimethod(readonly=True)
+    // def get_noticeboard_asset(
+    //     self,
+    //     asset_id : UInt64,
+    // ) -> NoticeboardAssetInfo:
+    proto 1 1
+    // smart_contracts/noticeboard/contract.py:2187
+    // return self.assets[asset_id]
+    frame_dig -1
+    itob
+    bytec 16 // 0x61737365745f
+    swap
+    concat
+    box_get
+    assert // check self.assets entry exists
+    retsub
+
+
+// smart_contracts.noticeboard.contract.Noticeboard.get_noticeboard_user(user: bytes) -> bytes:
+get_noticeboard_user:
+    // smart_contracts/noticeboard/contract.py:2189-2193
+    // @arc4.abimethod(readonly=True)
+    // def get_noticeboard_user(
+    //     self,
+    //     user : arc4.Address,
+    // ) -> UserInfo:
+    proto 1 1
+    // smart_contracts/noticeboard/contract.py:2202
+    // return self.users[user]
+    frame_dig -1
+    box_get
+    assert // check self.users entry exists
+    retsub

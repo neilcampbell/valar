@@ -1,0 +1,798 @@
+# Levels lookup https://docs.python.org/3/library/logging.html#logging-levels
+# 10 - DEBUG
+# 20 - INFO
+# 30 - WARNING
+# 40 - ERROR
+# 50 - CRITICAL
+
+# maintaining-valads:
+#   level: 
+#   description: >
+#     .
+#   message: >
+#     .
+
+
+# specific-log-message:
+#   level: 10
+#   module: Daemon
+#   description: >
+#     This message is used to log detailed information
+#     about a specific event. Ensure that parameters are
+#     passed correctly to format the message dynamically.
+#   message: >
+#     text {par1} text {par2} text.
+
+# another-specific-error-message:
+#   level: 40
+#   module: Daemon
+#   description: |
+#     Indicates an error scenario requiring attention.
+#     Namely from the development team.
+#   message: |
+#     text {par1} text.
+
+
+########################################################################################################################
+### Generic ############################################################################################################
+########################################################################################################################
+
+current_round:
+  level: 10
+  module: '*'
+  description: >
+    Displays the current round on the connected network.
+  action: >
+    NA.
+  message: >
+    Current round {current_round}.
+
+
+########################################################################################################################
+### Daemon #############################################################################################################
+########################################################################################################################
+
+maintaining_valads:
+  level: 10
+  module: Daemon
+  description: >
+    Signals the daemon is handling the validator ads, indicated in the daemon config file.
+  action: >
+    NA.
+  message: >
+    Maintaining {num_of_valads} valads.
+
+state_of_valad_with_id:
+  level: 10
+  module: Daemon
+  description: >
+    Reports the state of a validator ad next to its app ID. The state is reported in bytes format.
+  action: >
+    NA.
+  message: >
+    Valad with ID {app_id} is in state {state}.
+
+set_valad_ready_attribute_error:
+  level: 40
+  module: Daemon
+  description: >
+    Received AttributeError while trying to change valad state to `READY`. 
+    This is likely the result of a problem with algod, such as a wrong URL or an interrupted internet connection.
+  action: >
+    Check algod configuration and status; verify the network is accessible.
+  message: >
+    Cannot change valad state for valad with ID {app_id}.
+
+maintaining_delcos:
+  level: 10
+  module: Daemon
+  description: >
+    Signals the daemon is handling the delegator contracts connected to the validator ads.
+  action: >
+    NA.
+  message: >
+    Maintaining {num_of_delcos} delcos.
+
+unknown_delco_error:
+  level: 40
+  module: Daemon
+  description: >
+    Received an unexpected error during the handling of a delegator contract.
+  action: >
+    Contact the Valar team, sending the app ID, the log files, and information about your system.
+  message: >
+    Error while handling delco with ID {app_id}, {e}.
+
+removed_ended_or_deleted_delco:
+  level: 10
+  module: Daemon
+  description: >
+    Inidcates the daemon is checking the status of the delegator contracts connected to the validator ads.
+  action: >
+    NA.Daemon
+  message: >
+    Removed ended or deleted delco with ID {app_id}.
+
+state_of_delco_with_id:
+  level: 10
+  module: Daemon
+  description: >
+    Reports the state of a delegator contract next to its app ID. The state is reported in bytes format.
+  action: >
+    NA.
+  message: >
+    Delco with ID {app_id} is in state {state}.
+
+unknown_delco_state:
+  level: 50
+  module: Daemon
+  description: >
+    Indicates the delegator contract is in a state that is not recognized by the daemon. 
+    The state is reported in bytes format.
+  action: >
+    Contact the Valar team, sending the app ID, the log files, and information about your system.
+  message: >
+    Unknown delco state {state}.
+
+delco_in_ready_handler:
+  level: 10
+  module: Daemon
+  description: >
+    Indicates the delegator contract is being handled by the ready state handler.
+  action: >
+    NA.
+  message: >
+    In ready state handler for delco with ID {app_id}.
+
+urlerror_checking_partkey_generated:
+  level: 30
+  module: Daemon
+  description: >
+    A URL error occurred while checking if participation keys have already been generated for the delegator contract.
+    This is likely the result of a problem with algod, such as a wrong URL or an interrupted internet connection.
+  action: >
+    Check algod configuration and status; verify the network is accessible.
+  message: >
+    Cannot check if partkey generated for delco with ID {app_id}.
+
+partkeys_generated_for_delco:
+  level: 10
+  module: Daemon
+  description: >
+    The participation keys have been generated for the delegator contract.
+  action: >
+    NA.
+  message: >
+    Partkeys generated for delco with ID {app_id}.
+
+delco_cannot_pay:
+  level: 20
+  module: Daemon
+  description: >
+    The delegator contract can no longer transfer the payment asset to the validator ad.
+    This should lead to automatic termination of the contract.
+  action: >
+    NA.
+  message: >
+    Cannot pay for delco with ID {app_id}.
+
+attributeerror_cannot_pay:
+  level: 40
+  module: Daemon
+  description: >
+    The status of the payment asset on the delegator contract cannot be checked due to an attribute error.
+    This is likely the result of a problem with algod, such as a wrong URL or an interrupted internet connection.
+  action: >
+    Check algod configuration and status; verify the network is accessible.
+  message: >
+    Cannot check pay for delco with ID {app_id}.
+
+logicerror_cannot_pay:
+  level: 10
+  module: Daemon
+  description: >
+    The status of the payment asset on the delegator contract has been checked and is OK.
+    I.e. payments can be carried out. This error message is typical for localnet deployments.
+  action: >
+    NA.
+  message: >
+    Checked if can pay for delco with ID {app_id}.
+
+httperror_cannot_pay:
+  level: 10
+  module: Daemon
+  description: >
+    The status of the payment asset on the delegator contract has been checked and is OK.
+    I.e. payments can be carried out. This error message is typical for public deployments.
+  action: >
+    NA.
+  message: >
+    Checked if can pay for delco with ID {app_id}.
+
+partkeys_not_submitted:
+  level: 20
+  module: Daemon
+  description: >
+    The time for submitting participation keys according to the validator ad's terms is up.
+    This should lead to automatic termination of the contract.
+  action: >
+    NA.
+  message: >
+    Cannot submit partkeys for delco with ID {app_id}.
+
+attributeerror_partkeys_not_submitted:
+  level: 40
+  module: Daemon
+  description: >
+    The remaining time for submitting participation keys for a delegator contract cannot be checked due to an attribute error.
+    This is likely the result of a problem with algod, such as a wrong URL or an interrupted internet connection.
+  action: >
+    Check algod configuration and status; verify the network is accessible.
+  message: >
+    Cannot check partkey not submitted for delco with ID {app_id}.
+
+logicerror_partkeys_not_submitted:
+  level: 10
+  module: Daemon
+  description: >
+    The daemon still has time to submit the participation keys (self-report unsuccessful).
+    This report is done in order to remove delegator contracts which can no longer be serviced, making way for new ones.
+  action: >
+    NA.
+  message: >
+    Checked if still time to submit partkeys for delco with ID {app_id}.
+
+httperror_partkeys_not_submitted:
+  level: 10
+  module: Daemon
+  description: >
+    The daemon still has time to submit the participation keys (self-report unsuccessful).
+    This report is done in order to remove delegator contracts which can no longer be serviced, making way for new ones.
+  action: >
+    NA.
+  message: >
+    Checked if still time to submit partkeys for delco with ID {app_id}.
+
+partkey_params_submitted:
+  level: 20
+  module: Daemon
+  description: >
+    The participation key parameters have successfully been submitted to the delegator contract.
+  action: >
+    NA.
+  message: >
+    Submitted partkey parameters for delco with ID {app_id}.
+
+attributeerror_partkey_submit:
+  level: 40
+  module: Daemon
+  description: >
+    The participation key parameters cannot be submitted to the delegator contract due to an attribute error.
+    This is likely the result of a problem with algod, such as a wrong URL or an interrupted internet connection.
+  action: >
+    Check algod configuration and status; verify the network is accessible.
+  message: >
+    Cannot submit partkey params for delco with ID {app_id}.
+
+urlerror_checking_partkey_pending:
+  level: 30
+  module: Daemon
+  description: >
+    A URL error occurred while checking if participation key generation is pending for the delegator contract.
+    This is likely the result of a problem with algod, such as a wrong URL or an interrupted internet connection.
+  action: >
+    Check algod configuration and status; verify the network is accessible.
+  message: >
+    Cannot check if partkey generation pending for delco with ID {app_id}.
+
+partkey_generation_pending:
+  level: 10
+  module: Daemon
+  description: >
+    The participation keys are either in line or being generated by the node.
+  action: >
+    NA.
+  message: >
+    Partkey generation pending for delco with ID {app_id}.
+
+requested_partkey_generation:
+  level: 20
+  module: Daemon
+  description: >
+    A request to generate participation keys for the delegator contract (delegator beneficiary) has been issued.
+  action: >
+    NA.
+  message: >
+    Requested partkey generation for delco with ID {app_id}.
+
+partkey_generation_denied:
+  level: 30
+  module: Daemon
+  description: >
+    The request to generate participation keys for the delegator contract (delegator beneficiary) has been denied.
+    This is likely due to an full participation key buffer. 
+  action: >
+    Check the number of delegator contracts and the number of generated participation keys.
+  message: >
+    Partkey generation request denied for delco with ID {app_id}.
+
+partkeys_not_confirmed:
+  level: 20
+  module: Daemon
+  description: >
+    The participation keys have not been confirmed within the agreed time.
+    This should lead to automatic termination of the contract.
+  action: >
+    NA.
+  message: >
+    Keys not confirmed on time for delco with ID {app_id}.
+
+attributeerror_partkeys_not_confirmed:
+  level: 40
+  module: Daemon
+  description: >
+    Received AttributeError while trying to check if the participation keys have been confirmed. 
+    This is likely the result of a problem with algod, such as a wrong URL or an interrupted internet connection.
+  action: >
+    Check algod configuration and status; verify the network is accessible.
+  message: >
+    Cannot check partkey confirmation for delco with ID {app_id}.
+
+logicerror_partkeys_not_confirmed:
+  level: 10
+  module: Daemon
+  description: >
+    Tried reporting the participation keys as not confirmed without success. 
+    The delegator beneficiary still has time to confirm the participation keys.
+    This error message is typical for localnet deployments.
+  action: >
+    NA.
+  message: >
+    Tried calling not confirmed for delco with ID {app_id}.
+
+httperror_partkeys_not_confirmed:
+  level: 10
+  module: Daemon
+  description: >
+    Tried reporting the participation keys as not confirmed without success. 
+    The delegator beneficiary still has time to confirm the participation keys.
+    This error message is typical for public deployments.
+  action: >
+    NA.
+  message: >
+    Tried calling not confirmed for delco with ID {app_id}.
+
+delco_in_live_handler:
+  level: 10
+  module: Daemon
+  description: >
+    Indicates the delegator contract is being handled by the live state handler.
+  action: >
+    NA.
+  message: >
+    In live state handler for delco with ID {app_id}.
+
+contract_expired:
+  level: 20
+  module: Daemon
+  description: >
+    Indicates the delegator contract has expired (ended normally / fulfilled). 
+    This should lead to automatic termination of the contract.
+  action: >
+    NA.
+  message: >
+    Expired for delco with ID {app_id}.
+
+expired_attribute_error:
+  level: 40
+  module: Daemon
+  description: >
+    Received AttributeError while trying to report the delegator contract as expired. 
+    This is likely the result of a problem with algod, such as a wrong URL or an interrupted internet connection.
+  action: >
+    Check algod configuration and status; verify the network is accessible.
+  message: >
+    Cannot check partkey confirmation for delco with ID {app_id}.
+
+tried_contract_expired:
+  level: 10
+  module: Daemon
+  description: >
+    Tried reporting the delegator contract as expired without success. 
+    The delegator contract is still active.
+    This error message is typical for localnet deployments.
+  action: >
+    NA.
+  message: >
+    Tried calling expired for delco with ID {app_id}.
+
+httperror_contract_expired:
+  level: 10
+  module: Daemon
+  description: >
+    Tried reporting the delegator contract as expired without success. 
+    The delegator contract is still active.
+    This error message is typical for public deployments.
+  action: >
+    NA.
+  message: >
+    Tried calling expired for delco with ID {app_id}.
+
+gating_or_stake_limit_breached:
+  level: 20
+  module: Daemon
+  description: >
+    The delegator beneficiary breached the terms regarding gating assets and/or the maximum stake amount.
+    This should lead to the breach counter increase and/or automatic termination of the contract.
+  action: >
+    NA.
+  message: >
+    Gating or stake limit breach for delco with ID {app_id}.
+
+gating_or_stake_limit_breached_attribute_error:
+  level: 40
+  module: Daemon
+  description: >
+    Received AttributeError while trying to report the breach of the gating asset and/or the maximum stake amount. 
+    This is likely the result of a problem with algod, such as a wrong URL or an interrupted internet connection.
+  action: >
+    Check algod configuration and status; verify the network is accessible.
+  message: >
+    Attribute error for gating and stake limits for delco with ID {app_id}.
+
+logicerror_gating_or_stake_limit_breached:
+  level: 10
+  module: Daemon
+  description: >
+    Tried reporting the breach of the gating asset and/or the maximum stake amount without success. 
+    The delegator beneficiary complies with the requirements.
+    This error message is typical for localnet deployments.
+  action: >
+    NA.
+  message: >
+    Gating and stake limits OK for delco with ID {app_id}.
+
+httperror_gating_or_stake_limit_breached:
+  level: 10
+  module: Daemon
+  description: >
+    Tried reporting the breach of the gating asset and/or the maximum stake amount without success. 
+    The delegator beneficiary complies with the requirements.
+    This error message is typical for public deployments.
+  action: >
+    NA.
+  message: >
+    Gating and stake limits OK for delco with ID {app_id}.
+
+delco_in_ended_handler:
+  level: 10
+  module: Daemon
+  description: >
+    Indicates the delegator contract is being handled by the ended state handler.
+  action: >
+    NA.
+  message: >
+    In ended state handler for delco with ID {app_id}.
+
+scheduled_partkey_deletion_for_ended_or_deleted:
+  level: 20
+  module: Daemon
+  description: >
+    Scheduled the deletion of the participation keys for ended or deleted delegator contract.
+  action: >
+    NA.
+  message: >
+    Scheduled partkey deletion for delco with ID {app_id} on round {scheduled_deletion} (end round is {round_end}).
+
+no_partkeys_found_for_ended_or_deleted:
+  level: 10
+  module: Daemon
+  description: >
+    No participation keys found for ended or deleted delegator contract.
+  action: >
+    NA.
+  message: >
+    No partkeys found for delco with ID {app_id}.
+
+delco_in_deleted_handler:
+  level: 10
+  module: Daemon
+  description: >
+    Indicates the delegator contract is being handled by the deleted state handler.
+  action: >
+    NA.
+  message: >
+    In deleted state handler for delco with ID {app_id}.
+
+num_of_valad_ids_found:
+  level: 10
+  module: Daemon
+  description: >
+    Shows the number of validator ad IDs that have been extracted from the config file.
+  action: >
+    NA.
+  message: >
+    Found {num_of_valads} valad in configuration file.
+
+num_of_valad_clients_connected:
+  level: 10
+  module: Daemon
+  description: >
+    Shows the number of validator ad clients that were freshly connected (previously untracked).
+  action: >
+    NA.
+  message: >
+    Connected {num_of_valads} additional valad clients.
+
+num_of_updated_valads:
+  level: 10
+  module: Daemon
+  description: >
+    Shows the number of validator ads whose latest on-chain information was recorded.
+  action: >
+    NA.
+  message: >
+    Recorded {num_of_updated_valads} of {num_of_valads} connected valad clients.
+
+zero_valad_clients:
+  level: 30
+  module: Daemon
+  description: >
+    There are no connected clients for validator ads, meaning the daemon cannot connect to any validator ads
+    and will not continue maintaining validator ads.
+  action: >
+    NA.
+  message: >
+    Zero connected clients for the indicated valads in the config: {valad_id_list}.
+
+num_of_connected_delcos:
+  level: 10
+  module: Daemon
+  description: >
+    Shows the number of delegator contracts connected to the validator ads.
+  action: >
+    NA.
+  message: >
+    {num_of_delcos} delcos obtained from the valads.
+
+num_of_delco_clients_connected:
+  level: 10
+  module: Daemon
+  description: >
+    Shows the number of delegator contract clients that were freshly connected (previously untracked).
+  action: >
+    NA.
+  message: >
+    Connected {num_of_delcos} additional delco clients.
+
+num_of_updated_delcos:
+  level: 10
+  module: Daemon
+  description: >
+    Shows the number of delegator contracts whose latest on-chain information was recorded.
+  action: >
+    NA.
+  message: >
+    Recorded {num_of_updated_delcos} of {num_of_delcos} connected valad clients.
+
+algod_ok_continuing:
+  level: 10
+  module: Daemon
+  description: >
+    Algod status is OK and the daemon can proceed maintaining contracts and managing partkeys.
+  action: >
+    NA.
+  message: >
+    Algod OK, maintaining contracts and managing partkeys.
+
+generic_contract_servicing_error:
+  level: 40
+  module: Daemon
+  description: >
+    Displays the uncaught error that has been recorded during contract maintenance.
+  action: >
+    NA.
+  message: >
+    Error when trying to service contracts, {e}.
+
+generic_partkey_manager_error:
+  level: 40
+  module: Daemon
+  description: >
+    Displays the uncaught error that has been recorded during the participation key manager's refresh procedure.
+  action: >
+    Contact the Valar team, sending the the log files, information about your system, and participation key info.
+  message: >
+    Error when trying to refresh partkey manager, {e}.
+
+algod_error:
+  level: 50
+  module: Daemon
+  description: >
+    Displays the error encountered by algod.
+  action: >
+    Check algod configuration and status; verify the network is accessible.
+  message: >
+    Algod error, {msg}.
+
+single_loop_execution_time:
+  level: 10
+  module: Daemon
+  description: >
+    Displays the time in seconds it took for the latest loop to execute.
+  action: >
+    NA.
+  message: >
+    Single loop execution took {duration_s} s.
+
+targeted_sleep_duration:
+  level: 10
+  module: Daemon
+  description: >
+    Displays the sleep duration in seconds.
+  action: >
+    NA.
+  message: >
+    Will sleep for {duration_s} s.
+
+could_not_sleep:
+  level: 30
+  module: Daemon
+  description: >
+    Warns that the daemon could not go to sleep.
+    This is often the result of long loop execution times.
+  action: >
+    Check that the reported loop execution time and configure the loop period accordingly.
+  message: >
+    Could not sleep for {duration_s} s, {e}
+
+
+########################################################################################################################
+### AppWrapper #########################################################################################################
+########################################################################################################################
+
+app_create_urlerror:
+  level: 40
+  module: AppWrapper
+  description: >
+    Encountered URLError wen trying to create app wrapper. 
+    Often indicates an issue with algod.
+  action: >
+    Check algod configuration and status; verify the network is accessible.
+  message: >
+    App ID {app_id}, URLError {errno}: {strerror}.
+
+app_create_algohttperror:
+  level: 40
+  module: AppWrapper
+  description: >
+    Encountered AlgoHTTPError wen trying to create app wrapper.
+    Often indicates a non-existent app.
+  action: >
+    Check that the created app exists.
+  message: >
+    App ID {app_id}, AlgoHTTPError {errno}: {strerror}.
+
+app_create_genericerror:
+  level: 40
+  module: AppWrapper
+  description: >
+    Encountered an unknown exception wen trying to create app wrapper.
+  action: >
+    Contact the Valar team, sending the app ID, the log files, and information about your system.
+  message: >
+    App ID {app_id}, {e}.
+
+app_dynamic_update_genericerror:
+  level: 40
+  module: AppWrapper
+  description: >
+    Encountered an unknown exception wen trying to update dynamic app wrapper parameters.
+  action: >
+    Contact the Valar team, sending the app ID, the log files, and information about your system.
+  message: >
+    App ID {app_id}, {e}.
+
+
+########################################################################################################################
+### PartkeyManager #####################################################################################################
+########################################################################################################################
+
+partkey_generation_request:
+  level: 10
+  module: PartkeyManager
+  description: >
+    Received a request to generate participation keys for the given address and duration.
+  action: >
+    NA.
+  message: >
+    Partkey generation request for address {address} and for rounds {vote_first_valid} to {vote_last_valid}.
+
+generating_partkeys:
+  level: 20
+  module: PartkeyManager
+  description: >
+    Algod has been instructed to generate participation keys for the given address and duration.
+  action: >
+    NA.
+  message: >
+    Partkey generation started for address {address} and for rounds {vote_first_valid} to {vote_last_valid}.
+
+requested_partkey_in_past:
+  level: 30
+  module: PartkeyManager
+  description: >
+    Requested the generation of a participation key with its validity in the past (current round > last round).
+  action: >
+    Check that no delegator contracts with expired validity are associated with the validator ad.
+  message: >
+    Requested partkey generation with past validity.
+
+pending_buffer_is_full:
+  level: 30
+  module: PartkeyManager
+  description: >
+    The buffer that holds requests for generating participation keys is full.
+  action: >
+    Check that the number of delegator contracts is reasonably small.
+  message: >
+    Pending buffer is full ({num_of_keys} partkeys).
+
+generated_buffer_is_full:
+  level: 30
+  module: PartkeyManager
+  description: >
+    The buffer that holds information about generated participation keys is full.
+  action: >
+    Check the number generated participation keys is reasonably small.
+  message: >
+    Generated buffer is full ({num_of_keys} partkeys).
+
+requested_partkey_in_pending:
+  level: 30
+  module: PartkeyManager
+  description: >
+    The request for generating participation keys is already being handled.
+  action: >
+    Contact the Valar team, sending the the log files and information about your system.
+  message: >
+    Partkey generation request already in pending buffer.
+
+requested_partkey_in_generated:
+  level: 30
+  module: PartkeyManager
+  description: >
+    The participation keys with the same address and duration are already in the generated buffer.
+  action: >
+    Contact the Valar team, sending the the log files, information about your system, and participation key info.
+  message: >
+    Partkey generation request already in generated buffer.
+
+partkey_generation_request_added:
+  level: 10
+  module: PartkeyManager
+  description: >
+    The request to generate participation keys has been added to the pending buffer.
+  action: >
+    NA.
+  message: >
+    Added to pending buffer.
+
+generic_algod_error:
+  level: 40
+  module: PartkeyManager
+  description: >
+    An error was encountered when checking the last round number.
+  action: >
+    NA.
+  message: >
+    Algod error, {e}.
+
+# maintaining-valads:
+#   level: 
+#   description: >
+#     .
+#   action: >
+#     .
+#   message: >
+#     .

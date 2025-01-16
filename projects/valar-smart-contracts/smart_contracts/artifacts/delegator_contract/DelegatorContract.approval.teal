@@ -1,0 +1,3231 @@
+#pragma version 11
+
+smart_contracts.delegator_contract.contract.DelegatorContract.approval_program:
+    intcblock 0 1 4 16
+    bytecblock "G" "state" "del_manager" "round_end" 0x151f7c75 "round_start" 0x05 "del_beneficiary" "round_ended" "round_claim_last" "fee_operational" "fee_operational_partner" "B" "cnt_breach_del" 0x03 0x04 "round_breach_last" "noticeboard_app_id" "validator_ad_app_id" 0x00 "round_expiry_soon_last" 0x10 "vote_key_dilution" "sel_key" "vote_key" "state_proof_key" "tc_sha256"
+    txn ApplicationID
+    bnz main_after_if_else@2
+    callsub __init__
+
+main_after_if_else@2:
+    callsub __puya_arc4_router__
+    return
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract.__init__() -> void:
+__init__:
+    // smart_contracts/delegator_contract/contract.py:278
+    // def __init__(self) -> None:
+    proto 0 0
+    // smart_contracts/delegator_contract/contract.py:283
+    // self.noticeboard_app_id = UInt64(0)
+    bytec 17 // "noticeboard_app_id"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:284
+    // self.validator_ad_app_id = UInt64(0)
+    bytec 18 // "validator_ad_app_id"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:287
+    // DelegationTermsGeneral.from_bytes(op.bzero(96)),
+    pushint 96 // 96
+    bzero
+    // smart_contracts/delegator_contract/contract.py:288
+    // key="G",
+    bytec_0 // "G"
+    // smart_contracts/delegator_contract/contract.py:286-290
+    // self.delegation_terms_general = GlobalState(
+    //     DelegationTermsGeneral.from_bytes(op.bzero(96)),
+    //     key="G",
+    //     description="General delegation terms."
+    // )
+    swap
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:291
+    // self.fee_operational = UInt64(0)
+    bytec 10 // "fee_operational"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:292
+    // self.fee_operational_partner = UInt64(0)
+    bytec 11 // "fee_operational_partner"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:294
+    // DelegationTermsBalance.from_bytes(op.bzero(56)),
+    pushint 56 // 56
+    bzero
+    // smart_contracts/delegator_contract/contract.py:295
+    // key="B",
+    bytec 12 // "B"
+    // smart_contracts/delegator_contract/contract.py:293-297
+    // self.delegation_terms_balance = GlobalState(
+    //     DelegationTermsBalance.from_bytes(op.bzero(56)),
+    //     key="B",
+    //     description="Balance related delegation terms."
+    // )
+    swap
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:299
+    // self.del_manager = Global.zero_address
+    bytec_2 // "del_manager"
+    global ZeroAddress
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:300
+    // self.del_beneficiary = Global.zero_address
+    bytec 7 // "del_beneficiary"
+    global ZeroAddress
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:302
+    // self.round_start = UInt64(0)
+    bytec 5 // "round_start"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:303
+    // self.round_end = UInt64(0)
+    bytec_3 // "round_end"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:304
+    // self.round_ended = UInt64(0)
+    bytec 8 // "round_ended"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:306
+    // self.vote_key_dilution = UInt64(0)
+    bytec 22 // "vote_key_dilution"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:307
+    // self.sel_key = SelPk.from_bytes(op.bzero(32))
+    pushint 32 // 32
+    bzero
+    bytec 23 // "sel_key"
+    dig 1
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:308
+    // self.vote_key = VotePk.from_bytes(op.bzero(32))
+    bytec 24 // "vote_key"
+    dig 1
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:309
+    // self.state_proof_key = StateProofPk.from_bytes(op.bzero(64))
+    pushint 64 // 64
+    bzero
+    bytec 25 // "state_proof_key"
+    swap
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:311
+    // self.state = Bytes(STATE_NONE)
+    bytec_1 // "state"
+    bytec 19 // 0x00
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:313
+    // self.tc_sha256 = Sha256.from_bytes(op.bzero(32))
+    bytec 26 // "tc_sha256"
+    swap
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:315
+    // self.cnt_breach_del = UInt64(0)
+    bytec 13 // "cnt_breach_del"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:316
+    // self.round_breach_last = UInt64(0)
+    bytec 16 // "round_breach_last"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:318
+    // self.round_claim_last = UInt64(0)
+    bytec 9 // "round_claim_last"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:320
+    // self.round_expiry_soon_last = UInt64(0)
+    bytec 20 // "round_expiry_soon_last"
+    intc_0 // 0
+    app_global_put
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract.__puya_arc4_router__() -> uint64:
+__puya_arc4_router__:
+    // smart_contracts/delegator_contract/contract.py:104-105
+    // # ------- Smart contract -------
+    // class DelegatorContract(ARC4Contract, avm_version=11):
+    proto 0 1
+    txn NumAppArgs
+    bz __puya_arc4_router___after_if_else@20
+    pushbytess 0xd1beccce 0x7d3db474 0xb47ef9eb 0xcaeb1a7b 0x261bd199 0xfe811ae7 0x1f3399a8 0xc1773ee0 0x9516245e 0x9044e21f 0x26f59a46 0xb88322bb 0xf53b95cd 0xf2e67934 0xeafa1e15 // method "contract_create(address,address,uint64)uint64", method "contract_setup(byte[32],(uint64,uint64,uint64,uint64,address,uint64,uint64,uint64,uint64),(uint64,uint64,uint64,(uint64,uint64)[2]),uint64)void", method "contract_pay(txn)void", method "keys_confirm(address)void", method "keys_not_confirmed()(address,byte[100])", method "keys_not_submitted()(address,byte[100])", method "keys_submit((uint64,uint64,uint64,byte[32],byte[32],byte[64],address))((uint64,uint64,uint64),address,byte[100])", method "breach_limits()(bool,(uint64,uint64,uint64),address,byte[100])", method "breach_pay()(address,byte[100])", method "breach_suspended()((uint64,uint64,uint64),address,byte[100])", method "contract_claim()(uint64,uint64,uint64)", method "contract_expired()((uint64,uint64,uint64),address,byte[100])", method "contract_withdraw(address)(uint64,uint64,uint64)", method "contract_delete(address)(uint64,uint64)", method "contract_report_expiry_soon(uint64,uint64)(address,byte[100])"
+    txna ApplicationArgs 0
+    match __puya_arc4_router___contract_create_route@2 __puya_arc4_router___contract_setup_route@3 __puya_arc4_router___contract_pay_route@4 __puya_arc4_router___keys_confirm_route@5 __puya_arc4_router___keys_not_confirmed_route@6 __puya_arc4_router___keys_not_submitted_route@7 __puya_arc4_router___keys_submit_route@8 __puya_arc4_router___breach_limits_route@9 __puya_arc4_router___breach_pay_route@10 __puya_arc4_router___breach_suspended_route@11 __puya_arc4_router___contract_claim_route@12 __puya_arc4_router___contract_expired_route@13 __puya_arc4_router___contract_withdraw_route@14 __puya_arc4_router___contract_delete_route@15 __puya_arc4_router___contract_report_expiry_soon_route@16
+    intc_0 // 0
+    retsub
+
+__puya_arc4_router___contract_create_route@2:
+    // smart_contracts/delegator_contract/contract.py:322
+    // @arc4.abimethod(create="require")
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    !
+    assert // can only call when creating
+    // smart_contracts/delegator_contract/contract.py:104-105
+    // # ------- Smart contract -------
+    // class DelegatorContract(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    txna ApplicationArgs 3
+    btoi
+    // smart_contracts/delegator_contract/contract.py:322
+    // @arc4.abimethod(create="require")
+    callsub contract_create
+    bytec 4 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_setup_route@3:
+    // smart_contracts/delegator_contract/contract.py:361
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/delegator_contract/contract.py:104-105
+    // # ------- Smart contract -------
+    // class DelegatorContract(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    txna ApplicationArgs 3
+    txna ApplicationArgs 4
+    btoi
+    // smart_contracts/delegator_contract/contract.py:361
+    // @arc4.abimethod()
+    callsub contract_setup
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_pay_route@4:
+    // smart_contracts/delegator_contract/contract.py:425
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/delegator_contract/contract.py:104-105
+    // # ------- Smart contract -------
+    // class DelegatorContract(ARC4Contract, avm_version=11):
+    txn GroupIndex
+    intc_1 // 1
+    -
+    // smart_contracts/delegator_contract/contract.py:425
+    // @arc4.abimethod()
+    callsub contract_pay
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___keys_confirm_route@5:
+    // smart_contracts/delegator_contract/contract.py:467
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/delegator_contract/contract.py:104-105
+    // # ------- Smart contract -------
+    // class DelegatorContract(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    // smart_contracts/delegator_contract/contract.py:467
+    // @arc4.abimethod()
+    callsub keys_confirm
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___keys_not_confirmed_route@6:
+    // smart_contracts/delegator_contract/contract.py:509
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    callsub keys_not_confirmed
+    bytec 4 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___keys_not_submitted_route@7:
+    // smart_contracts/delegator_contract/contract.py:554
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    callsub keys_not_submitted
+    bytec 4 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___keys_submit_route@8:
+    // smart_contracts/delegator_contract/contract.py:600
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/delegator_contract/contract.py:104-105
+    // # ------- Smart contract -------
+    // class DelegatorContract(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    // smart_contracts/delegator_contract/contract.py:600
+    // @arc4.abimethod()
+    callsub keys_submit
+    bytec 4 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___breach_limits_route@9:
+    // smart_contracts/delegator_contract/contract.py:661
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    callsub breach_limits
+    bytec 4 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___breach_pay_route@10:
+    // smart_contracts/delegator_contract/contract.py:717
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    callsub breach_pay
+    bytec 4 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___breach_suspended_route@11:
+    // smart_contracts/delegator_contract/contract.py:787
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    callsub breach_suspended
+    bytec 4 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_claim_route@12:
+    // smart_contracts/delegator_contract/contract.py:830
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    callsub contract_claim
+    bytec 4 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_expired_route@13:
+    // smart_contracts/delegator_contract/contract.py:980
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    callsub contract_expired
+    bytec 4 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_withdraw_route@14:
+    // smart_contracts/delegator_contract/contract.py:1018
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/delegator_contract/contract.py:104-105
+    // # ------- Smart contract -------
+    // class DelegatorContract(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    // smart_contracts/delegator_contract/contract.py:1018
+    // @arc4.abimethod()
+    callsub contract_withdraw
+    bytec 4 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_delete_route@15:
+    // smart_contracts/delegator_contract/contract.py:1056
+    // @arc4.abimethod(allow_actions=["DeleteApplication"])
+    txn OnCompletion
+    pushint 5 // DeleteApplication
+    ==
+    assert // OnCompletion is not DeleteApplication
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/delegator_contract/contract.py:104-105
+    // # ------- Smart contract -------
+    // class DelegatorContract(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    // smart_contracts/delegator_contract/contract.py:1056
+    // @arc4.abimethod(allow_actions=["DeleteApplication"])
+    callsub contract_delete
+    bytec 4 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_report_expiry_soon_route@16:
+    // smart_contracts/delegator_contract/contract.py:1116
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/delegator_contract/contract.py:104-105
+    // # ------- Smart contract -------
+    // class DelegatorContract(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    btoi
+    // smart_contracts/delegator_contract/contract.py:1116
+    // @arc4.abimethod()
+    callsub contract_report_expiry_soon
+    bytec 4 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___after_if_else@20:
+    // smart_contracts/delegator_contract/contract.py:104-105
+    // # ------- Smart contract -------
+    // class DelegatorContract(ARC4Contract, avm_version=11):
+    intc_0 // 0
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract.contract_create(del_manager: bytes, del_beneficiary: bytes, noticeboard_app_id: uint64) -> bytes:
+contract_create:
+    // smart_contracts/delegator_contract/contract.py:322-328
+    // @arc4.abimethod(create="require")
+    // def contract_create(
+    //     self,
+    //     del_manager: arc4.Address,
+    //     del_beneficiary: arc4.Address,
+    //     noticeboard_app_id: UInt64,
+    // ) -> arc4.UInt64:
+    proto 3 1
+    // smart_contracts/delegator_contract/contract.py:349-350
+    // # Set global variables
+    // self.noticeboard_app_id = noticeboard_app_id
+    bytec 17 // "noticeboard_app_id"
+    frame_dig -1
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:351
+    // self.validator_ad_app_id = Global.caller_application_id
+    bytec 18 // "validator_ad_app_id"
+    global CallerApplicationID
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:353
+    // self.del_manager = del_manager.native
+    bytec_2 // "del_manager"
+    frame_dig -3
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:354
+    // self.del_beneficiary = del_beneficiary.native
+    bytec 7 // "del_beneficiary"
+    frame_dig -2
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:356-357
+    // # Change state to CREATED
+    // self.state = Bytes(STATE_CREATED)
+    bytec_1 // "state"
+    pushbytes 0x01
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:359
+    // return arc4.UInt64(Global.current_application_id.id)
+    global CurrentApplicationID
+    itob
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract.contract_setup(tc_sha256: bytes, delegation_terms_general: bytes, delegation_terms_balance: bytes, rounds_duration: uint64) -> void:
+contract_setup:
+    // smart_contracts/delegator_contract/contract.py:361-368
+    // @arc4.abimethod()
+    // def contract_setup(
+    //     self,
+    //     tc_sha256: Sha256,
+    //     delegation_terms_general: DelegationTermsGeneral,
+    //     delegation_terms_balance: DelegationTermsBalance,
+    //     rounds_duration: UInt64,
+    // ) -> None:
+    proto 4 0
+    // smart_contracts/delegator_contract/contract.py:388
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/delegator_contract/contract.py:389
+    // assert self.state == Bytes(STATE_CREATED), ERROR_NOT_STATE_CREATED
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    pushbytes 0x01
+    ==
+    assert // Cannot be called from other state than CREATED.
+    // smart_contracts/delegator_contract/contract.py:391
+    // self.tc_sha256 = tc_sha256.copy()
+    bytec 26 // "tc_sha256"
+    frame_dig -4
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:392
+    // self.delegation_terms_general.value = delegation_terms_general.copy()
+    bytec_0 // "G"
+    frame_dig -3
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:393
+    // self.delegation_terms_balance.value = delegation_terms_balance.copy()
+    bytec 12 // "B"
+    frame_dig -2
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:395
+    // self.round_start = Global.round
+    bytec 5 // "round_start"
+    global Round
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:396
+    // self.round_end = self.round_start + rounds_duration
+    intc_0 // 0
+    bytec 5 // "round_start"
+    app_global_get_ex
+    assert // check self.round_start exists
+    frame_dig -1
+    +
+    bytec_3 // "round_end"
+    swap
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:397
+    // self.round_claim_last = self.round_start
+    intc_0 // 0
+    bytec 5 // "round_start"
+    app_global_get_ex
+    assert // check self.round_start exists
+    bytec 9 // "round_claim_last"
+    swap
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:401
+    // fee_round=self.delegation_terms_general.value.fee_round.native,
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/delegator_contract/contract.py:402
+    // round_end=self.round_end,
+    intc_0 // 0
+    bytec_3 // "round_end"
+    app_global_get_ex
+    assert // check self.round_end exists
+    // smart_contracts/delegator_contract/contract.py:403
+    // round_start=self.round_start,
+    intc_0 // 0
+    bytec 5 // "round_start"
+    app_global_get_ex
+    assert // check self.round_start exists
+    // smart_contracts/delegator_contract/contract.py:399-404
+    // # Calculate operational fee
+    // self.fee_operational = calc_fee_operational(
+    //     fee_round=self.delegation_terms_general.value.fee_round.native,
+    //     round_end=self.round_end,
+    //     round_start=self.round_start,
+    // )
+    callsub calc_fee_operational
+    // smart_contracts/delegator_contract/contract.py:399-400
+    // # Calculate operational fee
+    // self.fee_operational = calc_fee_operational(
+    bytec 10 // "fee_operational"
+    // smart_contracts/delegator_contract/contract.py:399-404
+    // # Calculate operational fee
+    // self.fee_operational = calc_fee_operational(
+    //     fee_round=self.delegation_terms_general.value.fee_round.native,
+    //     round_end=self.round_end,
+    //     round_start=self.round_start,
+    // )
+    swap
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:407
+    // fee_round=self.delegation_terms_general.value.fee_round_partner.native,
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 64 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/delegator_contract/contract.py:408
+    // round_end=self.round_end,
+    intc_0 // 0
+    bytec_3 // "round_end"
+    app_global_get_ex
+    assert // check self.round_end exists
+    // smart_contracts/delegator_contract/contract.py:409
+    // round_start=self.round_start,
+    intc_0 // 0
+    bytec 5 // "round_start"
+    app_global_get_ex
+    assert // check self.round_start exists
+    // smart_contracts/delegator_contract/contract.py:405-410
+    // # Calculate the partner convenience operational fee
+    // self.fee_operational_partner = calc_fee_operational(
+    //     fee_round=self.delegation_terms_general.value.fee_round_partner.native,
+    //     round_end=self.round_end,
+    //     round_start=self.round_start,
+    // )
+    callsub calc_fee_operational
+    // smart_contracts/delegator_contract/contract.py:405-406
+    // # Calculate the partner convenience operational fee
+    // self.fee_operational_partner = calc_fee_operational(
+    bytec 11 // "fee_operational_partner"
+    // smart_contracts/delegator_contract/contract.py:405-410
+    // # Calculate the partner convenience operational fee
+    // self.fee_operational_partner = calc_fee_operational(
+    //     fee_round=self.delegation_terms_general.value.fee_round_partner.native,
+    //     round_end=self.round_end,
+    //     round_start=self.round_start,
+    // )
+    swap
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:412
+    // if delegation_terms_general.fee_asset_id != UInt64(ALGO_ASA_ID):
+    frame_dig -3
+    extract 24 8 // on error: Index access is out of bounds
+    dup
+    intc_0 // 0
+    itob
+    b!=
+    bz contract_setup_after_if_else@3
+    // smart_contracts/delegator_contract/contract.py:413-418
+    // # Opt in to the asset
+    // itxn.AssetTransfer(
+    //     xfer_asset=delegation_terms_general.fee_asset_id.native,
+    //     asset_receiver=Global.current_application_address,
+    //     asset_amount=0,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/delegator_contract/contract.py:415
+    // xfer_asset=delegation_terms_general.fee_asset_id.native,
+    frame_dig 0
+    btoi
+    // smart_contracts/delegator_contract/contract.py:416
+    // asset_receiver=Global.current_application_address,
+    global CurrentApplicationAddress
+    // smart_contracts/delegator_contract/contract.py:417
+    // asset_amount=0,
+    intc_0 // 0
+    itxn_field AssetAmount
+    itxn_field AssetReceiver
+    itxn_field XferAsset
+    // smart_contracts/delegator_contract/contract.py:413-414
+    // # Opt in to the asset
+    // itxn.AssetTransfer(
+    intc_2 // axfer
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/delegator_contract/contract.py:413-418
+    // # Opt in to the asset
+    // itxn.AssetTransfer(
+    //     xfer_asset=delegation_terms_general.fee_asset_id.native,
+    //     asset_receiver=Global.current_application_address,
+    //     asset_amount=0,
+    // ).submit()
+    itxn_submit
+
+contract_setup_after_if_else@3:
+    // smart_contracts/delegator_contract/contract.py:420-421
+    // # Change state to SET
+    // self.state = Bytes(STATE_SET)
+    bytec_1 // "state"
+    pushbytes 0x02
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:423
+    // return
+    retsub
+
+
+// smart_contracts.helpers.common.calc_fee_operational(fee_round: uint64, round_end: uint64, round_start: uint64) -> uint64:
+calc_fee_operational:
+    // smart_contracts/helpers/common.py:680-686
+    // # ------- Functions -------
+    // @subroutine
+    // def calc_fee_operational(
+    //     fee_round: UInt64,
+    //     round_end: UInt64,
+    //     round_start: UInt64,
+    // ) -> UInt64:
+    proto 3 1
+    // smart_contracts/helpers/common.py:706
+    // return (fee_round * (round_end - round_start)) // UInt64(FROM_BASE_TO_MILLI_MULTIPLIER)
+    frame_dig -2
+    frame_dig -1
+    -
+    frame_dig -3
+    *
+    pushint 1000 // 1000
+    /
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract.contract_pay(txn: uint64) -> void:
+contract_pay:
+    // smart_contracts/delegator_contract/contract.py:425-429
+    // @arc4.abimethod()
+    // def contract_pay(
+    //     self,
+    //     txn: gtxn.Transaction,
+    // ) -> None:
+    proto 1 0
+    // smart_contracts/delegator_contract/contract.py:439
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/delegator_contract/contract.py:440
+    // assert self.state == Bytes(STATE_SET), ERROR_NOT_STATE_SET
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    pushbytes 0x02
+    ==
+    assert // Cannot be called from other state than SET.
+    // smart_contracts/delegator_contract/contract.py:442-443
+    // # Check payment
+    // base_fee = self.delegation_terms_general.value.fee_setup.native + self.fee_operational
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 16 8 // on error: Index access is out of bounds
+    btoi
+    intc_0 // 0
+    bytec 10 // "fee_operational"
+    app_global_get_ex
+    assert // check self.fee_operational exists
+    +
+    // smart_contracts/delegator_contract/contract.py:444
+    // partner_fee = self.delegation_terms_general.value.fee_setup_partner.native + self.fee_operational_partner
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 72 8 // on error: Index access is out of bounds
+    btoi
+    intc_0 // 0
+    bytec 11 // "fee_operational_partner"
+    app_global_get_ex
+    assert // check self.fee_operational_partner exists
+    +
+    // smart_contracts/delegator_contract/contract.py:445
+    // amt_expected = base_fee + partner_fee
+    +
+    // smart_contracts/delegator_contract/contract.py:446
+    // if txn.type == TransactionType.Payment:
+    frame_dig -1
+    gtxns TypeEnum
+    dup
+    cover 2
+    intc_1 // pay
+    ==
+    bz contract_pay_else_body@2
+    // smart_contracts/delegator_contract/contract.py:447
+    // assert txn.receiver == Global.current_application_address, ERROR_RECEIVER
+    frame_dig -1
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert // Transaction must be to this contract.
+    // smart_contracts/delegator_contract/contract.py:449
+    // assert UInt64(ALGO_ASA_ID) == self.delegation_terms_general.value.fee_asset_id, ERROR_ASSET_ID
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 24 8 // on error: Index access is out of bounds
+    intc_0 // 0
+    itob
+    b==
+    assert // Sent asset doesn't match the agreed one.
+    // smart_contracts/delegator_contract/contract.py:450
+    // assert txn.amount == amt_expected, ERROR_AMOUNT
+    frame_dig -1
+    gtxns Amount
+    ==
+    assert // Sent amount doesn't match the agreed one.
+    b contract_pay_after_if_else@6
+
+contract_pay_else_body@2:
+    // smart_contracts/delegator_contract/contract.py:451
+    // elif txn.type == TransactionType.AssetTransfer:
+    frame_dig 0
+    intc_2 // axfer
+    ==
+    assert // Transaction type must be either Payment or AssetTransfer.
+    // smart_contracts/delegator_contract/contract.py:452
+    // assert txn.asset_receiver == Global.current_application_address, ERROR_RECEIVER
+    frame_dig -1
+    gtxns AssetReceiver
+    global CurrentApplicationAddress
+    ==
+    assert // Transaction must be to this contract.
+    // smart_contracts/delegator_contract/contract.py:454
+    // assert txn.xfer_asset.id == self.delegation_terms_general.value.fee_asset_id, ERROR_ASSET_ID
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 24 8 // on error: Index access is out of bounds
+    frame_dig -1
+    gtxns XferAsset
+    itob
+    b==
+    assert // Sent asset doesn't match the agreed one.
+    // smart_contracts/delegator_contract/contract.py:455
+    // assert txn.asset_amount == amt_expected, ERROR_AMOUNT
+    frame_dig -1
+    gtxns AssetAmount
+    ==
+    assert // Sent amount doesn't match the agreed one.
+
+contract_pay_after_if_else@6:
+    // smart_contracts/delegator_contract/contract.py:459-460
+    // # Check if del_beneficiary is eligible according to the agreed terms
+    // assert self._is_eligible().native, ERROR_NOT_ELIGIBLE
+    callsub _is_eligible
+    intc_0 // 0
+    getbit
+    assert // Delegator beneficiary is not eligible according to the agreed limits.
+    // smart_contracts/delegator_contract/contract.py:462-463
+    // # Change state to READY
+    // self.state = Bytes(STATE_READY)
+    bytec_1 // "state"
+    bytec 14 // 0x03
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:465
+    // return
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract._is_eligible() -> bytes:
+_is_eligible:
+    // smart_contracts/delegator_contract/contract.py:1157-1163
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // # ----- ----- ----- Internal functions ----- ----- -----
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // @subroutine
+    // def _is_eligible(
+    //     self,
+    // ) -> arc4.Bool:
+    proto 0 1
+    intc_0 // 0
+    dup
+    pushbytes ""
+    dupn 4
+    // smart_contracts/delegator_contract/contract.py:1175-1176
+    // # Check ALGO limit
+    // algo_bal = self.del_beneficiary.balance
+    intc_0 // 0
+    bytec 7 // "del_beneficiary"
+    app_global_get_ex
+    assert // check self.del_beneficiary exists
+    acct_params_get AcctBalance
+    assert // account funded
+    // smart_contracts/delegator_contract/contract.py:1177
+    // is_eligible = is_eligible and (algo_bal <= self.delegation_terms_balance.value.stake_max)
+    intc_0 // 0
+    bytec 12 // "B"
+    app_global_get_ex
+    assert // check self.delegation_terms_balance exists
+    extract 0 8 // on error: Index access is out of bounds
+    swap
+    itob
+    b>=
+    bz _is_eligible_bool_false@3
+    intc_1 // 1
+    frame_bury 5
+    b _is_eligible_bool_merge@4
+
+_is_eligible_bool_false@3:
+    intc_0 // 0
+    frame_bury 5
+
+_is_eligible_bool_merge@4:
+    // smart_contracts/delegator_contract/contract.py:1179-1180
+    // # Check ASA limits
+    // asa_id_list = self.delegation_terms_balance.value.gating_asa_list.copy()
+    intc_0 // 0
+    bytec 12 // "B"
+    app_global_get_ex
+    assert // check self.delegation_terms_balance exists
+    extract 24 32 // on error: Index access is out of bounds
+    frame_bury 0
+    // smart_contracts/delegator_contract/contract.py:1181
+    // for idx in urange(asa_id_list.length):
+    intc_0 // 0
+    frame_bury 4
+
+_is_eligible_for_header@5:
+    // smart_contracts/delegator_contract/contract.py:1181
+    // for idx in urange(asa_id_list.length):
+    frame_dig 4
+    pushint 2 // 2
+    <
+    bz _is_eligible_after_for@17
+    // smart_contracts/delegator_contract/contract.py:1182
+    // asset_id = asa_id_list[idx].id.native
+    frame_dig 4
+    intc_3 // 16
+    *
+    frame_dig 0
+    swap
+    intc_3 // 16
+    extract3 // on error: Index access is out of bounds
+    dup
+    frame_bury 1
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    dup
+    frame_bury 3
+    frame_dig 5
+    frame_bury 6
+    // smart_contracts/delegator_contract/contract.py:1183
+    // if asset_id != ALGO_ASA_ID:
+    bz _is_eligible_after_if_else@15
+    // smart_contracts/delegator_contract/contract.py:1185
+    // if self.del_beneficiary.is_opted_in(asset):
+    intc_0 // 0
+    bytec 7 // "del_beneficiary"
+    app_global_get_ex
+    assert // check self.del_beneficiary exists
+    frame_dig 3
+    asset_holding_get AssetBalance
+    bury 1
+    bz _is_eligible_else_body@9
+    // smart_contracts/delegator_contract/contract.py:1186
+    // asa_bal = asset.balance(self.del_beneficiary)
+    intc_0 // 0
+    bytec 7 // "del_beneficiary"
+    app_global_get_ex
+    assert // check self.del_beneficiary exists
+    frame_dig 3
+    asset_holding_get AssetBalance
+    swap
+    frame_bury 2
+    assert // account opted into asset
+    b _is_eligible_after_if_else@10
+
+_is_eligible_else_body@9:
+    // smart_contracts/delegator_contract/contract.py:1188
+    // asa_bal = UInt64(0)
+    intc_0 // 0
+    frame_bury 2
+
+_is_eligible_after_if_else@10:
+    // smart_contracts/delegator_contract/contract.py:1189
+    // is_eligible = is_eligible and (asa_bal >= asa_id_list[idx].min.native)
+    frame_dig 5
+    bz _is_eligible_bool_false@13
+    frame_dig 1
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    frame_dig 2
+    <=
+    bz _is_eligible_bool_false@13
+    intc_1 // 1
+    frame_bury 5
+    b _is_eligible_bool_merge@14
+
+_is_eligible_bool_false@13:
+    intc_0 // 0
+    frame_bury 5
+
+_is_eligible_bool_merge@14:
+    frame_dig 5
+    frame_bury 6
+
+_is_eligible_after_if_else@15:
+    frame_dig 6
+    frame_bury 5
+    // smart_contracts/delegator_contract/contract.py:1181
+    // for idx in urange(asa_id_list.length):
+    frame_dig 4
+    intc_1 // 1
+    +
+    frame_bury 4
+    b _is_eligible_for_header@5
+
+_is_eligible_after_for@17:
+    // smart_contracts/delegator_contract/contract.py:1191
+    // return arc4.Bool(is_eligible)
+    bytec 19 // 0x00
+    intc_0 // 0
+    frame_dig 5
+    setbit
+    frame_bury 0
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract.keys_confirm(del_manager: bytes) -> void:
+keys_confirm:
+    // smart_contracts/delegator_contract/contract.py:467-471
+    // @arc4.abimethod()
+    // def keys_confirm(
+    //     self,
+    //     del_manager: arc4.Address,
+    // ) -> None:
+    proto 1 0
+    // smart_contracts/delegator_contract/contract.py:481
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/delegator_contract/contract.py:482
+    // assert self.state == Bytes(STATE_SUBMITTED), ERROR_NOT_STATE_SUBMITTED
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 15 // 0x04
+    ==
+    assert // Cannot be called from other state than SUBMITTED.
+    // smart_contracts/delegator_contract/contract.py:484
+    // assert del_manager == self.del_manager, ERROR_NOT_MANAGER
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    frame_dig -1
+    ==
+    assert // Can only be approved by delegator manager.
+    // smart_contracts/delegator_contract/contract.py:486-487
+    // # Check if confirmation was done in time
+    // assert Global.round <= (
+    global Round
+    // smart_contracts/delegator_contract/contract.py:488
+    // self.round_start +
+    intc_0 // 0
+    bytec 5 // "round_start"
+    app_global_get_ex
+    assert // check self.round_start exists
+    // smart_contracts/delegator_contract/contract.py:489
+    // self.delegation_terms_general.value.rounds_setup.native +
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 80 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/delegator_contract/contract.py:488-489
+    // self.round_start +
+    // self.delegation_terms_general.value.rounds_setup.native +
+    +
+    // smart_contracts/delegator_contract/contract.py:490
+    // self.delegation_terms_general.value.rounds_confirm.native
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 88 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/delegator_contract/contract.py:488-490
+    // self.round_start +
+    // self.delegation_terms_general.value.rounds_setup.native +
+    // self.delegation_terms_general.value.rounds_confirm.native
+    +
+    // smart_contracts/delegator_contract/contract.py:486-490
+    // # Check if confirmation was done in time
+    // assert Global.round <= (
+    //     self.round_start +
+    //     self.delegation_terms_general.value.rounds_setup.native +
+    //     self.delegation_terms_general.value.rounds_confirm.native
+    <=
+    // smart_contracts/delegator_contract/contract.py:486-491
+    // # Check if confirmation was done in time
+    // assert Global.round <= (
+    //     self.round_start +
+    //     self.delegation_terms_general.value.rounds_setup.native +
+    //     self.delegation_terms_general.value.rounds_confirm.native
+    // ), ERROR_KEY_CONFIRM_TOO_LATE
+    assert // Key confirmation was done too late.
+    // smart_contracts/delegator_contract/contract.py:493-495
+    // # Check that beneficiary account has `AcctIncentiveEligible` flag set to true because otherwise
+    // # the delegator's contract would report breach_suspension right away.
+    // acct_incentive_eligible_raw = op.AcctParamsGet.acct_incentive_eligible(self.del_beneficiary)
+    intc_0 // 0
+    bytec 7 // "del_beneficiary"
+    app_global_get_ex
+    assert // check self.del_beneficiary exists
+    acct_params_get AcctIncentiveEligible
+    pop
+    // smart_contracts/delegator_contract/contract.py:497
+    // assert acct_incentive_eligible, ERROR_ACCOUNT_HAS_NOT_REGISTERED_FOR_SUSPENSION_TRACKING
+    assert // Must opt-in to consensus suspension tracking.
+    // smart_contracts/delegator_contract/contract.py:499-500
+    // # Set the last breach round to current one
+    // self.round_breach_last = Global.round
+    bytec 16 // "round_breach_last"
+    global Round
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:501-502
+    // # Reset the number of breaches
+    // self.cnt_breach_del = UInt64(0)
+    bytec 13 // "cnt_breach_del"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:504-505
+    // # Change state to LIVE
+    // self.state = Bytes(STATE_LIVE)
+    bytec_1 // "state"
+    bytec 6 // 0x05
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:507
+    // return
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract.keys_not_confirmed() -> bytes:
+keys_not_confirmed:
+    // smart_contracts/delegator_contract/contract.py:509-512
+    // @arc4.abimethod()
+    // def keys_not_confirmed(
+    //     self,
+    // ) -> Message:
+    proto 0 1
+    // smart_contracts/delegator_contract/contract.py:524
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/delegator_contract/contract.py:525
+    // assert self.state == Bytes(STATE_SUBMITTED), ERROR_NOT_STATE_SUBMITTED
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 15 // 0x04
+    ==
+    assert // Cannot be called from other state than SUBMITTED.
+    // smart_contracts/delegator_contract/contract.py:527-528
+    // # Check if time for confirmation has passed
+    // assert Global.round > (
+    global Round
+    // smart_contracts/delegator_contract/contract.py:529
+    // self.round_start +
+    intc_0 // 0
+    bytec 5 // "round_start"
+    app_global_get_ex
+    assert // check self.round_start exists
+    // smart_contracts/delegator_contract/contract.py:530
+    // self.delegation_terms_general.value.rounds_setup.native +
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 80 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/delegator_contract/contract.py:529-530
+    // self.round_start +
+    // self.delegation_terms_general.value.rounds_setup.native +
+    +
+    // smart_contracts/delegator_contract/contract.py:531
+    // self.delegation_terms_general.value.rounds_confirm.native
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 88 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/delegator_contract/contract.py:529-531
+    // self.round_start +
+    // self.delegation_terms_general.value.rounds_setup.native +
+    // self.delegation_terms_general.value.rounds_confirm.native
+    +
+    // smart_contracts/delegator_contract/contract.py:527-531
+    // # Check if time for confirmation has passed
+    // assert Global.round > (
+    //     self.round_start +
+    //     self.delegation_terms_general.value.rounds_setup.native +
+    //     self.delegation_terms_general.value.rounds_confirm.native
+    >
+    // smart_contracts/delegator_contract/contract.py:527-532
+    // # Check if time for confirmation has passed
+    // assert Global.round > (
+    //     self.round_start +
+    //     self.delegation_terms_general.value.rounds_setup.native +
+    //     self.delegation_terms_general.value.rounds_confirm.native
+    // ), ERROR_REPORT_NOT_CONFIRMED_TOO_EARLY
+    assert // Report keys as not confirmed can be done only after enough rounds have passed.
+    // smart_contracts/delegator_contract/contract.py:534-535
+    // # If possible, return the operational fees to the delegator manager
+    // fee_asset = Asset(self.delegation_terms_general.value.fee_asset_id.native)
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 24 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/delegator_contract/contract.py:536
+    // amt_return = self.fee_operational + self.fee_operational_partner
+    intc_0 // 0
+    bytec 10 // "fee_operational"
+    app_global_get_ex
+    assert // check self.fee_operational exists
+    intc_0 // 0
+    bytec 11 // "fee_operational_partner"
+    app_global_get_ex
+    assert // check self.fee_operational_partner exists
+    +
+    // smart_contracts/delegator_contract/contract.py:537-540
+    // self._try_return_fee(
+    //     fee_asset=fee_asset,
+    //     amt_return=amt_return,
+    // )
+    callsub _try_return_fee
+    // smart_contracts/delegator_contract/contract.py:542-543
+    // # Change state to ENDED_NOT_CONFIRMED
+    // self.state = Bytes(STATE_ENDED_NOT_CONFIRMED)
+    bytec_1 // "state"
+    pushbytes 0x11
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:545-546
+    // # Mark end of contract
+    // self.round_ended = Global.round
+    bytec 8 // "round_ended"
+    global Round
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:550
+    // del_manager=arc4.Address(self.del_manager),
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    // smart_contracts/delegator_contract/contract.py:548
+    // msg = NotificationMessage.from_bytes(MSG_CORE_KEYS_NOT_CONFIRMED)
+    pushbytes 0x4d6573736167652066726f6d2056616c61723a20596f752068617665206e6f7420636f6e6669726d656420746865206e6f646520746861742077617320707265706172656420666f7220796f752e20202020202020202020202020202020202020202020
+    // smart_contracts/delegator_contract/contract.py:549-552
+    // return Message(
+    //     del_manager=arc4.Address(self.del_manager),
+    //     msg=msg.copy(),
+    // )
+    concat
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract._try_return_fee(fee_asset: uint64, amt_return: uint64) -> void:
+_try_return_fee:
+    // smart_contracts/delegator_contract/contract.py:1193-1198
+    // @subroutine
+    // def _try_return_fee(
+    //     self,
+    //     fee_asset: Asset,
+    //     amt_return: UInt64,
+    // ) -> None:
+    proto 2 0
+    // smart_contracts/delegator_contract/contract.py:1211
+    // if fee_asset.id != UInt64(ALGO_ASA_ID):
+    frame_dig -2
+    bz _try_return_fee_else_body@9
+    // smart_contracts/delegator_contract/contract.py:1212
+    // if self.del_manager.is_opted_in(fee_asset):
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    frame_dig -2
+    asset_holding_get AssetBalance
+    bury 1
+    bz _try_return_fee_after_if_else@13
+    // smart_contracts/delegator_contract/contract.py:1213
+    // if not fee_asset.frozen(self.del_manager):
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    frame_dig -2
+    asset_holding_get AssetFrozen
+    assert // account opted into asset
+    bnz _try_return_fee_after_if_else@13
+    // smart_contracts/delegator_contract/contract.py:1214
+    // asset_balance = fee_asset.balance(self.del_manager)
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    frame_dig -2
+    asset_holding_get AssetBalance
+    assert // account opted into asset
+    // smart_contracts/delegator_contract/contract.py:1215
+    // if asset_balance >= amt_return:
+    frame_dig -1
+    >=
+    bz _try_return_fee_after_if_else@13
+    // smart_contracts/delegator_contract/contract.py:1216-1220
+    // itxn.AssetTransfer(
+    //     xfer_asset=fee_asset,
+    //     asset_receiver=self.del_manager,
+    //     asset_amount=amt_return,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/delegator_contract/contract.py:1218
+    // asset_receiver=self.del_manager,
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    frame_dig -1
+    itxn_field AssetAmount
+    itxn_field AssetReceiver
+    frame_dig -2
+    itxn_field XferAsset
+    // smart_contracts/delegator_contract/contract.py:1216
+    // itxn.AssetTransfer(
+    intc_2 // axfer
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/delegator_contract/contract.py:1216-1220
+    // itxn.AssetTransfer(
+    //     xfer_asset=fee_asset,
+    //     asset_receiver=self.del_manager,
+    //     asset_amount=amt_return,
+    // ).submit()
+    itxn_submit
+    b _try_return_fee_after_if_else@13
+
+_try_return_fee_else_body@9:
+    // smart_contracts/delegator_contract/contract.py:1222
+    // if op.balance(self.del_manager) >= Global.min_balance:
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    balance
+    global MinBalance
+    >=
+    bz _try_return_fee_after_if_else@13
+    // smart_contracts/delegator_contract/contract.py:1223-1226
+    // itxn.Payment(
+    //     receiver=self.del_manager,
+    //     amount=amt_return,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/delegator_contract/contract.py:1224
+    // receiver=self.del_manager,
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    frame_dig -1
+    itxn_field Amount
+    itxn_field Receiver
+    // smart_contracts/delegator_contract/contract.py:1223
+    // itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/delegator_contract/contract.py:1223-1226
+    // itxn.Payment(
+    //     receiver=self.del_manager,
+    //     amount=amt_return,
+    // ).submit()
+    itxn_submit
+
+_try_return_fee_after_if_else@13:
+    // smart_contracts/delegator_contract/contract.py:1228
+    // return
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract.keys_not_submitted() -> bytes:
+keys_not_submitted:
+    // smart_contracts/delegator_contract/contract.py:554-557
+    // @arc4.abimethod()
+    // def keys_not_submitted(
+    //     self,
+    // ) -> Message:
+    proto 0 1
+    // smart_contracts/delegator_contract/contract.py:569
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/delegator_contract/contract.py:570
+    // assert self.state == Bytes(STATE_READY), ERROR_NOT_STATE_READY
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 14 // 0x03
+    ==
+    assert // Cannot be called from other state than READY.
+    // smart_contracts/delegator_contract/contract.py:572-573
+    // # Check if time for submission has passed
+    // assert Global.round > (
+    global Round
+    // smart_contracts/delegator_contract/contract.py:574
+    // self.round_start +
+    intc_0 // 0
+    bytec 5 // "round_start"
+    app_global_get_ex
+    assert // check self.round_start exists
+    // smart_contracts/delegator_contract/contract.py:575
+    // self.delegation_terms_general.value.rounds_setup.native
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 80 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/delegator_contract/contract.py:574-575
+    // self.round_start +
+    // self.delegation_terms_general.value.rounds_setup.native
+    +
+    // smart_contracts/delegator_contract/contract.py:572-575
+    // # Check if time for submission has passed
+    // assert Global.round > (
+    //     self.round_start +
+    //     self.delegation_terms_general.value.rounds_setup.native
+    >
+    // smart_contracts/delegator_contract/contract.py:572-576
+    // # Check if time for submission has passed
+    // assert Global.round > (
+    //     self.round_start +
+    //     self.delegation_terms_general.value.rounds_setup.native
+    // ), ERROR_REPORT_NOT_SUBMITTED_TOO_EARLY
+    assert // Report keys as not submitted can be done only after enough rounds have passed.
+    // smart_contracts/delegator_contract/contract.py:578-579
+    // # If possible, return the sum of the setup and operational fees to the delegator manager
+    // fee_asset = Asset(self.delegation_terms_general.value.fee_asset_id.native)
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 24 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/delegator_contract/contract.py:580
+    // base_fee = self.delegation_terms_general.value.fee_setup.native + self.fee_operational
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 16 8 // on error: Index access is out of bounds
+    btoi
+    intc_0 // 0
+    bytec 10 // "fee_operational"
+    app_global_get_ex
+    assert // check self.fee_operational exists
+    +
+    // smart_contracts/delegator_contract/contract.py:581
+    // partner_fee = self.delegation_terms_general.value.fee_setup_partner.native + self.fee_operational_partner
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 72 8 // on error: Index access is out of bounds
+    btoi
+    intc_0 // 0
+    bytec 11 // "fee_operational_partner"
+    app_global_get_ex
+    assert // check self.fee_operational_partner exists
+    +
+    // smart_contracts/delegator_contract/contract.py:582
+    // amt_return = base_fee + partner_fee
+    +
+    // smart_contracts/delegator_contract/contract.py:583-586
+    // self._try_return_fee(
+    //     fee_asset=fee_asset,
+    //     amt_return=amt_return,
+    // )
+    callsub _try_return_fee
+    // smart_contracts/delegator_contract/contract.py:588-589
+    // # Change state to ENDED_NOT_SUBMITTED
+    // self.state = Bytes(STATE_ENDED_NOT_SUBMITTED)
+    bytec_1 // "state"
+    bytec 21 // 0x10
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:591-592
+    // # Mark end of contract
+    // self.round_ended = Global.round
+    bytec 8 // "round_ended"
+    global Round
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:596
+    // del_manager=arc4.Address(self.del_manager),
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    // smart_contracts/delegator_contract/contract.py:594
+    // msg = NotificationMessage.from_bytes(MSG_CORE_KEYS_NOT_SUBMITTED)
+    pushbytes 0x4d6573736167652066726f6d2056616c61723a204e6f64652072756e6e65722068617320756e666f7274756e6174656c79206e6f742070726570617265642061206e6f646520666f7220796f752e20202020202020202020202020202020202020202020
+    // smart_contracts/delegator_contract/contract.py:595-598
+    // return Message(
+    //     del_manager=arc4.Address(self.del_manager),
+    //     msg=msg.copy(),
+    // )
+    concat
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract.keys_submit(key_reg_txn_info: bytes) -> bytes:
+keys_submit:
+    // smart_contracts/delegator_contract/contract.py:600-604
+    // @arc4.abimethod()
+    // def keys_submit(
+    //     self,
+    //     key_reg_txn_info : KeyRegTxnInfo,
+    // ) -> EarningsDistributionAndMessage:
+    proto 1 1
+    // smart_contracts/delegator_contract/contract.py:625
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/delegator_contract/contract.py:626
+    // assert self.state == Bytes(STATE_READY), ERROR_NOT_STATE_READY
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 14 // 0x03
+    ==
+    assert // Cannot be called from other state than READY.
+    // smart_contracts/delegator_contract/contract.py:628-629
+    // # Sanity check on submitted key information
+    // assert self.del_beneficiary == key_reg_txn_info.sender, ERROR_KEY_BENEFICIARY_MISMATCH
+    frame_dig -1
+    extract 152 32 // on error: Index access is out of bounds
+    intc_0 // 0
+    bytec 7 // "del_beneficiary"
+    app_global_get_ex
+    assert // check self.del_beneficiary exists
+    ==
+    assert // Key beneficiary does not match.
+    // smart_contracts/delegator_contract/contract.py:630
+    // assert self.round_start == key_reg_txn_info.vote_first, ERROR_VOTE_FIRST_ROUND_MISMATCH
+    frame_dig -1
+    extract 0 8 // on error: Index access is out of bounds
+    intc_0 // 0
+    bytec 5 // "round_start"
+    app_global_get_ex
+    assert // check self.round_start exists
+    itob
+    b==
+    assert // Vote first round does not match contract start.
+    // smart_contracts/delegator_contract/contract.py:631
+    // assert self.round_end == key_reg_txn_info.vote_last, ERROR_VOTE_LAST_ROUND_MISMATCH
+    frame_dig -1
+    extract 8 8 // on error: Index access is out of bounds
+    intc_0 // 0
+    bytec_3 // "round_end"
+    app_global_get_ex
+    assert // check self.round_end exists
+    itob
+    b==
+    assert // Vote last round does not match contract end.
+    // smart_contracts/delegator_contract/contract.py:633-634
+    // # Store submitted key information
+    // self.vote_key_dilution = key_reg_txn_info.vote_key_dilution.native
+    frame_dig -1
+    extract 16 8 // on error: Index access is out of bounds
+    btoi
+    bytec 22 // "vote_key_dilution"
+    swap
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:635
+    // self.vote_key = key_reg_txn_info.vote_pk.copy()
+    frame_dig -1
+    extract 24 32 // on error: Index access is out of bounds
+    bytec 24 // "vote_key"
+    swap
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:636
+    // self.sel_key = key_reg_txn_info.selection_pk.copy()
+    frame_dig -1
+    extract 56 32 // on error: Index access is out of bounds
+    bytec 23 // "sel_key"
+    swap
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:637
+    // self.state_proof_key = key_reg_txn_info.state_proof_pk.copy()
+    frame_dig -1
+    extract 88 64 // on error: Index access is out of bounds
+    bytec 25 // "state_proof_key"
+    swap
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:639-640
+    // # Check if submission was done in time
+    // assert Global.round <= (
+    global Round
+    // smart_contracts/delegator_contract/contract.py:641
+    // self.round_start +
+    intc_0 // 0
+    bytec 5 // "round_start"
+    app_global_get_ex
+    assert // check self.round_start exists
+    // smart_contracts/delegator_contract/contract.py:642
+    // self.delegation_terms_general.value.rounds_setup.native
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 80 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/delegator_contract/contract.py:641-642
+    // self.round_start +
+    // self.delegation_terms_general.value.rounds_setup.native
+    +
+    // smart_contracts/delegator_contract/contract.py:639-642
+    // # Check if submission was done in time
+    // assert Global.round <= (
+    //     self.round_start +
+    //     self.delegation_terms_general.value.rounds_setup.native
+    <=
+    // smart_contracts/delegator_contract/contract.py:639-643
+    // # Check if submission was done in time
+    // assert Global.round <= (
+    //     self.round_start +
+    //     self.delegation_terms_general.value.rounds_setup.native
+    // ), ERROR_KEY_SUBMIT_TOO_LATE
+    assert // Key submission was done too late.
+    // smart_contracts/delegator_contract/contract.py:647
+    // self.delegation_terms_general.value.fee_setup.native,
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 16 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/delegator_contract/contract.py:648
+    // self.delegation_terms_general.value.fee_setup_partner.native,
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 72 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/delegator_contract/contract.py:645-649
+    // # Distribute earnings from the setup fee
+    // earnings_distribution = self._distribute_earnings(
+    //     self.delegation_terms_general.value.fee_setup.native,
+    //     self.delegation_terms_general.value.fee_setup_partner.native,
+    // )
+    callsub _distribute_earnings
+    // smart_contracts/delegator_contract/contract.py:651-652
+    // # Change state to LIVE
+    // self.state = Bytes(STATE_SUBMITTED)
+    bytec_1 // "state"
+    bytec 15 // 0x04
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:657
+    // del_manager=arc4.Address(self.del_manager),
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    // smart_contracts/delegator_contract/contract.py:655-659
+    // return EarningsDistributionAndMessage(
+    //     earnings_distribution = earnings_distribution.copy(),
+    //     del_manager=arc4.Address(self.del_manager),
+    //     msg=msg.copy(),
+    // )
+    concat
+    // smart_contracts/delegator_contract/contract.py:654
+    // msg = NotificationMessage.from_bytes(MSG_CORE_KEYS_SUBMIT)
+    pushbytes 0x4d6573736167652066726f6d2056616c61723a204e6f646520686173206265656e20707265706172656420666f7220796f7520746f207374616b652e20202020202020202020202020202020202020202020202020202020202020202020202020202020
+    // smart_contracts/delegator_contract/contract.py:655-659
+    // return EarningsDistributionAndMessage(
+    //     earnings_distribution = earnings_distribution.copy(),
+    //     del_manager=arc4.Address(self.del_manager),
+    //     msg=msg.copy(),
+    // )
+    concat
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract._distribute_earnings(amount: uint64, amount_partner: uint64) -> bytes:
+_distribute_earnings:
+    // smart_contracts/delegator_contract/contract.py:876-881
+    // @subroutine
+    // def _distribute_earnings(
+    //     self,
+    //     amount: UInt64,
+    //     amount_partner: UInt64,
+    // ) -> EarningsDistribution:
+    proto 2 1
+    // smart_contracts/delegator_contract/contract.py:901
+    // asset = Asset(self.delegation_terms_general.value.fee_asset_id.native)
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 24 8 // on error: Index access is out of bounds
+    btoi
+    dup
+    // smart_contracts/delegator_contract/contract.py:902
+    // val_app = Application(self.validator_ad_app_id)
+    intc_0 // 0
+    bytec 18 // "validator_ad_app_id"
+    app_global_get_ex
+    swap
+    cover 2
+    assert // check self.validator_ad_app_id exists
+    // smart_contracts/delegator_contract/contract.py:903
+    // pla_app = Application(self.noticeboard_app_id)
+    intc_0 // 0
+    bytec 17 // "noticeboard_app_id"
+    app_global_get_ex
+    swap
+    cover 2
+    assert // check self.noticeboard_app_id exists
+    // smart_contracts/delegator_contract/contract.py:905
+    // partner = self.delegation_terms_general.value.partner_address.native
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 32 32 // on error: Index access is out of bounds
+    swap
+    // smart_contracts/delegator_contract/contract.py:910
+    // commission=self.delegation_terms_general.value.commission.native,
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/delegator_contract/contract.py:907-912
+    // # Calculate earnings
+    // earnings_distribution = calc_earnings(
+    //     amount=amount,
+    //     commission=self.delegation_terms_general.value.commission.native,
+    //     asset_id=asset.id,
+    // )
+    frame_dig -2
+    swap
+    dig 2
+    callsub calc_earnings
+    swap
+    // smart_contracts/delegator_contract/contract.py:914
+    // if asset.id != UInt64(ALGO_ASA_ID):
+    bz _distribute_earnings_else_body@19
+    // smart_contracts/delegator_contract/contract.py:915
+    // assert asset.balance(Global.current_application_address) >= amount + amount_partner, \
+    global CurrentApplicationAddress
+    frame_dig 0
+    dup
+    cover 2
+    asset_holding_get AssetBalance
+    assert // account opted into asset
+    frame_dig -2
+    frame_dig -1
+    +
+    >=
+    // smart_contracts/delegator_contract/contract.py:915-916
+    // assert asset.balance(Global.current_application_address) >= amount + amount_partner, \
+    //     ERROR_INSUFFICIENT_BALANCE
+    assert // Earnings cannot be paid because DelegatorContract has insufficient amount.
+    // smart_contracts/delegator_contract/contract.py:918
+    // assert not asset.frozen(Global.current_application_address), \
+    global CurrentApplicationAddress
+    dig 1
+    asset_holding_get AssetFrozen
+    assert // account opted into asset
+    !
+    // smart_contracts/delegator_contract/contract.py:918-919
+    // assert not asset.frozen(Global.current_application_address), \
+    //     ERROR_BALANCE_FROZEN
+    assert // Earnings cannot be paid because DelegatorContract has the asset frozen.
+    // smart_contracts/delegator_contract/contract.py:921-922
+    // # Send validator earnings to ValidatorAd if it can accept them
+    // if val_app.address.is_opted_in(asset):
+    frame_dig 1
+    app_params_get AppAddress
+    assert // application exists
+    swap
+    asset_holding_get AssetBalance
+    bury 1
+    bz _distribute_earnings_after_if_else@6
+    // smart_contracts/delegator_contract/contract.py:923
+    // if not asset.frozen(val_app.address):
+    frame_dig 1
+    app_params_get AppAddress
+    assert // application exists
+    frame_dig 0
+    asset_holding_get AssetFrozen
+    assert // account opted into asset
+    bnz _distribute_earnings_after_if_else@6
+    // smart_contracts/delegator_contract/contract.py:924-928
+    // itxn.AssetTransfer(
+    //     xfer_asset=asset,
+    //     asset_receiver=val_app.address,
+    //     asset_amount=earnings_distribution.user.native,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/delegator_contract/contract.py:926
+    // asset_receiver=val_app.address,
+    frame_dig 1
+    app_params_get AppAddress
+    assert // application exists
+    // smart_contracts/delegator_contract/contract.py:927
+    // asset_amount=earnings_distribution.user.native,
+    frame_dig 4
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    itxn_field AssetAmount
+    itxn_field AssetReceiver
+    frame_dig 0
+    itxn_field XferAsset
+    // smart_contracts/delegator_contract/contract.py:924
+    // itxn.AssetTransfer(
+    intc_2 // axfer
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/delegator_contract/contract.py:924-928
+    // itxn.AssetTransfer(
+    //     xfer_asset=asset,
+    //     asset_receiver=val_app.address,
+    //     asset_amount=earnings_distribution.user.native,
+    // ).submit()
+    itxn_submit
+
+_distribute_earnings_after_if_else@6:
+    // smart_contracts/delegator_contract/contract.py:930-931
+    // # Send platform earnings to Noticeboard if it can accept them
+    // if pla_app.address.is_opted_in(asset):
+    frame_dig 2
+    app_params_get AppAddress
+    assert // application exists
+    frame_dig 0
+    asset_holding_get AssetBalance
+    bury 1
+    bz _distribute_earnings_after_if_else@11
+    // smart_contracts/delegator_contract/contract.py:932
+    // if not asset.frozen(pla_app.address):
+    frame_dig 2
+    app_params_get AppAddress
+    assert // application exists
+    frame_dig 0
+    asset_holding_get AssetFrozen
+    assert // account opted into asset
+    bnz _distribute_earnings_after_if_else@11
+    // smart_contracts/delegator_contract/contract.py:933-937
+    // itxn.AssetTransfer(
+    //     xfer_asset=asset,
+    //     asset_receiver=pla_app.address,
+    //     asset_amount=earnings_distribution.platform.native,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/delegator_contract/contract.py:935
+    // asset_receiver=pla_app.address,
+    frame_dig 2
+    app_params_get AppAddress
+    assert // application exists
+    // smart_contracts/delegator_contract/contract.py:936
+    // asset_amount=earnings_distribution.platform.native,
+    frame_dig 4
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    itxn_field AssetAmount
+    itxn_field AssetReceiver
+    frame_dig 0
+    itxn_field XferAsset
+    // smart_contracts/delegator_contract/contract.py:933
+    // itxn.AssetTransfer(
+    intc_2 // axfer
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/delegator_contract/contract.py:933-937
+    // itxn.AssetTransfer(
+    //     xfer_asset=asset,
+    //     asset_receiver=pla_app.address,
+    //     asset_amount=earnings_distribution.platform.native,
+    // ).submit()
+    itxn_submit
+
+_distribute_earnings_after_if_else@11:
+    // smart_contracts/delegator_contract/contract.py:939-940
+    // # Send partner earnings to partner_address if it is non-zero
+    // if partner != Global.zero_address:
+    frame_dig 3
+    global ZeroAddress
+    !=
+    bz _distribute_earnings_after_if_else@27
+    // smart_contracts/delegator_contract/contract.py:941-942
+    // # Send the earnings if the partner_address can accept them
+    // if partner.is_opted_in(asset):
+    frame_dig 3
+    frame_dig 0
+    asset_holding_get AssetBalance
+    bury 1
+    bz _distribute_earnings_after_if_else@27
+    // smart_contracts/delegator_contract/contract.py:943
+    // if not asset.frozen(partner):
+    frame_dig 3
+    frame_dig 0
+    asset_holding_get AssetFrozen
+    assert // account opted into asset
+    bnz _distribute_earnings_after_if_else@27
+    // smart_contracts/delegator_contract/contract.py:944-948
+    // itxn.AssetTransfer(
+    //     xfer_asset=asset,
+    //     asset_receiver=partner,
+    //     asset_amount=amount_partner,
+    // ).submit()
+    itxn_begin
+    frame_dig -1
+    itxn_field AssetAmount
+    frame_dig 3
+    itxn_field AssetReceiver
+    frame_dig 0
+    itxn_field XferAsset
+    // smart_contracts/delegator_contract/contract.py:944
+    // itxn.AssetTransfer(
+    intc_2 // axfer
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/delegator_contract/contract.py:944-948
+    // itxn.AssetTransfer(
+    //     xfer_asset=asset,
+    //     asset_receiver=partner,
+    //     asset_amount=amount_partner,
+    // ).submit()
+    itxn_submit
+    b _distribute_earnings_after_if_else@27
+
+_distribute_earnings_else_body@19:
+    // smart_contracts/delegator_contract/contract.py:951
+    // Global.current_application_address.balance -
+    global CurrentApplicationAddress
+    acct_params_get AcctBalance
+    assert // account funded
+    // smart_contracts/delegator_contract/contract.py:952
+    // Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/delegator_contract/contract.py:951-952
+    // Global.current_application_address.balance -
+    // Global.current_application_address.min_balance
+    -
+    // smart_contracts/delegator_contract/contract.py:953
+    // ) >= amount + amount_partner, \
+    frame_dig -2
+    frame_dig -1
+    +
+    // smart_contracts/delegator_contract/contract.py:951-953
+    //     Global.current_application_address.balance -
+    //     Global.current_application_address.min_balance
+    // ) >= amount + amount_partner, \
+    >=
+    // smart_contracts/delegator_contract/contract.py:950-954
+    // assert (
+    //     Global.current_application_address.balance -
+    //     Global.current_application_address.min_balance
+    // ) >= amount + amount_partner, \
+    //     ERROR_INSUFFICIENT_ALGO
+    assert // Earnings cannot be paid because DelegatorContract has insufficient ALGO.
+    // smart_contracts/delegator_contract/contract.py:957-961
+    // # Send validator earnings to ValidatorAd
+    // itxn.Payment(
+    //     receiver=val_app.address,
+    //     amount=earnings_distribution.user.native,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/delegator_contract/contract.py:959
+    // receiver=val_app.address,
+    frame_dig 1
+    app_params_get AppAddress
+    assert // application exists
+    // smart_contracts/delegator_contract/contract.py:960
+    // amount=earnings_distribution.user.native,
+    frame_dig 4
+    dup
+    cover 2
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    itxn_field Amount
+    itxn_field Receiver
+    // smart_contracts/delegator_contract/contract.py:957-958
+    // # Send validator earnings to ValidatorAd
+    // itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/delegator_contract/contract.py:957-961
+    // # Send validator earnings to ValidatorAd
+    // itxn.Payment(
+    //     receiver=val_app.address,
+    //     amount=earnings_distribution.user.native,
+    // ).submit()
+    itxn_submit
+    // smart_contracts/delegator_contract/contract.py:963-967
+    // # Send platform earnings to Noticeboard
+    // itxn.Payment(
+    //     receiver=pla_app.address,
+    //     amount=earnings_distribution.platform.native,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/delegator_contract/contract.py:965
+    // receiver=pla_app.address,
+    frame_dig 2
+    app_params_get AppAddress
+    assert // application exists
+    // smart_contracts/delegator_contract/contract.py:966
+    // amount=earnings_distribution.platform.native,
+    swap
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    itxn_field Amount
+    itxn_field Receiver
+    // smart_contracts/delegator_contract/contract.py:963-964
+    // # Send platform earnings to Noticeboard
+    // itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/delegator_contract/contract.py:963-967
+    // # Send platform earnings to Noticeboard
+    // itxn.Payment(
+    //     receiver=pla_app.address,
+    //     amount=earnings_distribution.platform.native,
+    // ).submit()
+    itxn_submit
+    // smart_contracts/delegator_contract/contract.py:969-970
+    // # Send partner earnings to partner_address if it is non-zero
+    // if partner != Global.zero_address:
+    frame_dig 3
+    global ZeroAddress
+    !=
+    bz _distribute_earnings_after_if_else@27
+    // smart_contracts/delegator_contract/contract.py:971-972
+    // # Try sending partner earnings to partner_address
+    // if op.balance(partner) >= Global.min_balance:
+    frame_dig 3
+    balance
+    global MinBalance
+    >=
+    bz _distribute_earnings_after_if_else@27
+    // smart_contracts/delegator_contract/contract.py:973-976
+    // itxn.Payment(
+    //     receiver=partner,
+    //     amount=amount_partner,
+    // ).submit()
+    itxn_begin
+    frame_dig -1
+    itxn_field Amount
+    frame_dig 3
+    itxn_field Receiver
+    // smart_contracts/delegator_contract/contract.py:973
+    // itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/delegator_contract/contract.py:973-976
+    // itxn.Payment(
+    //     receiver=partner,
+    //     amount=amount_partner,
+    // ).submit()
+    itxn_submit
+
+_distribute_earnings_after_if_else@27:
+    // smart_contracts/delegator_contract/contract.py:978
+    // return earnings_distribution.copy()
+    frame_dig 4
+    frame_bury 0
+    retsub
+
+
+// smart_contracts.helpers.common.calc_earnings(amount: uint64, commission: uint64, asset_id: uint64) -> bytes:
+calc_earnings:
+    // smart_contracts/helpers/common.py:734-739
+    // @subroutine
+    // def calc_earnings(
+    //     amount: UInt64,
+    //     commission: UInt64,
+    //     asset_id: UInt64,
+    // ) -> EarningsDistribution:
+    proto 3 1
+    // smart_contracts/helpers/common.py:759
+    // tmp = op.mulw(amount, commission)
+    frame_dig -3
+    frame_dig -2
+    mulw
+    // smart_contracts/helpers/common.py:760
+    // plat_earn = op.divw(tmp[0], tmp[1], UInt64(COMMISSION_MAX))
+    pushint 1000000 // 1000000
+    divw
+    // smart_contracts/helpers/common.py:761
+    // user_earn = amount - plat_earn
+    frame_dig -3
+    dig 1
+    -
+    // smart_contracts/helpers/common.py:764
+    // user=arc4.UInt64(user_earn),
+    itob
+    // smart_contracts/helpers/common.py:765
+    // platform=arc4.UInt64(plat_earn),
+    swap
+    itob
+    // smart_contracts/helpers/common.py:766
+    // asset_id=arc4.UInt64(asset_id),
+    frame_dig -1
+    itob
+    // smart_contracts/helpers/common.py:763-767
+    // return EarningsDistribution(
+    //     user=arc4.UInt64(user_earn),
+    //     platform=arc4.UInt64(plat_earn),
+    //     asset_id=arc4.UInt64(asset_id),
+    // )
+    cover 2
+    concat
+    swap
+    concat
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract.breach_limits() -> bytes:
+breach_limits:
+    // smart_contracts/delegator_contract/contract.py:661-664
+    // @arc4.abimethod()
+    // def breach_limits(
+    //     self,
+    // ) -> BreachLimitsReturn:
+    proto 0 1
+    // smart_contracts/delegator_contract/contract.py:682
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/delegator_contract/contract.py:683
+    // assert self.state == Bytes(STATE_LIVE), ERROR_NOT_STATE_LIVE
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 6 // 0x05
+    ==
+    assert // Cannot be called from other state than LIVE.
+    // smart_contracts/delegator_contract/contract.py:685
+    // assert self.round_end > Global.round, ERROR_ALREADY_EXPIRED
+    intc_0 // 0
+    bytec_3 // "round_end"
+    app_global_get_ex
+    assert // check self.round_end exists
+    global Round
+    >
+    assert // Cannot be called when the contract has already expired.
+    // smart_contracts/delegator_contract/contract.py:687
+    // assert self.round_breach_last + self.delegation_terms_balance.value.rounds_breach.native < Global.round, \
+    intc_0 // 0
+    bytec 16 // "round_breach_last"
+    app_global_get_ex
+    assert // check self.round_breach_last exists
+    intc_0 // 0
+    bytec 12 // "B"
+    app_global_get_ex
+    assert // check self.delegation_terms_balance exists
+    extract 16 8 // on error: Index access is out of bounds
+    btoi
+    +
+    global Round
+    <
+    // smart_contracts/delegator_contract/contract.py:687-688
+    // assert self.round_breach_last + self.delegation_terms_balance.value.rounds_breach.native < Global.round, \
+    //     ERROR_LIMIT_BREACH_TOO_EARLY
+    assert // Not enough rounds have passed since last limit breach event.
+    // smart_contracts/delegator_contract/contract.py:690
+    // assert not self._is_eligible().native, ERROR_IS_STILL_ELIGIBLE
+    callsub _is_eligible
+    intc_0 // 0
+    getbit
+    !
+    assert // Delegator beneficiary is still eligible according to the agreed limits.
+    // smart_contracts/delegator_contract/contract.py:692-693
+    // # Update limit breach event counter
+    // self.cnt_breach_del += 1
+    intc_0 // 0
+    bytec 13 // "cnt_breach_del"
+    app_global_get_ex
+    assert // check self.cnt_breach_del exists
+    intc_1 // 1
+    +
+    bytec 13 // "cnt_breach_del"
+    swap
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:694
+    // self.round_breach_last = Global.round
+    bytec 16 // "round_breach_last"
+    global Round
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:696-697
+    // # Claim earnings up to this round
+    // earnings_distribution = self.contract_claim()
+    callsub contract_claim
+    // smart_contracts/delegator_contract/contract.py:699
+    // max_breach_reached = False
+    intc_0 // 0
+    // smart_contracts/delegator_contract/contract.py:700
+    // msg = NotificationMessage.from_bytes(MSG_CORE_BREACH_LIMITS_ERROR)
+    pushbytes 0x4d6573736167652066726f6d2056616c61723a20596f75722062616c616e6365206973206f75747369646520746865206c696d69747320616772656564207769746820746865206e6f64652072756e6e65722e20436f7272656374206974212020202020
+    // smart_contracts/delegator_contract/contract.py:701
+    // if self.cnt_breach_del >= self.delegation_terms_balance.value.cnt_breach_del_max:
+    intc_0 // 0
+    bytec 12 // "B"
+    app_global_get_ex
+    assert // check self.delegation_terms_balance exists
+    extract 8 8 // on error: Index access is out of bounds
+    intc_0 // 0
+    bytec 13 // "cnt_breach_del"
+    app_global_get_ex
+    assert // check self.cnt_breach_del exists
+    itob
+    b<=
+    bz breach_limits_after_if_else@2
+    // smart_contracts/delegator_contract/contract.py:702-703
+    // # Change state to ENDED_LIMITS
+    // self.state = Bytes(STATE_ENDED_LIMITS)
+    bytec_1 // "state"
+    pushbytes 0x12
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:704-705
+    // # Mark end of contract
+    // self.round_ended = Global.round
+    bytec 8 // "round_ended"
+    global Round
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:706-707
+    // # Mark that maximum number of breaches has been reached
+    // max_breach_reached = True
+    intc_1 // 1
+    frame_bury 1
+    // smart_contracts/delegator_contract/contract.py:708
+    // msg = NotificationMessage.from_bytes(MSG_CORE_BREACH_LIMITS_END)
+    pushbytes 0x4d6573736167652066726f6d2056616c61723a20596f757220636f6e74726163742068617320656e646564206265636175736520796f7520627265616368656420746865207465726d7320746f6f206d616e792074696d65732e20202020202020202020
+    frame_bury 2
+
+breach_limits_after_if_else@2:
+    // smart_contracts/delegator_contract/contract.py:711
+    // max_breach_reached = arc4.Bool(max_breach_reached),
+    bytec 19 // 0x00
+    intc_0 // 0
+    frame_dig 1
+    setbit
+    // smart_contracts/delegator_contract/contract.py:713
+    // del_manager=arc4.Address(self.del_manager),
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    // smart_contracts/delegator_contract/contract.py:710-715
+    // return BreachLimitsReturn(
+    //     max_breach_reached = arc4.Bool(max_breach_reached),
+    //     earnings_distribution=earnings_distribution.copy(),
+    //     del_manager=arc4.Address(self.del_manager),
+    //     msg=msg.copy(),
+    // )
+    swap
+    frame_dig 0
+    concat
+    swap
+    concat
+    frame_dig 2
+    concat
+    frame_bury 0
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract.contract_claim() -> bytes:
+contract_claim:
+    // smart_contracts/delegator_contract/contract.py:830-833
+    // @arc4.abimethod()
+    // def contract_claim(
+    //     self,
+    // ) -> EarningsDistribution:
+    proto 0 1
+    // smart_contracts/delegator_contract/contract.py:847
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/delegator_contract/contract.py:848
+    // assert self.state == Bytes(STATE_LIVE), ERROR_NOT_STATE_LIVE
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 6 // 0x05
+    ==
+    assert // Cannot be called from other state than LIVE.
+    // smart_contracts/delegator_contract/contract.py:850
+    // assert self.round_claim_last < Global.round, ERROR_OPERATION_FEE_ALREADY_CLAIMED_AT_ROUND
+    intc_0 // 0
+    bytec 9 // "round_claim_last"
+    app_global_get_ex
+    assert // check self.round_claim_last exists
+    global Round
+    <
+    assert // Operational fee has already been claimed up to this round.
+    // smart_contracts/delegator_contract/contract.py:852
+    // if Global.round > self.round_end:
+    global Round
+    intc_0 // 0
+    bytec_3 // "round_end"
+    app_global_get_ex
+    assert // check self.round_end exists
+    >
+    bz contract_claim_else_body@2
+    // smart_contracts/delegator_contract/contract.py:853
+    // round_claim_to = self.round_end
+    intc_0 // 0
+    bytec_3 // "round_end"
+    app_global_get_ex
+    assert // check self.round_end exists
+    b contract_claim_after_if_else@3
+
+contract_claim_else_body@2:
+    // smart_contracts/delegator_contract/contract.py:855
+    // round_claim_to = Global.round
+    global Round
+
+contract_claim_after_if_else@3:
+    // smart_contracts/delegator_contract/contract.py:858
+    // self.delegation_terms_general.value.fee_round.native,
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/delegator_contract/contract.py:860
+    // self.round_claim_last,
+    intc_0 // 0
+    bytec 9 // "round_claim_last"
+    app_global_get_ex
+    assert // check self.round_claim_last exists
+    // smart_contracts/delegator_contract/contract.py:857-861
+    // fee_operational_earned = calc_fee_operational(
+    //     self.delegation_terms_general.value.fee_round.native,
+    //     round_claim_to,
+    //     self.round_claim_last,
+    // )
+    dig 2
+    swap
+    callsub calc_fee_operational
+    // smart_contracts/delegator_contract/contract.py:863
+    // self.delegation_terms_general.value.fee_round_partner.native,
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 64 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/delegator_contract/contract.py:865
+    // self.round_claim_last,
+    intc_0 // 0
+    bytec 9 // "round_claim_last"
+    app_global_get_ex
+    assert // check self.round_claim_last exists
+    // smart_contracts/delegator_contract/contract.py:862-866
+    // fee_operational_earned_partner = calc_fee_operational(
+    //     self.delegation_terms_general.value.fee_round_partner.native,
+    //     round_claim_to,
+    //     self.round_claim_last,
+    // )
+    dig 3
+    swap
+    callsub calc_fee_operational
+    // smart_contracts/delegator_contract/contract.py:867-870
+    // earnings_distribution = self._distribute_earnings(
+    //     fee_operational_earned,
+    //     fee_operational_earned_partner,
+    // )
+    callsub _distribute_earnings
+    // smart_contracts/delegator_contract/contract.py:872
+    // self.round_claim_last = round_claim_to
+    bytec 9 // "round_claim_last"
+    uncover 2
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:874
+    // return earnings_distribution.copy()
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract.breach_pay() -> bytes:
+breach_pay:
+    // smart_contracts/delegator_contract/contract.py:717-720
+    // @arc4.abimethod()
+    // def breach_pay(
+    //     self,
+    // ) -> Message:
+    proto 0 1
+    pushbytes ""
+    dupn 4
+    // smart_contracts/delegator_contract/contract.py:733
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/delegator_contract/contract.py:734
+    // assert self.state == Bytes(STATE_LIVE) or self.state == Bytes(STATE_SUBMITTED) or self.state == Bytes(STATE_READY), ERROR_NOT_STATE_LIVE_OR_SUBMITTED_OR_READY  # noqa: E501
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 6 // 0x05
+    ==
+    bnz breach_pay_bool_true@3
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 15 // 0x04
+    ==
+    bnz breach_pay_bool_true@3
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 14 // 0x03
+    ==
+    bz breach_pay_bool_false@4
+
+breach_pay_bool_true@3:
+    intc_1 // 1
+    b breach_pay_bool_merge@5
+
+breach_pay_bool_false@4:
+    intc_0 // 0
+
+breach_pay_bool_merge@5:
+    // smart_contracts/delegator_contract/contract.py:734
+    // assert self.state == Bytes(STATE_LIVE) or self.state == Bytes(STATE_SUBMITTED) or self.state == Bytes(STATE_READY), ERROR_NOT_STATE_LIVE_OR_SUBMITTED_OR_READY  # noqa: E501
+    assert // Cannot be called from other state than LIVE or SUBMITTED or READY.
+    // smart_contracts/delegator_contract/contract.py:736
+    // assert self.delegation_terms_general.value.fee_asset_id != UInt64(ALGO_ASA_ID), ERROR_ALGO_IS_PERMISSIONLESS
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 24 8 // on error: Index access is out of bounds
+    intc_0 // 0
+    itob
+    b!=
+    assert // ALGO cannot be frozen or clawed back.
+    // smart_contracts/delegator_contract/contract.py:738
+    // fee_round = self.delegation_terms_general.value.fee_round.native
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    frame_bury 1
+    // smart_contracts/delegator_contract/contract.py:739
+    // fee_round_partner = self.delegation_terms_general.value.fee_round_partner.native
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 64 8 // on error: Index access is out of bounds
+    btoi
+    frame_bury 2
+    // smart_contracts/delegator_contract/contract.py:740
+    // fee_setup = self.delegation_terms_general.value.fee_setup.native
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 16 8 // on error: Index access is out of bounds
+    btoi
+    frame_bury 3
+    // smart_contracts/delegator_contract/contract.py:741
+    // fee_setup_partner = self.delegation_terms_general.value.fee_setup_partner.native
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 72 8 // on error: Index access is out of bounds
+    btoi
+    frame_bury 4
+    // smart_contracts/delegator_contract/contract.py:743
+    // asset = Asset(self.delegation_terms_general.value.fee_asset_id.native)
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 24 8 // on error: Index access is out of bounds
+    btoi
+    dup
+    frame_bury 0
+    // smart_contracts/delegator_contract/contract.py:744
+    // if asset.frozen(Global.current_application_address):
+    global CurrentApplicationAddress
+    swap
+    asset_holding_get AssetFrozen
+    assert // account opted into asset
+    bnz breach_pay_after_if_else@19
+    // smart_contracts/delegator_contract/contract.py:747
+    // if self.state == Bytes(STATE_READY):
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 14 // 0x03
+    ==
+    bz breach_pay_else_body@9
+    // smart_contracts/delegator_contract/contract.py:748
+    // base_fee = fee_setup + self.fee_operational
+    intc_0 // 0
+    bytec 10 // "fee_operational"
+    app_global_get_ex
+    assert // check self.fee_operational exists
+    frame_dig 3
+    +
+    // smart_contracts/delegator_contract/contract.py:749
+    // partner_fee = fee_setup_partner + self.fee_operational_partner
+    intc_0 // 0
+    bytec 11 // "fee_operational_partner"
+    app_global_get_ex
+    assert // check self.fee_operational_partner exists
+    frame_dig 4
+    +
+    // smart_contracts/delegator_contract/contract.py:750
+    // amt = base_fee + partner_fee
+    +
+    // smart_contracts/delegator_contract/contract.py:751
+    // assert asset.balance(Global.current_application_address) < amt, ERROR_ENOUGH_FUNDS_FOR_SETUP_AND_OPERATIONAL_FEE  # noqa: E501
+    global CurrentApplicationAddress
+    frame_dig 0
+    asset_holding_get AssetBalance
+    assert // account opted into asset
+    >
+    assert // Contract has sufficient funds to pay the setup and operational fee.
+    b breach_pay_after_if_else@19
+
+breach_pay_else_body@9:
+    // smart_contracts/delegator_contract/contract.py:752
+    // elif self.state == Bytes(STATE_SUBMITTED):
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 15 // 0x04
+    ==
+    bz breach_pay_else_body@11
+    // smart_contracts/delegator_contract/contract.py:753
+    // base_fee = self.fee_operational
+    intc_0 // 0
+    bytec 10 // "fee_operational"
+    app_global_get_ex
+    assert // check self.fee_operational exists
+    // smart_contracts/delegator_contract/contract.py:754
+    // partner_fee = self.fee_operational_partner
+    intc_0 // 0
+    bytec 11 // "fee_operational_partner"
+    app_global_get_ex
+    assert // check self.fee_operational_partner exists
+    // smart_contracts/delegator_contract/contract.py:755
+    // amt = base_fee + partner_fee
+    +
+    // smart_contracts/delegator_contract/contract.py:756
+    // assert asset.balance(Global.current_application_address) < amt, ERROR_ENOUGH_FUNDS_FOR_OPERATIONAL_FEE
+    global CurrentApplicationAddress
+    frame_dig 0
+    asset_holding_get AssetBalance
+    assert // account opted into asset
+    >
+    assert // Contract has sufficient funds to pay the full operational fee.
+    b breach_pay_after_if_else@19
+
+breach_pay_else_body@11:
+    // smart_contracts/delegator_contract/contract.py:757
+    // elif self.state == Bytes(STATE_LIVE):
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 6 // 0x05
+    ==
+    bz breach_pay_after_if_else@19
+    // smart_contracts/delegator_contract/contract.py:758
+    // if Global.round < self.round_end:
+    global Round
+    intc_0 // 0
+    bytec_3 // "round_end"
+    app_global_get_ex
+    assert // check self.round_end exists
+    <
+    bz breach_pay_else_body@14
+    // smart_contracts/delegator_contract/contract.py:759
+    // tmp_r = Global.round
+    global Round
+    b breach_pay_after_if_else@15
+
+breach_pay_else_body@14:
+    // smart_contracts/delegator_contract/contract.py:761
+    // tmp_r = self.round_end
+    intc_0 // 0
+    bytec_3 // "round_end"
+    app_global_get_ex
+    assert // check self.round_end exists
+
+breach_pay_after_if_else@15:
+    // smart_contracts/delegator_contract/contract.py:766
+    // round_start=self.round_claim_last,
+    intc_0 // 0
+    bytec 9 // "round_claim_last"
+    app_global_get_ex
+    assert // check self.round_claim_last exists
+    // smart_contracts/delegator_contract/contract.py:763-767
+    // base_fee = calc_fee_operational(
+    //     fee_round=fee_round,
+    //     round_end=tmp_r,
+    //     round_start=self.round_claim_last,
+    // )
+    frame_dig 1
+    dig 2
+    uncover 2
+    callsub calc_fee_operational
+    // smart_contracts/delegator_contract/contract.py:771
+    // round_start=self.round_claim_last,
+    intc_0 // 0
+    bytec 9 // "round_claim_last"
+    app_global_get_ex
+    assert // check self.round_claim_last exists
+    // smart_contracts/delegator_contract/contract.py:768-772
+    // partner_fee = calc_fee_operational(
+    //     fee_round=fee_round_partner,
+    //     round_end=tmp_r,
+    //     round_start=self.round_claim_last,
+    // )
+    frame_dig 2
+    uncover 3
+    uncover 2
+    callsub calc_fee_operational
+    // smart_contracts/delegator_contract/contract.py:773
+    // amt = base_fee + partner_fee
+    +
+    // smart_contracts/delegator_contract/contract.py:774
+    // assert asset.balance(Global.current_application_address) < amt, ERROR_ENOUGH_FUNDS_FOR_EARNED_OPERATIONAL_FEE  # noqa: E501
+    global CurrentApplicationAddress
+    frame_dig 0
+    asset_holding_get AssetBalance
+    assert // account opted into asset
+    >
+    assert // Contract has sufficient funds to pay the earned operational fee.
+
+breach_pay_after_if_else@19:
+    // smart_contracts/delegator_contract/contract.py:776-777
+    // # Change state to ENDED_CANNOT_PAY
+    // self.state = Bytes(STATE_ENDED_CANNOT_PAY)
+    bytec_1 // "state"
+    pushbytes 0x16
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:778-779
+    // # Mark end of contract
+    // self.round_ended = Global.round
+    bytec 8 // "round_ended"
+    global Round
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:783
+    // del_manager=arc4.Address(self.del_manager),
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    // smart_contracts/delegator_contract/contract.py:781
+    // msg = NotificationMessage.from_bytes(MSG_CORE_BREACH_PAY)
+    pushbytes 0x4d6573736167652066726f6d2056616c61723a20546865726520697320616e206973737565207769746820796f7572207061796d656e7420746f20746865206e6f64652072756e6e65722e20596f7520646f6e2774207374616b6520616e796d6f72652e
+    // smart_contracts/delegator_contract/contract.py:782-785
+    // return Message(
+    //     del_manager=arc4.Address(self.del_manager),
+    //     msg=msg.copy(),
+    // )
+    concat
+    frame_bury 0
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract.breach_suspended() -> bytes:
+breach_suspended:
+    // smart_contracts/delegator_contract/contract.py:787-790
+    // @arc4.abimethod()
+    // def breach_suspended(
+    //     self,
+    // ) -> EarningsDistributionAndMessage:
+    proto 0 1
+    // smart_contracts/delegator_contract/contract.py:806
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/delegator_contract/contract.py:807
+    // assert self.state == Bytes(STATE_LIVE), ERROR_NOT_STATE_LIVE
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 6 // 0x05
+    ==
+    assert // Cannot be called from other state than LIVE.
+    // smart_contracts/delegator_contract/contract.py:809
+    // assert self.round_end > Global.round, ERROR_ALREADY_EXPIRED
+    intc_0 // 0
+    bytec_3 // "round_end"
+    app_global_get_ex
+    assert // check self.round_end exists
+    global Round
+    >
+    assert // Cannot be called when the contract has already expired.
+    // smart_contracts/delegator_contract/contract.py:811-812
+    // # Confirm that account was suspended based on `AcctIncentiveEligible` parameter
+    // acct_incentive_eligible_raw = op.AcctParamsGet.acct_incentive_eligible(self.del_beneficiary)
+    intc_0 // 0
+    bytec 7 // "del_beneficiary"
+    app_global_get_ex
+    assert // check self.del_beneficiary exists
+    acct_params_get AcctIncentiveEligible
+    pop
+    // smart_contracts/delegator_contract/contract.py:814
+    // assert not acct_incentive_eligible, ERROR_ACCOUNT_HAS_NOT_BEEN_SUSPENDED
+    !
+    assert // Account is still participating in consensus.
+    // smart_contracts/delegator_contract/contract.py:816-817
+    // # Claim earnings up to this round
+    // earnings_distribution = self.contract_claim()
+    callsub contract_claim
+    // smart_contracts/delegator_contract/contract.py:818-819
+    // # Change state to ENDED_SUSPENDED
+    // self.state = Bytes(STATE_ENDED_SUSPENDED)
+    bytec_1 // "state"
+    pushbytes 0x15
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:820-821
+    // # Mark end of contract
+    // self.round_ended = Global.round
+    bytec 8 // "round_ended"
+    global Round
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:826
+    // del_manager=arc4.Address(self.del_manager),
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    // smart_contracts/delegator_contract/contract.py:824-828
+    // return EarningsDistributionAndMessage(
+    //     earnings_distribution=earnings_distribution.copy(),
+    //     del_manager=arc4.Address(self.del_manager),
+    //     msg=msg.copy(),
+    // )
+    concat
+    // smart_contracts/delegator_contract/contract.py:823
+    // msg = NotificationMessage.from_bytes(MSG_CORE_BREACH_SUSPENDED)
+    pushbytes 0x4d6573736167652066726f6d2056616c61723a20546865206e6574776f726b206861732073757370656e64656420796f7572206163636f756e742066726f6d207374616b696e672e20596f7520646f6e2774207374616b6520616e796d6f72652e202020
+    // smart_contracts/delegator_contract/contract.py:824-828
+    // return EarningsDistributionAndMessage(
+    //     earnings_distribution=earnings_distribution.copy(),
+    //     del_manager=arc4.Address(self.del_manager),
+    //     msg=msg.copy(),
+    // )
+    concat
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract.contract_expired() -> bytes:
+contract_expired:
+    // smart_contracts/delegator_contract/contract.py:980-983
+    // @arc4.abimethod()
+    // def contract_expired(
+    //     self,
+    // ) -> EarningsDistributionAndMessage:
+    proto 0 1
+    // smart_contracts/delegator_contract/contract.py:999
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/delegator_contract/contract.py:1000
+    // assert self.state == Bytes(STATE_LIVE), ERROR_NOT_STATE_LIVE
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 6 // 0x05
+    ==
+    assert // Cannot be called from other state than LIVE.
+    // smart_contracts/delegator_contract/contract.py:1002
+    // assert self.round_end <= Global.round, ERROR_NOT_YET_EXPIRED
+    intc_0 // 0
+    bytec_3 // "round_end"
+    app_global_get_ex
+    assert // check self.round_end exists
+    global Round
+    <=
+    assert // Cannot be called when the contract has not yet expired.
+    // smart_contracts/delegator_contract/contract.py:1004-1005
+    // # Claim earnings up to this round
+    // earnings_distribution = self.contract_claim()
+    callsub contract_claim
+    // smart_contracts/delegator_contract/contract.py:1006-1007
+    // # Change state to ENDED_EXPIRED
+    // self.state = Bytes(STATE_ENDED_EXPIRED)
+    bytec_1 // "state"
+    pushbytes 0x14
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:1008-1009
+    // # Mark end of contract
+    // self.round_ended = Global.round
+    bytec 8 // "round_ended"
+    global Round
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:1014
+    // del_manager=arc4.Address(self.del_manager),
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    // smart_contracts/delegator_contract/contract.py:1012-1016
+    // return EarningsDistributionAndMessage(
+    //     earnings_distribution=earnings_distribution.copy(),
+    //     del_manager=arc4.Address(self.del_manager),
+    //     msg=msg.copy(),
+    // )
+    concat
+    // smart_contracts/delegator_contract/contract.py:1011
+    // msg = NotificationMessage.from_bytes(MSG_CORE_CONTRACT_EXPIRED)
+    pushbytes 0x4d6573736167652066726f6d2056616c61723a20596f757220636f6e747261637420746f207374616b6520776974682061206e6f64652072756e6e65722068617320656e6465642e20202020202020202020202020202020202020202020202020202020
+    // smart_contracts/delegator_contract/contract.py:1012-1016
+    // return EarningsDistributionAndMessage(
+    //     earnings_distribution=earnings_distribution.copy(),
+    //     del_manager=arc4.Address(self.del_manager),
+    //     msg=msg.copy(),
+    // )
+    concat
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract.contract_withdraw(del_manager: bytes) -> bytes:
+contract_withdraw:
+    // smart_contracts/delegator_contract/contract.py:1018-1022
+    // @arc4.abimethod()
+    // def contract_withdraw(
+    //     self,
+    //     del_manager: arc4.Address,
+    // ) -> EarningsDistribution:
+    proto 1 1
+    // smart_contracts/delegator_contract/contract.py:1040
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/delegator_contract/contract.py:1041
+    // assert self.state == Bytes(STATE_LIVE), ERROR_NOT_STATE_LIVE
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 6 // 0x05
+    ==
+    assert // Cannot be called from other state than LIVE.
+    // smart_contracts/delegator_contract/contract.py:1043
+    // assert del_manager == self.del_manager, ERROR_NOT_MANAGER
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    frame_dig -1
+    ==
+    assert // Can only be approved by delegator manager.
+    // smart_contracts/delegator_contract/contract.py:1045
+    // assert self.round_end > Global.round, ERROR_ALREADY_EXPIRED
+    intc_0 // 0
+    bytec_3 // "round_end"
+    app_global_get_ex
+    assert // check self.round_end exists
+    global Round
+    >
+    assert // Cannot be called when the contract has already expired.
+    // smart_contracts/delegator_contract/contract.py:1047-1048
+    // # Claim earnings up to this round
+    // earnings_distribution = self.contract_claim()
+    callsub contract_claim
+    // smart_contracts/delegator_contract/contract.py:1049-1050
+    // # Change state to ENDED_WITHDREW
+    // self.state = Bytes(STATE_ENDED_WITHDREW)
+    bytec_1 // "state"
+    pushbytes 0x13
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:1051-1052
+    // # Mark end of contract
+    // self.round_ended = Global.round
+    bytec 8 // "round_ended"
+    global Round
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:1054
+    // return earnings_distribution.copy()
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract.contract_delete(del_manager: bytes) -> bytes:
+contract_delete:
+    // smart_contracts/delegator_contract/contract.py:1056-1060
+    // @arc4.abimethod(allow_actions=["DeleteApplication"])
+    // def contract_delete(
+    //     self,
+    //     del_manager: arc4.Address,
+    // ) -> ContractDeleteReturn:
+    proto 1 1
+    // smart_contracts/delegator_contract/contract.py:1080
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/delegator_contract/contract.py:1081
+    // assert (self.state & Bytes(STATE_ENDED_MASK)) == Bytes(STATE_ENDED_MASK), ERROR_NOT_ENDED_STATE
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 21 // 0x10
+    b&
+    bytec 21 // 0x10
+    ==
+    assert // Cannot be called from other state than ENDED_xyz.
+    // smart_contracts/delegator_contract/contract.py:1083
+    // assert del_manager == self.del_manager, ERROR_NOT_MANAGER
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    frame_dig -1
+    ==
+    assert // Can only be approved by delegator manager.
+    // smart_contracts/delegator_contract/contract.py:1085
+    // asset_id = self.delegation_terms_general.value.fee_asset_id.native
+    intc_0 // 0
+    bytec_0 // "G"
+    app_global_get_ex
+    assert // check self.delegation_terms_general exists
+    extract 24 8 // on error: Index access is out of bounds
+    btoi
+    dup
+    // smart_contracts/delegator_contract/contract.py:1086
+    // if asset_id == UInt64(ALGO_ASA_ID):
+    bnz contract_delete_else_body@3
+    // smart_contracts/delegator_contract/contract.py:1087
+    // bal = Global.current_application_address.balance - Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctBalance
+    assert // account funded
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    -
+    dup
+    // smart_contracts/delegator_contract/contract.py:1089-1092
+    // itxn.Payment(
+    //     receiver=self.del_manager,
+    //     amount=bal,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/delegator_contract/contract.py:1090
+    // receiver=self.del_manager,
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    itxn_field Receiver
+    itxn_field Amount
+    // smart_contracts/delegator_contract/contract.py:1089
+    // itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/delegator_contract/contract.py:1089-1092
+    // itxn.Payment(
+    //     receiver=self.del_manager,
+    //     amount=bal,
+    // ).submit()
+    itxn_submit
+    b contract_delete_after_if_else@5
+
+contract_delete_else_body@3:
+    // smart_contracts/delegator_contract/contract.py:1095
+    // bal = asset.balance(Global.current_application_address)
+    global CurrentApplicationAddress
+    frame_dig 0
+    dup
+    cover 2
+    asset_holding_get AssetBalance
+    swap
+    dup
+    cover 2
+    cover 3
+    assert // account opted into asset
+    // smart_contracts/delegator_contract/contract.py:1097-1102
+    // itxn.AssetTransfer(
+    //     xfer_asset=asset,
+    //     asset_receiver=self.del_manager,
+    //     asset_amount=bal,
+    //     asset_close_to=self.del_manager,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/delegator_contract/contract.py:1099
+    // asset_receiver=self.del_manager,
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    // smart_contracts/delegator_contract/contract.py:1101
+    // asset_close_to=self.del_manager,
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    itxn_field AssetCloseTo
+    itxn_field AssetReceiver
+    itxn_field AssetAmount
+    itxn_field XferAsset
+    // smart_contracts/delegator_contract/contract.py:1097
+    // itxn.AssetTransfer(
+    intc_2 // axfer
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/delegator_contract/contract.py:1097-1102
+    // itxn.AssetTransfer(
+    //     xfer_asset=asset,
+    //     asset_receiver=self.del_manager,
+    //     asset_amount=bal,
+    //     asset_close_to=self.del_manager,
+    // ).submit()
+    itxn_submit
+
+contract_delete_after_if_else@5:
+    // smart_contracts/delegator_contract/contract.py:1104-1109
+    // # Close out the account to delegator manager
+    // itxn.Payment(
+    //     receiver=self.del_manager,
+    //     amount=0,
+    //     close_remainder_to=self.del_manager,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/delegator_contract/contract.py:1106
+    // receiver=self.del_manager,
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    // smart_contracts/delegator_contract/contract.py:1108
+    // close_remainder_to=self.del_manager,
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    itxn_field CloseRemainderTo
+    // smart_contracts/delegator_contract/contract.py:1107
+    // amount=0,
+    intc_0 // 0
+    itxn_field Amount
+    itxn_field Receiver
+    // smart_contracts/delegator_contract/contract.py:1104-1105
+    // # Close out the account to delegator manager
+    // itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/delegator_contract/contract.py:1104-1109
+    // # Close out the account to delegator manager
+    // itxn.Payment(
+    //     receiver=self.del_manager,
+    //     amount=0,
+    //     close_remainder_to=self.del_manager,
+    // ).submit()
+    itxn_submit
+    // smart_contracts/delegator_contract/contract.py:1112
+    // remaining_balance=arc4.UInt64(bal),
+    itob
+    // smart_contracts/delegator_contract/contract.py:1113
+    // asset_id=arc4.UInt64(asset_id),
+    frame_dig 0
+    itob
+    // smart_contracts/delegator_contract/contract.py:1111-1114
+    // return ContractDeleteReturn(
+    //     remaining_balance=arc4.UInt64(bal),
+    //     asset_id=arc4.UInt64(asset_id),
+    // )
+    concat
+    swap
+    retsub
+
+
+// smart_contracts.delegator_contract.contract.DelegatorContract.contract_report_expiry_soon(before_expiry: uint64, report_period: uint64) -> bytes:
+contract_report_expiry_soon:
+    // smart_contracts/delegator_contract/contract.py:1116-1121
+    // @arc4.abimethod()
+    // def contract_report_expiry_soon(
+    //     self,
+    //     before_expiry: UInt64,
+    //     report_period: UInt64,
+    // ) -> Message:
+    proto 2 1
+    // smart_contracts/delegator_contract/contract.py:1142
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/delegator_contract/contract.py:1143
+    // assert self.state == Bytes(STATE_LIVE), ERROR_NOT_STATE_LIVE
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 6 // 0x05
+    ==
+    assert // Cannot be called from other state than LIVE.
+    // smart_contracts/delegator_contract/contract.py:1145
+    // assert Global.round + before_expiry >= self.round_end, ERROR_TOO_SOON_TO_REPORT_EXPIRY_SOON
+    global Round
+    frame_dig -2
+    +
+    intc_0 // 0
+    bytec_3 // "round_end"
+    app_global_get_ex
+    assert // check self.round_end exists
+    >=
+    assert // It is too soon to report the contract is about to expire.
+    // smart_contracts/delegator_contract/contract.py:1146
+    // assert self.round_end > Global.round, ERROR_ALREADY_EXPIRED
+    intc_0 // 0
+    bytec_3 // "round_end"
+    app_global_get_ex
+    assert // check self.round_end exists
+    global Round
+    >
+    assert // Cannot be called when the contract has already expired.
+    // smart_contracts/delegator_contract/contract.py:1148
+    // assert Global.round >= self.round_expiry_soon_last + report_period, ERROR_TOO_SOON_TO_REPORT_EXPIRY_SOON_AGAIN
+    global Round
+    intc_0 // 0
+    bytec 20 // "round_expiry_soon_last"
+    app_global_get_ex
+    assert // check self.round_expiry_soon_last exists
+    frame_dig -1
+    +
+    >=
+    assert // It is too soon to report again that the contract is about to expire.
+    // smart_contracts/delegator_contract/contract.py:1149
+    // self.round_expiry_soon_last = Global.round
+    bytec 20 // "round_expiry_soon_last"
+    global Round
+    app_global_put
+    // smart_contracts/delegator_contract/contract.py:1153
+    // del_manager=arc4.Address(self.del_manager),
+    intc_0 // 0
+    bytec_2 // "del_manager"
+    app_global_get_ex
+    assert // check self.del_manager exists
+    // smart_contracts/delegator_contract/contract.py:1151
+    // msg = NotificationMessage.from_bytes(MSG_CORE_WILL_EXPIRE)
+    pushbytes 0x4d6573736167652066726f6d2056616c61723a20596f757220636f6e747261637420746f207374616b6520776974682061206e6f64652072756e6e6572206973206578706972696e672e20436f6e736964657220657874656e64696e6720697421202020
+    // smart_contracts/delegator_contract/contract.py:1152-1155
+    // return Message(
+    //     del_manager=arc4.Address(self.del_manager),
+    //     msg=msg.copy(),
+    // )
+    concat
+    retsub

@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Nunito Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100,
+    "YTLC" 500;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-text;
+  }
+  :root {
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+body::after {
+  @apply absolute inset-0 bg-background bg-contain bg-no-repeat;
+
+  z-index: -1;
+  content: "";
+  background-image: url(assets/background-image.svg);
+  max-height: 790px;
+  filter: blur(25px);
+  opacity: 0.6;
+
+  /* Default background size (for mobile view, small screens) */
+  @apply bg-cover;
+}
+
+/* Apply bg-cover for screens wider than 640px (Tailwind's sm breakpoint) */
+@media (min-width: 640px) {
+  body::after {
+    @apply bg-contain;
+  }
+}
+
+@layer components {
+  .wallet-button {
+    /* background: linear-gradient(
+        107.87deg,
+        rgba(14, 52, 56, 0) -34.02%,
+        rgba(14, 52, 56, 0.8) 103.26%
+      ),
+      linear-gradient(
+        0deg,
+        var(--secondary, #69cbe3),
+        var(--secondary, #69cbe3)
+      ); */
+  }
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Remove default styles in Firefox */
+input[type="date"] {
+  -moz-appearance: textfield;
+}
+
+/* Removing Input Autofill */
+input:-webkit-autofill {
+  background-color: rgba(0, 0, 0, 0) !important;
+  -webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0) inset !important; /* Override autofill default styling */
+  transition: background-color 5000s ease-in-out 0s; /* Ensure background color sticks */
+  -webkit-text-fill-color: rgba(255, 255, 255, 1)  !important;
+  color: rgba(255, 255, 255, 1) !important;
+}

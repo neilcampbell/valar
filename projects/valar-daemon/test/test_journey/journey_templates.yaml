@@ -1,0 +1,69 @@
+########################################################################################################################
+### Journey templates that are used to configure the parameters of the journey test. ###################################
+########################################################################################################################
+
+
+#    Delco journey
+#    Mask (0 - reserved, 1 - employed bits) : 1001_1111
+#
+#    0 (LSB)   Will sign keys                      (0-no, 1-yes)
+#    1         Can pay                             (0-no, 1-yes)
+#    2         Stake within limits                 (0-no, 1-yes)
+#    3         Gating within limits                (0-no, 1-yes)
+#
+#    4         Wants to stake (and not withdraw)   (0-no, 1-yes)
+#    5         Reserved                            (...........)
+#    6         Reserved                            (...........)
+#    7 (MSB)   Contract exists                     (0-no, 1-yes)
+delco_actions:
+  normal_journey:
+    - [  3, 0b_1001_1111]
+  not_confirmed:
+    - [  3, 0b_1001_1110]
+  not_submitted:
+    - [  3, 0b_1001_1111]
+    
+
+#    Expected delco states according to definitions in smart contracts 
+delco_states:
+  normal_journey:
+    - DELCO_STATE_READY
+    - DELCO_STATE_SUBMITTED
+    - DELCO_STATE_LIVE
+    - DELCO_STATE_ENDED_EXPIRED
+  not_confirmed:
+    - DELCO_STATE_READY
+    - DELCO_STATE_SUBMITTED
+    - DELCO_STATE_ENDED_NOT_CONFIRMED
+  not_submitted:
+    - DELCO_STATE_READY
+    - DELCO_STATE_ENDED_NOT_SUBMITTED
+
+
+#    Daemon journey
+#    Mask (0 - reserved, 1 - employed bits) : 1000_00001
+#
+#    0 (LSB)   Algod service connected             (0-no, 1-yes)
+#    1         Reserved                            (...........)
+#    2         Reserved                            (...........)
+#    3         Reserved                            (...........)
+#
+#    4         Reserved                            (...........)
+#    5         Reserved                            (...........)
+#    6         Reserved                            (...........)
+#    7 (MSB)   Daemon running (instance exists)    (0-no, 1-yes)
+node_actions:
+  normal_journey:
+    - [  0, 0b_1000_0001]
+  not_submitted:
+    - [  0, 0b_1000_0001]
+    - [  2, 0b_0000_0001] # Shut down (delete daemon)
+    - [ 20, 0b_1000_0001] # Boot up (spawn new daemon)
+  service_down:
+    - [  0, 0b_1000_0001]
+    - [ 30, 0b_1000_0000] # Disconnect
+    - [ 32, 0b_1000_0001] # Reconnect
+  reboot:
+    - [  0, 0b_1000_0001]
+    - [ 30, 0b_0000_0001] # Shut down (delete daemon)
+    - [ 32, 0b_1000_0001] # Boot up (spawn new daemon)

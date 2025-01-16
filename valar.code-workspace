@@ -1,0 +1,64 @@
+{
+  "folders": [
+    {
+      "path": "./",
+      "name": "ROOT"
+    },
+    {
+      "path": "projects/valar-daemon"
+    },
+    {
+      "path": "projects/valar-smart-contracts"
+    },
+    {
+      "path": "projects/valar-user-interface"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "projects/": true
+    },
+    "jest.disabledWorkspaceFolders": [
+      "ROOT",
+      "projects"
+    ],
+    "cSpell.words": [
+      "algod",
+      "Algorand",
+      "clawback",
+      "delegators",
+      "dereg",
+      "deregistration",
+      "glspl",
+      "glsposs",
+      "localnet",
+      "MILLI",
+      "mnemonic",
+      "Nodekit",
+      "partkey",
+      "partkeys",
+      "permissionless",
+      "Puya",
+      "REQS",
+      "Reti",
+      "stablecoins",
+      "Struct",
+      "Valar",
+      "vals"
+    ]
+  },
+  "extensions": {
+    "recommendations": [
+      "joshx.workspace-terminals",
+      "streetsidesoftware.code-spell-checker",
+      "bierner.markdown-mermaid"
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": []
+  },
+  "launch": {
+    "configurations": []
+  }
+}

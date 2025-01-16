@@ -1,0 +1,5 @@
+#pragma version 11
+
+smart_contracts.delegator_contract.contract.DelegatorContract.clear_state_program:
+    pushint 1 // 1
+    return

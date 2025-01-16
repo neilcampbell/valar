@@ -1,0 +1,71 @@
+########################################################################################################################
+### Journey test parameters, based on journey templates. ###############################################################
+########################################################################################################################
+
+# Parameters used for each journey test.
+
+# delco_actions: list
+#   Delegator (contract) actions, each a tuple consisting of the round number and action/state mask.
+# delco_states: list
+#   The expected/targeted delegator contract states.
+# node_actions: list
+#   Node actions, each a tuple consisting of the round number and action/state mask.
+# delben_equal_delman: bool
+#   Flag indicating whether to set the same address for the delegator beneficiary and manager.
+# gating_asset_id: int
+#   The ID of the asset used for gating (-1 means none).
+# fee_asset_id: int
+#   The ID of the asset used for fee payments.
+# valad_state: str
+#   The initial state of the validator ad (e.g., NOT_READY).
+# timeout_s: int
+#   Duration before the test is timed out.
+# round_period_s: int
+#   Round (block) time in seconds.
+
+
+# - delco_actions:
+#     - normal_journey
+#     - not_confirmed
+#   delco_states:
+#     - normal_journey
+#     - not_confirmed
+#   node_actions: normal_journey
+#   delben_equal_delman: False
+#   gating_asset_id: -1
+#   fee_asset_id: 0
+#   valad_state: NOT_READY
+
+
+- delco_actions:
+    - normal_journey
+  delco_states:
+    - normal_journey
+  node_actions: normal_journey
+  delben_equal_delman: False
+  algo_fee_asset: True
+  valad_state: NOT_READY
+  timeout_s: 300
+  round_period_s: 3
+
+- delco_actions:
+    - not_confirmed
+  delco_states:
+    - not_confirmed
+  node_actions: normal_journey
+  delben_equal_delman: False
+  algo_fee_asset: True
+  valad_state: NOT_READY
+  timeout_s: 300
+  round_period_s: 3
+
+- delco_actions:
+    - not_submitted
+  delco_states:
+    - not_submitted
+  node_actions: not_submitted
+  delben_equal_delman: False
+  algo_fee_asset: True
+  valad_state: NOT_READY
+  timeout_s: 120
+  round_period_s: 3

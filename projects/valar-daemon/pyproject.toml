@@ -1,0 +1,78 @@
+[tool.poetry]
+name = "valar_daemon"
+version = "0.3.0-rc2"
+description = "The Valar Daemon is used to automate Validator Manager tasks on the Valar Peer-to-Peer Staking Platform."
+authors = ["Valar Solutions GmbH <info@valar.solutions>"]
+license = "AGPL-3.0-only"
+readme = "./docs/README_pypi.md"
+homepage = "https://stake.valar.solutions"
+repository = "https://github.com/ValarStaking/valar/tree/master"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+algokit-utils = "^2.3.2"
+anyio = "^4.4.0"
+auto_mix_prep = "^0.2.0"
+certifi = "^2024.6.2"
+cffi = "^1.16.0"
+Deprecated = "^1.2.14"
+h11 = "^0.14.0"
+httpcore = "^0.16.3"
+httpx = "^0.23.3"
+idna = "^3.7"
+msgpack = "^1.0.8"
+py-algorand-sdk = "^2.6.1"
+pycparser = "^2.22"
+pycryptodomex = "^3.20.0"
+PyNaCl = "^1.5.0"
+python-dateutil = "^2.9.0.post0"
+python-dotenv = "^1.0.1"
+pytz = "^2024.1"
+PyYAML = "^6.0.2"
+rfc3986 = "^1.5.0"
+setuptools = "^75.3.0"
+six = "^1.16.0"
+sniffio = "^1.3.1"
+typing_extensions = "^4.12.2"
+tzdata = "^2024.1"
+wrapt = "^1.16.0"
+
+[tool.poetry.group.build.dependencies]
+build = "^1.2.1"
+twine = "^6.0.1"
+pdoc = "^15.0.1"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.3"
+pytest-cov = "^5.0.0"
+
+[tool.poetry.group.dev.dependencies]
+numpy = "^1.26.4"
+pandas = "^2.2.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["test"]
+python_files = "test_*.py"
+addopts = "--basetemp=./test/tmp -vv"
+
+[tool.coverage.run]
+source = ["src/valar_daemon"]
+
+[tool.coverage.report]
+include = [
+    "src/valar_daemon/AppWrapper.py",
+    "src/valar_daemon/constants.py",
+    "src/valar_daemon/Daemon.py",
+    "src/valar_daemon/DaemonConfig.py",
+    "src/valar_daemon/PartkeyManager.py",
+    "src/valar_daemon/utils_chain.py",
+    "src/valar_daemon/utils.py"
+]
+omit = ["test"]
+
+[tool.coverage.html]
+directory = "test/coverage-report"

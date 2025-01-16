@@ -1,0 +1,5 @@
+{
+  "assumedBlockTime": "number - assumed block time",
+	"paramUpdate": "number - period for updating suggested Txn parameters and round [ms]",
+  "openDrawerFetchInterval": "number - period for refetching information of an open drawer"
+}

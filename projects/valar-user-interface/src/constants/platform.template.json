@@ -1,0 +1,70 @@
+{
+  "noticeboardAppID": "number - App ID of noticeboard",
+  "tc": "string - SHA256 of Terms and Conditions, written as hex, in lower case",
+	"currencies": {
+	  "string - ASA ID or 0 for 1st supported payment asset": {
+	    "allowed": "boolean - whether asset is currently allowed at the platform or not",
+	    "ticker": "string - ticker to show at the UI",
+	    "decimals": "number - number of decimals of the asset",
+	    "displayDecimals": "number - number of decimals to display for the asset",
+	    "adTermsFees": {
+	      "paymentCurrency": "string - MUST be same as this object key",
+	      "setupFee": "number - suggested setup fee for this asset",
+	      "minOperationalFee": "number - suggested minimum operational fee for this asset",
+	      "varOperationalFee": "number - suggested variable operational fee for this asset"
+	    },
+	    "adTermsFeesMin": {
+	      "setupFee": "number - minimal setup fee for this asset",
+	      "minOperationalFee": "number - minimal minimum operational fee for this asset",
+	      "varOperationalFee": "number - minimal variable operational fee for this asset"
+	    }
+	  },
+	  "string - ASA ID or 0 for 2nd supported payment asset": "same structure as above"
+	},
+  "limits": {
+    "duration": {
+      "min": "number - minimal contract duration",
+      "max": "number - maximal contract duration"
+    },
+    "maxStake": {
+      "min": "number - minimal maximum stake [ALGO]",
+      "max": "number - maximum maximum stake [ALGO]"
+    }
+  },
+	"suggestions": {
+		"delCo": {
+			"duration": "number - suggested contract duration",
+			"paymentAsa": "1002",
+			"maxStakeBuffer": "number - suggested relative max stake buffer",
+			"maxStake": "number - default max stake [uALGO]"
+		},
+		"valAd": {
+      "time": {
+        "validFor": "number - suggested validity of ad",
+        "minDuration": "number - suggested minimum contract duration",
+        "maxDuration": "number - suggested maximum contract duration",
+        "setupTime": "number - suggested setup time",
+        "confirmationTime": "number - suggested confirmation time"
+      },
+      "stake": {
+        "maxStake": "number - suggested max stake [ALGO]",
+        "gratisStake": "number - suggested gratis stake"
+      },
+      "reqs": {
+        "idASA1": 0,
+        "amountASA1": 0,
+        "idASA2": 0,
+        "amountASA2": 0
+      },
+      "warn": {
+        "maxWarnings": "number - suggested maximum number of warnings",
+        "warnTime": "number - suggested warning time"
+      },
+      "config": {
+        "managerAddress": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ",
+        "maxUser": "number - suggested number of maximum users",
+        "acceptingNewUser": "boolean - suggested to accept new users"
+      }
+		}
+	}
+}

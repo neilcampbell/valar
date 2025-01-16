@@ -1,0 +1,86 @@
+{
+  "noticeboardAppID": 1024,
+  "tc": "bcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbc",
+	"currencies": {
+	  "1002": {
+	    "allowed": true,
+	    "ticker": "USDC",
+	    "decimals": 6,
+	    "displayDecimals": 2,
+	    "adTermsFees": {
+	      "paymentCurrency": "1002",
+	      "setupFee": 0.5,
+	      "minOperationalFee": 10.0,
+	      "varOperationalFee": 10.0
+	    },
+	    "adTermsFeesMin": {
+	      "setupFee": 0.2,
+	      "minOperationalFee": 5.0,
+	      "varOperationalFee": 0.0
+	    }
+	  },
+	  "0": {
+	    "allowed": true,
+	    "ticker": "ALGO",
+	    "decimals": 6,
+	    "displayDecimals": 2,
+	    "adTermsFees": {
+	      "paymentCurrency": "0",
+	      "setupFee": 1.3,
+	      "minOperationalFee": 5.1,
+	      "varOperationalFee": 3.4
+	    },
+	    "adTermsFeesMin": {
+	      "setupFee": 0.5,
+	      "minOperationalFee": 1.0,
+	      "varOperationalFee": 0.0
+	    }
+	  }
+	},
+  "limits": {
+    "duration": {
+      "min": 14,
+      "max": 120
+    },
+    "maxStake": {
+      "min": 0,
+      "max": 60000000
+    }
+  },
+	"suggestions": {
+		"delCo": {
+			"duration": 90,
+			"paymentAsa": "1002",
+			"maxStakeBuffer": 20,
+			"maxStake": 100000000000
+		},
+		"valAd": {
+      "time": {
+        "validFor": 90,
+        "minDuration": 14,
+        "maxDuration": 120,
+        "setupTime": 5,
+        "confirmationTime": 24
+      },
+      "stake": {
+        "maxStake": 250000,
+        "gratisStake": 20.00
+      },
+      "reqs": {
+        "idASA1": 0,
+        "amountASA1": 0,
+        "idASA2": 0,
+        "amountASA2": 0
+      },
+      "warn": {
+        "maxWarnings": 3,
+        "warnTime": 8
+      },
+      "config": {
+        "managerAddress": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ",
+        "maxUser": 4,
+        "acceptingNewUser": true
+      }
+		}
+	}
+}

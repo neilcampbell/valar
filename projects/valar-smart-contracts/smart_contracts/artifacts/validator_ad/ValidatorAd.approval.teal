@@ -1,0 +1,3735 @@
+#pragma version 11
+
+smart_contracts.validator_ad.contract.ValidatorAd.approval_program:
+    intcblock 0 1 6 1000000 4096
+    bytecblock 0x151f7c75 "state" "val_owner" 0x64 "cnt_del" "del_app_list" "T" "P" "cnt_asa" "S" "W" "val_manager" 0x02 0x6173615f "noticeboard_app_id" "tc_sha256" "G" "cnt_del_max" "total_algo_earned" "total_algo_fees_generated" 0x01 0x03 0x06 0x05 0x0000000000000000
+    txn ApplicationID
+    bnz main_after_if_else@2
+    callsub __init__
+
+main_after_if_else@2:
+    callsub __puya_arc4_router__
+    return
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.__init__() -> void:
+__init__:
+    // smart_contracts/validator_ad/contract.py:356
+    // def __init__(self) -> None:
+    proto 0 0
+    // smart_contracts/validator_ad/contract.py:360
+    // self.noticeboard_app_id = UInt64(0)
+    bytec 14 // "noticeboard_app_id"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:362
+    // self.tc_sha256 = Sha256.from_bytes(op.bzero(32))
+    pushint 32 // 32
+    bzero
+    bytec 15 // "tc_sha256"
+    dig 1
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:365
+    // ValidatorTermsTiming.from_bytes(op.bzero(40)),
+    pushint 40 // 40
+    bzero
+    // smart_contracts/validator_ad/contract.py:366
+    // key="T",
+    bytec 6 // "T"
+    // smart_contracts/validator_ad/contract.py:364-367
+    // self.terms_time = GlobalState(
+    //     ValidatorTermsTiming.from_bytes(op.bzero(40)),
+    //     key="T",
+    // )
+    dig 1
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:370
+    // key="P",
+    bytec 7 // "P"
+    // smart_contracts/validator_ad/contract.py:368-371
+    // self.terms_price = GlobalState(
+    //     ValidatorTermsPricing.from_bytes(op.bzero(40)),
+    //     key="P",
+    // )
+    swap
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:373
+    // ValidatorTermsStakeLimits.from_bytes(op.bzero(16)),
+    pushint 16 // 16
+    bzero
+    // smart_contracts/validator_ad/contract.py:374
+    // key="S",
+    bytec 9 // "S"
+    // smart_contracts/validator_ad/contract.py:372-375
+    // self.terms_stake = GlobalState(
+    //     ValidatorTermsStakeLimits.from_bytes(op.bzero(16)),
+    //     key="S",
+    // )
+    dig 1
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:378
+    // key="G",
+    bytec 16 // "G"
+    // smart_contracts/validator_ad/contract.py:376-379
+    // self.terms_reqs = GlobalState(
+    //     ValidatorTermsGating.from_bytes(op.bzero(32)),
+    //     key="G",
+    // )
+    uncover 2
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:382
+    // key="W",
+    bytec 10 // "W"
+    // smart_contracts/validator_ad/contract.py:380-383
+    // self.terms_warn = GlobalState(
+    //     ValidatorTermsWarnings.from_bytes(op.bzero(16)),
+    //     key="W",
+    // )
+    swap
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:385
+    // self.val_owner = Global.zero_address
+    bytec_2 // "val_owner"
+    global ZeroAddress
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:386
+    // self.val_manager = Global.zero_address
+    bytec 11 // "val_manager"
+    global ZeroAddress
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:389
+    // ValidatorSelfDisclosure.from_bytes(op.bzero(120)),
+    pushint 120 // 120
+    bzero
+    // smart_contracts/validator_ad/contract.py:390
+    // key="V",
+    pushbytes "V"
+    // smart_contracts/validator_ad/contract.py:388-392
+    // self.val_info = GlobalState(
+    //     ValidatorSelfDisclosure.from_bytes(op.bzero(120)),
+    //     key="V",
+    //     description="Self-disclosed information about validator."
+    // )
+    swap
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:394
+    // self.state = Bytes(STATE_NONE)
+    bytec_1 // "state"
+    pushbytes 0x00
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:396
+    // self.cnt_del = UInt64(0)
+    bytec 4 // "cnt_del"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:397
+    // self.cnt_del_max = UInt64(0)
+    bytec 17 // "cnt_del_max"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:399
+    // self.del_app_list = DelAppList.from_bytes(op.bzero(8 * MAXIMUM_NUMBER_OF_DELEGATOR_CONTRACTS_PER_VALIDATOR_AD))
+    pushint 112 // 112
+    bzero
+    bytec 5 // "del_app_list"
+    swap
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:401
+    // self.total_algo_earned = UInt64(0)
+    bytec 18 // "total_algo_earned"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:402
+    // self.total_algo_fees_generated = UInt64(0)
+    bytec 19 // "total_algo_fees_generated"
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:404
+    // self.cnt_asa = UInt64(0)
+    bytec 8 // "cnt_asa"
+    intc_0 // 0
+    app_global_put
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.__puya_arc4_router__() -> uint64:
+__puya_arc4_router__:
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    proto 0 1
+    txn NumAppArgs
+    bz __puya_arc4_router___after_if_else@31
+    pushbytess 0x734ecd77 0x93f04fe6 0x8039e324 0xa693de02 0xef423551 0xad036de5 0x8bb07b5f 0x30a38659 0xe0a4b723 0x9d64c6e9 0xdbe1605f 0xc47f3b93 0x800fd2a1 0xe03402ed 0x4dd09b26 0x39908de9 0x49dfee1a 0xf9b68e32 0xf811fcb7 0xace03631 0x458ccb0c 0xc68d2db5 0x0bf7d855 0x169361b9 0x3172ca9d 0x22680863 // method "ad_create(address)uint64", method "ad_config(address,address,bool,uint64)void", method "ad_delete(address)void", method "ad_ready(address,bool)void", method "ad_self_disclose(address,(byte[30],byte[60],byte[2],uint64,byte[20]))void", method "ad_terms(address,byte[32],(uint64,uint64,uint64,uint64,uint64),(uint64,uint64,uint64,uint64,uint64),(uint64,uint64),((uint64,uint64)[2]),(uint64,uint64),pay)void", method "ad_income(address,uint64)uint64", method "ad_asa_close(address,uint64)void", method "template_load_init(address,uint64,pay)void", method "template_load_data(address,uint64,byte[])void", method "template_load_end(address)void", method "contract_create(address,address,uint64,uint64,address,(uint64,uint64),pay,txn)uint64", method "keys_confirm(address,application)void", method "keys_not_confirmed(application)(address,byte[100])", method "keys_not_submitted(application)(address,byte[100])", method "keys_submit(address,application,(uint64,uint64,uint64,byte[32],byte[32],byte[64],address))(address,byte[100])", method "breach_limits(application)(bool,(uint64,uint64,uint64),address,byte[100])", method "breach_pay(application)(address,byte[100])", method "breach_suspended(application)((uint64,uint64,uint64),address,byte[100])", method "contract_claim(application)(uint64,uint64,uint64)", method "contract_expired(application)(address,byte[100])", method "contract_withdraw(address,application)void", method "contract_delete(address,application)(uint64,uint64)", method "contract_report_expiry_soon(uint64,uint64,application)(address,byte[100])", method "gas()void", method "get_validator_asa(uint64)(uint64,uint64)"
+    txna ApplicationArgs 0
+    match __puya_arc4_router___ad_create_route@2 __puya_arc4_router___ad_config_route@3 __puya_arc4_router___ad_delete_route@4 __puya_arc4_router___ad_ready_route@5 __puya_arc4_router___ad_self_disclose_route@6 __puya_arc4_router___ad_terms_route@7 __puya_arc4_router___ad_income_route@8 __puya_arc4_router___ad_asa_close_route@9 __puya_arc4_router___template_load_init_route@10 __puya_arc4_router___template_load_data_route@11 __puya_arc4_router___template_load_end_route@12 __puya_arc4_router___contract_create_route@13 __puya_arc4_router___keys_confirm_route@14 __puya_arc4_router___keys_not_confirmed_route@15 __puya_arc4_router___keys_not_submitted_route@16 __puya_arc4_router___keys_submit_route@17 __puya_arc4_router___breach_limits_route@18 __puya_arc4_router___breach_pay_route@19 __puya_arc4_router___breach_suspended_route@20 __puya_arc4_router___contract_claim_route@21 __puya_arc4_router___contract_expired_route@22 __puya_arc4_router___contract_withdraw_route@23 __puya_arc4_router___contract_delete_route@24 __puya_arc4_router___contract_report_expiry_soon_route@25 __puya_arc4_router___gas_route@26 __puya_arc4_router___get_validator_asa_route@27
+    intc_0 // 0
+    retsub
+
+__puya_arc4_router___ad_create_route@2:
+    // smart_contracts/validator_ad/contract.py:410
+    // @arc4.abimethod(create="require")
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    !
+    assert // can only call when creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    // smart_contracts/validator_ad/contract.py:410
+    // @arc4.abimethod(create="require")
+    callsub ad_create
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___ad_config_route@3:
+    // smart_contracts/validator_ad/contract.py:441
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    txna ApplicationArgs 3
+    txna ApplicationArgs 4
+    btoi
+    // smart_contracts/validator_ad/contract.py:441
+    // @arc4.abimethod()
+    callsub ad_config
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___ad_delete_route@4:
+    // smart_contracts/validator_ad/contract.py:486
+    // @arc4.abimethod(allow_actions=["DeleteApplication"])
+    txn OnCompletion
+    pushint 5 // DeleteApplication
+    ==
+    assert // OnCompletion is not DeleteApplication
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    // smart_contracts/validator_ad/contract.py:486
+    // @arc4.abimethod(allow_actions=["DeleteApplication"])
+    callsub ad_delete
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___ad_ready_route@5:
+    // smart_contracts/validator_ad/contract.py:523
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    // smart_contracts/validator_ad/contract.py:523
+    // @arc4.abimethod()
+    callsub ad_ready
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___ad_self_disclose_route@6:
+    // smart_contracts/validator_ad/contract.py:555
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    // smart_contracts/validator_ad/contract.py:555
+    // @arc4.abimethod()
+    callsub ad_self_disclose
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___ad_terms_route@7:
+    // smart_contracts/validator_ad/contract.py:579
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    txna ApplicationArgs 3
+    txna ApplicationArgs 4
+    txna ApplicationArgs 5
+    txna ApplicationArgs 6
+    txna ApplicationArgs 7
+    txn GroupIndex
+    intc_1 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    // smart_contracts/validator_ad/contract.py:579
+    // @arc4.abimethod()
+    callsub ad_terms
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___ad_income_route@8:
+    // smart_contracts/validator_ad/contract.py:666
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    // smart_contracts/validator_ad/contract.py:666
+    // @arc4.abimethod()
+    callsub ad_income
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___ad_asa_close_route@9:
+    // smart_contracts/validator_ad/contract.py:709
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    // smart_contracts/validator_ad/contract.py:709
+    // @arc4.abimethod()
+    callsub ad_asa_close
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___template_load_init_route@10:
+    // smart_contracts/validator_ad/contract.py:748
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txn GroupIndex
+    intc_1 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    // smart_contracts/validator_ad/contract.py:748
+    // @arc4.abimethod()
+    callsub template_load_init
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___template_load_data_route@11:
+    // smart_contracts/validator_ad/contract.py:788
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    extract 2 0
+    // smart_contracts/validator_ad/contract.py:788
+    // @arc4.abimethod()
+    callsub template_load_data
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___template_load_end_route@12:
+    // smart_contracts/validator_ad/contract.py:817
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    // smart_contracts/validator_ad/contract.py:817
+    // @arc4.abimethod()
+    callsub template_load_end
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_create_route@13:
+    // smart_contracts/validator_ad/contract.py:844
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    btoi
+    txna ApplicationArgs 5
+    txna ApplicationArgs 6
+    txn GroupIndex
+    pushint 2 // 2
+    -
+    dup
+    gtxns TypeEnum
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    txn GroupIndex
+    intc_1 // 1
+    -
+    // smart_contracts/validator_ad/contract.py:844
+    // @arc4.abimethod()
+    callsub contract_create
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___keys_confirm_route@14:
+    // smart_contracts/validator_ad/contract.py:1032
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txnas Applications
+    // smart_contracts/validator_ad/contract.py:1032
+    // @arc4.abimethod()
+    callsub keys_confirm
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___keys_not_confirmed_route@15:
+    // smart_contracts/validator_ad/contract.py:1063
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    // smart_contracts/validator_ad/contract.py:1063
+    // @arc4.abimethod()
+    callsub keys_not_confirmed
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___keys_not_submitted_route@16:
+    // smart_contracts/validator_ad/contract.py:1102
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    // smart_contracts/validator_ad/contract.py:1102
+    // @arc4.abimethod()
+    callsub keys_not_submitted
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___keys_submit_route@17:
+    // smart_contracts/validator_ad/contract.py:1141
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txnas Applications
+    txna ApplicationArgs 3
+    // smart_contracts/validator_ad/contract.py:1141
+    // @arc4.abimethod()
+    callsub keys_submit
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___breach_limits_route@18:
+    // smart_contracts/validator_ad/contract.py:1190
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    // smart_contracts/validator_ad/contract.py:1190
+    // @arc4.abimethod()
+    callsub breach_limits
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___breach_pay_route@19:
+    // smart_contracts/validator_ad/contract.py:1236
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    // smart_contracts/validator_ad/contract.py:1236
+    // @arc4.abimethod()
+    callsub breach_pay
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___breach_suspended_route@20:
+    // smart_contracts/validator_ad/contract.py:1273
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    // smart_contracts/validator_ad/contract.py:1273
+    // @arc4.abimethod()
+    callsub breach_suspended
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_claim_route@21:
+    // smart_contracts/validator_ad/contract.py:1316
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    // smart_contracts/validator_ad/contract.py:1316
+    // @arc4.abimethod()
+    callsub contract_claim
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_expired_route@22:
+    // smart_contracts/validator_ad/contract.py:1353
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    // smart_contracts/validator_ad/contract.py:1353
+    // @arc4.abimethod()
+    callsub contract_expired
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_withdraw_route@23:
+    // smart_contracts/validator_ad/contract.py:1395
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txnas Applications
+    // smart_contracts/validator_ad/contract.py:1395
+    // @arc4.abimethod()
+    callsub contract_withdraw
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_delete_route@24:
+    // smart_contracts/validator_ad/contract.py:1432
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txnas Applications
+    // smart_contracts/validator_ad/contract.py:1432
+    // @arc4.abimethod()
+    callsub contract_delete
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___contract_report_expiry_soon_route@25:
+    // smart_contracts/validator_ad/contract.py:1471
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    btoi
+    txnas Applications
+    // smart_contracts/validator_ad/contract.py:1471
+    // @arc4.abimethod()
+    callsub contract_report_expiry_soon
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___gas_route@26:
+    // smart_contracts/validator_ad/contract.py:1510
+    // @arc4.abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___get_validator_asa_route@27:
+    // smart_contracts/validator_ad/contract.py:1519-1522
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // # ----- ----- ----- Read-only functions ----- ----- ----
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // @arc4.abimethod(readonly=True)
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/validator_ad/contract.py:1519-1522
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // # ----- ----- ----- Read-only functions ----- ----- ----
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // @arc4.abimethod(readonly=True)
+    callsub get_validator_asa
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    retsub
+
+__puya_arc4_router___after_if_else@31:
+    // smart_contracts/validator_ad/contract.py:102-103
+    // # ------- Smart contract -------
+    // class ValidatorAd(ARC4Contract, avm_version=11):
+    intc_0 // 0
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.ad_create(val_owner: bytes) -> bytes:
+ad_create:
+    // smart_contracts/validator_ad/contract.py:410-414
+    // @arc4.abimethod(create="require")
+    // def ad_create(
+    //     self,
+    //     val_owner: arc4.Address,
+    // ) -> arc4.UInt64:
+    proto 1 1
+    // smart_contracts/validator_ad/contract.py:431-432
+    // # Set global variables
+    // self.noticeboard_app_id = Global.caller_application_id
+    bytec 14 // "noticeboard_app_id"
+    global CallerApplicationID
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:434
+    // self.val_owner = val_owner.native
+    bytec_2 // "val_owner"
+    frame_dig -1
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:436-437
+    // # Change state to CREATED
+    // self.state = Bytes(STATE_CREATED)
+    bytec_1 // "state"
+    bytec 20 // 0x01
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:439
+    // return arc4.UInt64(Global.current_application_id.id)
+    global CurrentApplicationID
+    itob
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.ad_config(val_owner: bytes, val_manager: bytes, live: bytes, cnt_del_max: uint64) -> void:
+ad_config:
+    // smart_contracts/validator_ad/contract.py:441-448
+    // @arc4.abimethod()
+    // def ad_config(
+    //     self,
+    //     val_owner: arc4.Address,
+    //     val_manager: arc4.Address,
+    //     live : arc4.Bool,
+    //     cnt_del_max : UInt64,
+    // ) -> None:
+    proto 4 0
+    // smart_contracts/validator_ad/contract.py:466
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:468
+    // self.state != Bytes(STATE_CREATED) and
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 20 // 0x01
+    !=
+    // smart_contracts/validator_ad/contract.py:468-470
+    // self.state != Bytes(STATE_CREATED) and
+    // self.state != Bytes(STATE_TEMPLATE_LOAD) and
+    // self.state != Bytes(STATE_TEMPLATE_LOADED)
+    bz ad_config_bool_false@4
+    // smart_contracts/validator_ad/contract.py:469
+    // self.state != Bytes(STATE_TEMPLATE_LOAD) and
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 12 // 0x02
+    !=
+    // smart_contracts/validator_ad/contract.py:468-470
+    // self.state != Bytes(STATE_CREATED) and
+    // self.state != Bytes(STATE_TEMPLATE_LOAD) and
+    // self.state != Bytes(STATE_TEMPLATE_LOADED)
+    bz ad_config_bool_false@4
+    // smart_contracts/validator_ad/contract.py:470
+    // self.state != Bytes(STATE_TEMPLATE_LOADED)
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 21 // 0x03
+    !=
+    // smart_contracts/validator_ad/contract.py:468-470
+    // self.state != Bytes(STATE_CREATED) and
+    // self.state != Bytes(STATE_TEMPLATE_LOAD) and
+    // self.state != Bytes(STATE_TEMPLATE_LOADED)
+    bz ad_config_bool_false@4
+    intc_1 // 1
+    b ad_config_bool_merge@5
+
+ad_config_bool_false@4:
+    intc_0 // 0
+
+ad_config_bool_merge@5:
+    // smart_contracts/validator_ad/contract.py:467-471
+    // assert (
+    //     self.state != Bytes(STATE_CREATED) and
+    //     self.state != Bytes(STATE_TEMPLATE_LOAD) and
+    //     self.state != Bytes(STATE_TEMPLATE_LOADED)
+    // ), ERROR_CALLED_FROM_STATE_CREATED_TEMPLATE_LOAD_OR_TEMPLATE_LOADED
+    assert // Cannot be called from state CREATED, TEMPLATE_LOAD or TEMPLATE_LOADED.
+    // smart_contracts/validator_ad/contract.py:472
+    // assert val_owner.native == self.val_owner, ERROR_CALLED_BY_NOT_VAL_OWNER
+    intc_0 // 0
+    bytec_2 // "val_owner"
+    app_global_get_ex
+    assert // check self.val_owner exists
+    frame_dig -4
+    ==
+    assert // Can only be called by validator owner.
+    // smart_contracts/validator_ad/contract.py:474
+    // self.val_manager = val_manager.native
+    bytec 11 // "val_manager"
+    frame_dig -3
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:476
+    // assert cnt_del_max <= UInt64(MAXIMUM_NUMBER_OF_DELEGATOR_CONTRACTS_PER_VALIDATOR_AD), ERROR_NO_MEMORY_FOR_MORE_DELEGATORS  # noqa: E501
+    frame_dig -1
+    pushint 14 // 14
+    <=
+    assert // Validator ad does not have enough memory to store that many active delegators.
+    // smart_contracts/validator_ad/contract.py:477
+    // self.cnt_del_max = cnt_del_max
+    bytec 17 // "cnt_del_max"
+    frame_dig -1
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:479
+    // if live.native:
+    frame_dig -2
+    intc_0 // 0
+    getbit
+    bz ad_config_else_body@7
+    // smart_contracts/validator_ad/contract.py:480
+    // self.state = Bytes(STATE_NOT_READY)
+    bytec_1 // "state"
+    bytec 22 // 0x06
+    app_global_put
+    b ad_config_after_if_else@8
+
+ad_config_else_body@7:
+    // smart_contracts/validator_ad/contract.py:482
+    // self.state = Bytes(STATE_NOT_LIVE)
+    bytec_1 // "state"
+    pushbytes 0x07
+    app_global_put
+
+ad_config_after_if_else@8:
+    // smart_contracts/validator_ad/contract.py:484
+    // return
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.ad_delete(val_owner: bytes) -> void:
+ad_delete:
+    // smart_contracts/validator_ad/contract.py:486-490
+    // @arc4.abimethod(allow_actions=["DeleteApplication"])
+    // def ad_delete(
+    //     self,
+    //     val_owner: arc4.Address,
+    // ) -> None:
+    proto 1 0
+    // smart_contracts/validator_ad/contract.py:502
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:503
+    // assert val_owner.native == self.val_owner, ERROR_CALLED_BY_NOT_VAL_OWNER
+    intc_0 // 0
+    bytec_2 // "val_owner"
+    app_global_get_ex
+    assert // check self.val_owner exists
+    frame_dig -1
+    ==
+    assert // Can only be called by validator owner.
+    // smart_contracts/validator_ad/contract.py:505
+    // assert self.cnt_del == UInt64(0), ERROR_DELETE_ACTIVE_DELEGATORS
+    intc_0 // 0
+    bytec 4 // "cnt_del"
+    app_global_get_ex
+    assert // check self.cnt_del exists
+    !
+    assert // Cannot delete validator ad if there are active delegators.
+    // smart_contracts/validator_ad/contract.py:506
+    // assert self.cnt_asa == UInt64(0), ERROR_DELETE_ASA_REMAIN
+    intc_0 // 0
+    bytec 8 // "cnt_asa"
+    app_global_get_ex
+    assert // check self.cnt_asa exists
+    !
+    assert // Cannot delete validator if there are ASAs that remain.
+    // smart_contracts/validator_ad/contract.py:508
+    // assert Global.current_application_address.balance-Global.current_application_address.min_balance == UInt64(0), \
+    global CurrentApplicationAddress
+    acct_params_get AcctBalance
+    assert // account funded
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    -
+    !
+    // smart_contracts/validator_ad/contract.py:508-509
+    // assert Global.current_application_address.balance-Global.current_application_address.min_balance == UInt64(0), \
+    //     ERROR_ALGO_AVAILABLE_BALANCE_NOT_ZERO
+    assert // Algorand balance is not zero.
+    // smart_contracts/validator_ad/contract.py:511
+    // assert self.template.delete(), ERROR_DELETE_TEMPLATE_BOX # Should not be possible to raise the error if code ok
+    bytec_3 // 0x64
+    box_del
+    assert // Cannot delete box with smart contract template.
+    // smart_contracts/validator_ad/contract.py:513-514
+    // # Close account to owner to return the MBR
+    // rcv = self.val_owner
+    intc_0 // 0
+    bytec_2 // "val_owner"
+    app_global_get_ex
+    assert // check self.val_owner exists
+    // smart_contracts/validator_ad/contract.py:515-519
+    // itxn.Payment(
+    //     receiver=rcv,
+    //     amount=0,
+    //     close_remainder_to=rcv,
+    // ).submit()
+    itxn_begin
+    dup
+    itxn_field CloseRemainderTo
+    // smart_contracts/validator_ad/contract.py:517
+    // amount=0,
+    intc_0 // 0
+    itxn_field Amount
+    itxn_field Receiver
+    // smart_contracts/validator_ad/contract.py:515
+    // itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/validator_ad/contract.py:515-519
+    // itxn.Payment(
+    //     receiver=rcv,
+    //     amount=0,
+    //     close_remainder_to=rcv,
+    // ).submit()
+    itxn_submit
+    // smart_contracts/validator_ad/contract.py:521
+    // return
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.ad_ready(val_manager: bytes, ready: bytes) -> void:
+ad_ready:
+    // smart_contracts/validator_ad/contract.py:523-528
+    // @arc4.abimethod()
+    // def ad_ready(
+    //     self,
+    //     val_manager: arc4.Address,
+    //     ready: arc4.Bool,
+    // ) -> None:
+    proto 2 0
+    // smart_contracts/validator_ad/contract.py:540
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:542
+    // self.state == Bytes(STATE_READY) or
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 23 // 0x05
+    ==
+    // smart_contracts/validator_ad/contract.py:542-543
+    // self.state == Bytes(STATE_READY) or
+    // self.state == Bytes(STATE_NOT_READY)
+    bnz ad_ready_bool_true@2
+    // smart_contracts/validator_ad/contract.py:543
+    // self.state == Bytes(STATE_NOT_READY)
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 22 // 0x06
+    ==
+    // smart_contracts/validator_ad/contract.py:542-543
+    // self.state == Bytes(STATE_READY) or
+    // self.state == Bytes(STATE_NOT_READY)
+    bz ad_ready_bool_false@3
+
+ad_ready_bool_true@2:
+    intc_1 // 1
+    b ad_ready_bool_merge@4
+
+ad_ready_bool_false@3:
+    intc_0 // 0
+
+ad_ready_bool_merge@4:
+    // smart_contracts/validator_ad/contract.py:541-544
+    // assert (
+    //     self.state == Bytes(STATE_READY) or
+    //     self.state == Bytes(STATE_NOT_READY)
+    // ), ERROR_NOT_STATE_READY_OR_NOT_READY
+    assert // Cannot be called from other state than READY or NOT_READY.
+    // smart_contracts/validator_ad/contract.py:546
+    // assert val_manager.native == self.val_manager, ERROR_CALLED_BY_NOT_VAL_MANAGER
+    intc_0 // 0
+    bytec 11 // "val_manager"
+    app_global_get_ex
+    assert // check self.val_manager exists
+    frame_dig -2
+    ==
+    assert // Can only be called by validator manager.
+    // smart_contracts/validator_ad/contract.py:548
+    // if ready.native:
+    frame_dig -1
+    intc_0 // 0
+    getbit
+    bz ad_ready_else_body@6
+    // smart_contracts/validator_ad/contract.py:549
+    // self.state = Bytes(STATE_READY)
+    bytec_1 // "state"
+    bytec 23 // 0x05
+    app_global_put
+    b ad_ready_after_if_else@7
+
+ad_ready_else_body@6:
+    // smart_contracts/validator_ad/contract.py:551
+    // self.state = Bytes(STATE_NOT_READY)
+    bytec_1 // "state"
+    bytec 22 // 0x06
+    app_global_put
+
+ad_ready_after_if_else@7:
+    // smart_contracts/validator_ad/contract.py:553
+    // return
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.ad_self_disclose(val_owner: bytes, val_info: bytes) -> void:
+ad_self_disclose:
+    // smart_contracts/validator_ad/contract.py:555-560
+    // @arc4.abimethod()
+    // def ad_self_disclose(
+    //     self,
+    //     val_owner: arc4.Address,
+    //     val_info: ValidatorSelfDisclosure,
+    // ) -> None:
+    proto 2 0
+    // smart_contracts/validator_ad/contract.py:572
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:573
+    // assert val_owner.native == self.val_owner, ERROR_CALLED_BY_NOT_VAL_OWNER
+    intc_0 // 0
+    bytec_2 // "val_owner"
+    app_global_get_ex
+    assert // check self.val_owner exists
+    frame_dig -2
+    ==
+    assert // Can only be called by validator owner.
+    // smart_contracts/validator_ad/contract.py:575
+    // self.val_info.value = val_info.copy()
+    pushbytes "V"
+    frame_dig -1
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:577
+    // return
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.ad_terms(val_owner: bytes, tc_sha256: bytes, terms_time: bytes, terms_price: bytes, terms_stake: bytes, terms_reqs: bytes, terms_warn: bytes, txn: uint64) -> void:
+ad_terms:
+    // smart_contracts/validator_ad/contract.py:579-590
+    // @arc4.abimethod()
+    // def ad_terms(
+    //     self,
+    //     val_owner: arc4.Address,
+    //     tc_sha256: Sha256,
+    //     terms_time: ValidatorTermsTiming,
+    //     terms_price: ValidatorTermsPricing,
+    //     terms_stake: ValidatorTermsStakeLimits,
+    //     terms_reqs: ValidatorTermsGating,
+    //     terms_warn: ValidatorTermsWarnings,
+    //     txn: gtxn.PaymentTransaction,
+    // ) -> None:
+    proto 8 0
+    intc_0 // 0
+    // smart_contracts/validator_ad/contract.py:615
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:616
+    // assert val_owner.native == self.val_owner, ERROR_CALLED_BY_NOT_VAL_OWNER
+    intc_0 // 0
+    bytec_2 // "val_owner"
+    app_global_get_ex
+    assert // check self.val_owner exists
+    frame_dig -8
+    ==
+    assert // Can only be called by validator owner.
+    // smart_contracts/validator_ad/contract.py:618
+    // mbr_cur = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/validator_ad/contract.py:620-621
+    // # Sanity checks on input terms
+    // assert terms_time.rounds_setup.native + terms_time.rounds_confirm.native < terms_time.rounds_duration_min, \
+    frame_dig -6
+    extract 16 8 // on error: Index access is out of bounds
+    frame_dig -6
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    frame_dig -6
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    +
+    itob
+    dig 1
+    b<
+    // smart_contracts/validator_ad/contract.py:620-622
+    // # Sanity checks on input terms
+    // assert terms_time.rounds_setup.native + terms_time.rounds_confirm.native < terms_time.rounds_duration_min, \
+    //     ERROR_TERMS_MIN_DURATION_SETUP_CONFIRM
+    assert // Minimum delegation duration must be longer the sum of setup and confirmation rounds.
+    // smart_contracts/validator_ad/contract.py:623
+    // assert terms_time.rounds_duration_min <= terms_time.rounds_duration_max, \
+    frame_dig -6
+    extract 24 8 // on error: Index access is out of bounds
+    b<=
+    // smart_contracts/validator_ad/contract.py:623-624
+    // assert terms_time.rounds_duration_min <= terms_time.rounds_duration_max, \
+    //     ERROR_TERM_DURATION_MIN_LARGER_THAN_MAX
+    assert // Minimum delegation duration cannot be larger than maximum duration.
+    // smart_contracts/validator_ad/contract.py:625
+    // assert terms_stake.stake_gratis <= UInt64(STAKE_GRATIS_MAX), ERROR_TERM_GRATIS_MAX
+    frame_dig -4
+    extract 8 8 // on error: Index access is out of bounds
+    intc_3 // 1000000
+    itob
+    b<=
+    assert // Validator ad gratis stake amount must be at smaller or equal to the maximum possible.
+    // smart_contracts/validator_ad/contract.py:626
+    // assert terms_time.round_max_end > Global.round, ERROR_AD_END_IS_IN_PAST
+    frame_dig -6
+    extract 32 8 // on error: Index access is out of bounds
+    global Round
+    itob
+    b>
+    assert // Validator ad end time defined is in the past.
+    // smart_contracts/validator_ad/contract.py:628
+    // self.tc_sha256 = tc_sha256.copy()
+    bytec 15 // "tc_sha256"
+    frame_dig -7
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:629
+    // self.terms_time.value = terms_time.copy()
+    bytec 6 // "T"
+    frame_dig -6
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:630
+    // self.terms_price.value = terms_price.copy()
+    bytec 7 // "P"
+    frame_dig -5
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:631
+    // self.terms_stake.value = terms_stake.copy()
+    bytec 9 // "S"
+    frame_dig -4
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:632
+    // self.terms_reqs.value = terms_reqs.copy()
+    bytec 16 // "G"
+    frame_dig -3
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:633
+    // self.terms_warn.value = terms_warn.copy()
+    bytec 10 // "W"
+    frame_dig -2
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:635
+    // asset_id = terms_price.fee_asset_id.native
+    frame_dig -5
+    extract 32 8 // on error: Index access is out of bounds
+    btoi
+    dup
+    // smart_contracts/validator_ad/contract.py:636
+    // if asset_id != UInt64(ALGO_ASA_ID):
+    bz ad_terms_after_if_else@5
+    // smart_contracts/validator_ad/contract.py:638
+    // if asset not in self.asas:
+    frame_dig 2
+    itob
+    bytec 13 // 0x6173615f
+    swap
+    concat
+    dup
+    frame_bury 0
+    box_len
+    bury 1
+    bnz ad_terms_after_if_else@5
+    // smart_contracts/validator_ad/contract.py:639-644
+    // # Opt in to the asset
+    // itxn.AssetTransfer(
+    //     xfer_asset=asset,
+    //     asset_receiver=Global.current_application_address,
+    //     asset_amount=0,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/validator_ad/contract.py:642
+    // asset_receiver=Global.current_application_address,
+    global CurrentApplicationAddress
+    // smart_contracts/validator_ad/contract.py:643
+    // asset_amount=0,
+    intc_0 // 0
+    itxn_field AssetAmount
+    itxn_field AssetReceiver
+    frame_dig 2
+    itxn_field XferAsset
+    // smart_contracts/validator_ad/contract.py:639-640
+    // # Opt in to the asset
+    // itxn.AssetTransfer(
+    pushint 4 // axfer
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/validator_ad/contract.py:639-644
+    // # Opt in to the asset
+    // itxn.AssetTransfer(
+    //     xfer_asset=asset,
+    //     asset_receiver=Global.current_application_address,
+    //     asset_amount=0,
+    // ).submit()
+    itxn_submit
+    // smart_contracts/validator_ad/contract.py:646-650
+    // # Create the entry
+    // self.asas[asset] = ValidatorASA(
+    //     total_earning=arc4.UInt64(0),
+    //     total_fees_generated=arc4.UInt64(0),
+    // )
+    frame_dig 0
+    pushbytes 0x00000000000000000000000000000000
+    box_put
+    // smart_contracts/validator_ad/contract.py:652
+    // self.cnt_asa += 1
+    intc_0 // 0
+    bytec 8 // "cnt_asa"
+    app_global_get_ex
+    assert // check self.cnt_asa exists
+    intc_1 // 1
+    +
+    bytec 8 // "cnt_asa"
+    swap
+    app_global_put
+
+ad_terms_after_if_else@5:
+    // smart_contracts/validator_ad/contract.py:654-655
+    // # Check if payment for increase of MBR was made
+    // assert txn.receiver == Global.current_application_address, ERROR_RECEIVER
+    frame_dig -1
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert // Transaction must be to this contract.
+    // smart_contracts/validator_ad/contract.py:656
+    // mbr_new = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/validator_ad/contract.py:657
+    // mbr_pay_amount = mbr_new - mbr_cur
+    frame_dig 1
+    -
+    // smart_contracts/validator_ad/contract.py:658
+    // assert txn.amount == mbr_pay_amount, ERROR_AD_TERMS_MBR
+    frame_dig -1
+    gtxns Amount
+    ==
+    assert // Insufficient payment for MBR increase of validator ad due to new terms.
+    // smart_contracts/validator_ad/contract.py:661
+    // if self.state == Bytes(STATE_TEMPLATE_LOADED):
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 21 // 0x03
+    ==
+    bz ad_terms_after_if_else@7
+    // smart_contracts/validator_ad/contract.py:662
+    // self.state = Bytes(STATE_SET)
+    bytec_1 // "state"
+    pushbytes 0x04
+    app_global_put
+
+ad_terms_after_if_else@7:
+    // smart_contracts/validator_ad/contract.py:664
+    // return
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.ad_income(val_owner: bytes, asset_id: uint64) -> bytes:
+ad_income:
+    // smart_contracts/validator_ad/contract.py:666-671
+    // @arc4.abimethod()
+    // def ad_income(
+    //     self,
+    //     val_owner: arc4.Address,
+    //     asset_id: UInt64,
+    // ) -> arc4.UInt64:
+    proto 2 1
+    // smart_contracts/validator_ad/contract.py:689
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:690
+    // assert val_owner.native == self.val_owner, ERROR_CALLED_BY_NOT_VAL_OWNER
+    intc_0 // 0
+    bytec_2 // "val_owner"
+    app_global_get_ex
+    assert // check self.val_owner exists
+    frame_dig -2
+    ==
+    assert // Can only be called by validator owner.
+    // smart_contracts/validator_ad/contract.py:693
+    // if asset.id != UInt64(ALGO_ASA_ID):
+    frame_dig -1
+    bz ad_income_else_body@3
+    // smart_contracts/validator_ad/contract.py:694
+    // bal = asset.balance(Global.current_application_address)
+    global CurrentApplicationAddress
+    frame_dig -1
+    asset_holding_get AssetBalance
+    swap
+    dup
+    uncover 2
+    assert // account opted into asset
+    // smart_contracts/validator_ad/contract.py:695-699
+    // itxn.AssetTransfer(
+    //     xfer_asset=asset,
+    //     asset_receiver=val_owner.native,
+    //     asset_amount=bal,
+    // ).submit()
+    itxn_begin
+    itxn_field AssetAmount
+    frame_dig -2
+    itxn_field AssetReceiver
+    frame_dig -1
+    itxn_field XferAsset
+    // smart_contracts/validator_ad/contract.py:695
+    // itxn.AssetTransfer(
+    pushint 4 // axfer
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/validator_ad/contract.py:695-699
+    // itxn.AssetTransfer(
+    //     xfer_asset=asset,
+    //     asset_receiver=val_owner.native,
+    //     asset_amount=bal,
+    // ).submit()
+    itxn_submit
+    b ad_income_after_if_else@5
+
+ad_income_else_body@3:
+    // smart_contracts/validator_ad/contract.py:701
+    // bal = Global.current_application_address.balance - Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctBalance
+    assert // account funded
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    -
+    dup
+    // smart_contracts/validator_ad/contract.py:702-705
+    // itxn.Payment(
+    //     receiver=val_owner.native,
+    //     amount=bal,
+    // ).submit()
+    itxn_begin
+    itxn_field Amount
+    frame_dig -2
+    itxn_field Receiver
+    // smart_contracts/validator_ad/contract.py:702
+    // itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/validator_ad/contract.py:702-705
+    // itxn.Payment(
+    //     receiver=val_owner.native,
+    //     amount=bal,
+    // ).submit()
+    itxn_submit
+
+ad_income_after_if_else@5:
+    // smart_contracts/validator_ad/contract.py:707
+    // return arc4.UInt64(bal)
+    itob
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.ad_asa_close(val_owner: bytes, asset_id: uint64) -> void:
+ad_asa_close:
+    // smart_contracts/validator_ad/contract.py:709-714
+    // @arc4.abimethod()
+    // def ad_asa_close(
+    //     self,
+    //     val_owner: arc4.Address,
+    //     asset_id: UInt64,
+    // ) -> None:
+    proto 2 0
+    // smart_contracts/validator_ad/contract.py:727
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:728
+    // assert val_owner.native == self.val_owner, ERROR_CALLED_BY_NOT_VAL_OWNER
+    intc_0 // 0
+    bytec_2 // "val_owner"
+    app_global_get_ex
+    assert // check self.val_owner exists
+    frame_dig -2
+    ==
+    assert // Can only be called by validator owner.
+    // smart_contracts/validator_ad/contract.py:730
+    // assert self.cnt_del == UInt64(0), ERROR_CANNOT_REMOVE_ASA_WITH_ACTIVE_DELEGATORS
+    intc_0 // 0
+    bytec 4 // "cnt_del"
+    app_global_get_ex
+    assert // check self.cnt_del exists
+    !
+    assert // Cannot remove ASA while there are active delegators because one could be still using it.
+    // smart_contracts/validator_ad/contract.py:733-734
+    // # Check if ASA is even stored on the ValidatorAd. This inherently fails for ALGO, which is stored separately.
+    // assert asset in self.asas, ERROR_ASA_NOT_STORED_AT_VALIDATOR_AD
+    frame_dig -1
+    itob
+    bytec 13 // 0x6173615f
+    swap
+    concat
+    dup
+    box_len
+    bury 1
+    assert // ASA is not stored at validator ad.
+    // smart_contracts/validator_ad/contract.py:736
+    // assert op.Box.delete(Bytes(BOX_ASA_KEY_PREFIX) + op.itob(asset_id)), ERROR_ASA_BOX_NOT_DELETED
+    box_del
+    assert // Failed to delete ASA box.
+    // smart_contracts/validator_ad/contract.py:737
+    // self.cnt_asa -= 1
+    intc_0 // 0
+    bytec 8 // "cnt_asa"
+    app_global_get_ex
+    assert // check self.cnt_asa exists
+    intc_1 // 1
+    -
+    bytec 8 // "cnt_asa"
+    swap
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:739-744
+    // itxn.AssetTransfer(
+    //     xfer_asset=asset,
+    //     asset_receiver=val_owner.native,
+    //     asset_amount=0,
+    //     asset_close_to=val_owner.native,
+    // ).submit()
+    itxn_begin
+    frame_dig -2
+    itxn_field AssetCloseTo
+    // smart_contracts/validator_ad/contract.py:742
+    // asset_amount=0,
+    intc_0 // 0
+    itxn_field AssetAmount
+    frame_dig -2
+    itxn_field AssetReceiver
+    frame_dig -1
+    itxn_field XferAsset
+    // smart_contracts/validator_ad/contract.py:739
+    // itxn.AssetTransfer(
+    pushint 4 // axfer
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/validator_ad/contract.py:739-744
+    // itxn.AssetTransfer(
+    //     xfer_asset=asset,
+    //     asset_receiver=val_owner.native,
+    //     asset_amount=0,
+    //     asset_close_to=val_owner.native,
+    // ).submit()
+    itxn_submit
+    // smart_contracts/validator_ad/contract.py:746
+    // return
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.template_load_init(val_owner: bytes, template_size: uint64, mbr_txn: uint64) -> void:
+template_load_init:
+    // smart_contracts/validator_ad/contract.py:748-754
+    // @arc4.abimethod()
+    // def template_load_init(
+    //     self,
+    //     val_owner: arc4.Address,
+    //     template_size: UInt64,
+    //     mbr_txn: gtxn.PaymentTransaction,
+    // ) -> None:
+    proto 3 0
+    // smart_contracts/validator_ad/contract.py:769
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:770
+    // assert val_owner.native == self.val_owner, ERROR_CALLED_BY_NOT_VAL_OWNER
+    intc_0 // 0
+    bytec_2 // "val_owner"
+    app_global_get_ex
+    assert // check self.val_owner exists
+    frame_dig -3
+    ==
+    assert // Can only be called by validator owner.
+    // smart_contracts/validator_ad/contract.py:772
+    // mbr_cur = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/validator_ad/contract.py:774
+    // assert self.state == Bytes(STATE_CREATED), ERROR_NOT_STATE_CREATED
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 20 // 0x01
+    ==
+    assert // Cannot be called from other state than CREATED.
+    // smart_contracts/validator_ad/contract.py:776
+    // assert self.template.create(size=template_size)
+    bytec_3 // 0x64
+    frame_dig -2
+    box_create
+    assert
+    // smart_contracts/validator_ad/contract.py:778
+    // self.state = Bytes(STATE_TEMPLATE_LOAD)
+    bytec_1 // "state"
+    bytec 12 // 0x02
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:780-781
+    // # Check if the input MBR payment transaction was sufficient for increase validator ad's MBR
+    // mbr_new = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/validator_ad/contract.py:782
+    // amt = (mbr_new - mbr_cur)
+    swap
+    -
+    // smart_contracts/validator_ad/contract.py:783
+    // assert mbr_txn.receiver == Global.current_application_address, ERROR_RECEIVER
+    frame_dig -1
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert // Transaction must be to this contract.
+    // smart_contracts/validator_ad/contract.py:784
+    // assert mbr_txn.amount == amt, ERROR_AMOUNT
+    frame_dig -1
+    gtxns Amount
+    ==
+    assert // Sent amount doesn't match the agreed one.
+    // smart_contracts/validator_ad/contract.py:786
+    // return
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.template_load_data(val_owner: bytes, offset: uint64, data: bytes) -> void:
+template_load_data:
+    // smart_contracts/validator_ad/contract.py:788-794
+    // @arc4.abimethod()
+    // def template_load_data(
+    //     self,
+    //     val_owner: arc4.Address,
+    //     offset: UInt64,
+    //     data: Bytes,
+    // ) -> None:
+    proto 3 0
+    // smart_contracts/validator_ad/contract.py:808
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:809
+    // assert val_owner.native == self.val_owner, ERROR_CALLED_BY_NOT_VAL_OWNER
+    intc_0 // 0
+    bytec_2 // "val_owner"
+    app_global_get_ex
+    assert // check self.val_owner exists
+    frame_dig -3
+    ==
+    assert // Can only be called by validator owner.
+    // smart_contracts/validator_ad/contract.py:811
+    // assert self.state == Bytes(STATE_TEMPLATE_LOAD), ERROR_NOT_STATE_TEMPLATE_LOAD
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 12 // 0x02
+    ==
+    assert // Cannot be called from other state than TEMPLATE_LOAD.
+    // smart_contracts/validator_ad/contract.py:813
+    // self.template.replace(offset, data)
+    bytec_3 // 0x64
+    frame_dig -2
+    frame_dig -1
+    box_replace
+    // smart_contracts/validator_ad/contract.py:815
+    // return
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.template_load_end(val_owner: bytes) -> void:
+template_load_end:
+    // smart_contracts/validator_ad/contract.py:817-821
+    // @arc4.abimethod()
+    // def template_load_end(
+    //     self,
+    //     val_owner: arc4.Address,
+    // ) -> None:
+    proto 1 0
+    // smart_contracts/validator_ad/contract.py:831
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:832
+    // assert val_owner.native == self.val_owner, ERROR_CALLED_BY_NOT_VAL_OWNER
+    intc_0 // 0
+    bytec_2 // "val_owner"
+    app_global_get_ex
+    assert // check self.val_owner exists
+    frame_dig -1
+    ==
+    assert // Can only be called by validator owner.
+    // smart_contracts/validator_ad/contract.py:834
+    // assert self.state == Bytes(STATE_TEMPLATE_LOAD), ERROR_NOT_STATE_TEMPLATE_LOAD
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 12 // 0x02
+    ==
+    assert // Cannot be called from other state than TEMPLATE_LOAD.
+    // smart_contracts/validator_ad/contract.py:836
+    // self.state = Bytes(STATE_TEMPLATE_LOADED)
+    bytec_1 // "state"
+    bytec 21 // 0x03
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:838
+    // return
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.contract_create(del_manager: bytes, del_beneficiary: bytes, rounds_duration: uint64, stake_max: uint64, partner_address: bytes, partner_commissions: bytes, mbr_txn: uint64, txn: uint64) -> bytes:
+contract_create:
+    // smart_contracts/validator_ad/contract.py:844-855
+    // @arc4.abimethod()
+    // def contract_create(
+    //     self,
+    //     del_manager: arc4.Address,
+    //     del_beneficiary: arc4.Address,
+    //     rounds_duration: UInt64,
+    //     stake_max: UInt64,
+    //     partner_address: arc4.Address,
+    //     partner_commissions: PartnerCommissions,
+    //     mbr_txn: gtxn.PaymentTransaction,
+    //     txn: gtxn.Transaction,
+    // ) -> arc4.UInt64:
+    proto 8 1
+    intc_0 // 0
+    dupn 4
+    pushbytes ""
+    dupn 15
+    // smart_contracts/validator_ad/contract.py:888
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:890
+    // assert self.state == Bytes(STATE_READY), ERROR_NOT_STATE_READY
+    intc_0 // 0
+    bytec_1 // "state"
+    app_global_get_ex
+    assert // check self.state exists
+    bytec 23 // 0x05
+    ==
+    assert // Cannot be called from other state than READY.
+    // smart_contracts/validator_ad/contract.py:892
+    // mbr_cur = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/validator_ad/contract.py:896
+    // if self.template.length > UInt64(4096):
+    bytec_3 // 0x64
+    box_len
+    assert // check self.template exists
+    intc 4 // 4096
+    >
+    bz contract_create_else_body@2
+    // smart_contracts/validator_ad/contract.py:898
+    // self.template.extract(UInt64(0), UInt64(4096)),
+    bytec_3 // 0x64
+    intc_0 // 0
+    intc 4 // 4096
+    box_extract
+    frame_bury 0
+    // smart_contracts/validator_ad/contract.py:899
+    // self.template.extract(UInt64(4096), self.template.length - UInt64(4096)),
+    bytec_3 // 0x64
+    box_len
+    assert // check self.template exists
+    intc 4 // 4096
+    -
+    bytec_3 // 0x64
+    intc 4 // 4096
+    uncover 2
+    box_extract
+    b contract_create_after_if_else@3
+
+contract_create_else_body@2:
+    // smart_contracts/validator_ad/contract.py:903
+    // self.template.extract(UInt64(0), self.template.length),
+    bytec_3 // 0x64
+    box_len
+    assert // check self.template exists
+    bytec_3 // 0x64
+    intc_0 // 0
+    uncover 2
+    box_extract
+    frame_bury 0
+    // smart_contracts/validator_ad/contract.py:904
+    // Bytes(),
+    pushbytes 0x
+
+contract_create_after_if_else@3:
+    // smart_contracts/validator_ad/contract.py:907-919
+    // del_app_id, txn_create = arc4.abi_call(
+    //     DelegatorContract.contract_create,
+    //     del_manager,
+    //     del_beneficiary,
+    //     self.noticeboard_app_id,
+    //     approval_program=approval_program,
+    //     clear_state_program=compiled.clear_state_program,
+    //     global_num_uint=compiled.global_uints,
+    //     global_num_bytes=compiled.global_bytes,
+    //     local_num_uint=compiled.local_uints,
+    //     local_num_bytes=compiled.local_bytes,
+    //     extra_program_pages=compiled.extra_program_pages,
+    // )
+    itxn_begin
+    // smart_contracts/validator_ad/contract.py:911
+    // self.noticeboard_app_id,
+    intc_0 // 0
+    bytec 14 // "noticeboard_app_id"
+    app_global_get_ex
+    assert // check self.noticeboard_app_id exists
+    itob
+    // smart_contracts/validator_ad/contract.py:894-895
+    // # Create a new delegator contract
+    // compiled = compile_contract(DelegatorContract)
+    intc_1 // 1
+    itxn_field ExtraProgramPages
+    pushint 9 // 9
+    itxn_field GlobalNumByteSlice
+    pushint 12 // 12
+    itxn_field GlobalNumUint
+    pushbytes base64(C4EBQw==)
+    itxn_field ClearStateProgramPages
+    frame_dig 0
+    itxn_field ApprovalProgramPages
+    swap
+    itxn_field ApprovalProgramPages
+    // smart_contracts/validator_ad/contract.py:907-919
+    // del_app_id, txn_create = arc4.abi_call(
+    //     DelegatorContract.contract_create,
+    //     del_manager,
+    //     del_beneficiary,
+    //     self.noticeboard_app_id,
+    //     approval_program=approval_program,
+    //     clear_state_program=compiled.clear_state_program,
+    //     global_num_uint=compiled.global_uints,
+    //     global_num_bytes=compiled.global_bytes,
+    //     local_num_uint=compiled.local_uints,
+    //     local_num_bytes=compiled.local_bytes,
+    //     extra_program_pages=compiled.extra_program_pages,
+    // )
+    pushbytes 0xd1beccce // method "contract_create(address,address,uint64)uint64"
+    itxn_field ApplicationArgs
+    frame_dig -8
+    itxn_field ApplicationArgs
+    frame_dig -7
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_0 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/validator_ad/contract.py:920
+    // del_app = Application(del_app_id.native)
+    btoi
+    dup
+    frame_bury 5
+    // smart_contracts/validator_ad/contract.py:922-923
+    // # Fund the created delegator contract
+    // del_mbr_fund = Global.min_balance + Global.asset_opt_in_min_balance
+    global MinBalance
+    global AssetOptInMinBalance
+    +
+    dup
+    frame_bury 6
+    // smart_contracts/validator_ad/contract.py:924-927
+    // itxn.Payment(
+    //     receiver=del_app.address,
+    //     amount=del_mbr_fund,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/validator_ad/contract.py:925
+    // receiver=del_app.address,
+    swap
+    app_params_get AppAddress
+    assert // application exists
+    itxn_field Receiver
+    itxn_field Amount
+    // smart_contracts/validator_ad/contract.py:924
+    // itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/validator_ad/contract.py:924-927
+    // itxn.Payment(
+    //     receiver=del_app.address,
+    //     amount=del_mbr_fund,
+    // ).submit()
+    itxn_submit
+    // smart_contracts/validator_ad/contract.py:929-930
+    // # Setup the delegator contract
+    // assert rounds_duration >= self.terms_time.value.rounds_duration_min, ERROR_DELEGATION_PERIOD_TOO_SHORT
+    intc_0 // 0
+    bytec 6 // "T"
+    app_global_get_ex
+    assert // check self.terms_time exists
+    extract 16 8 // on error: Index access is out of bounds
+    frame_dig -6
+    itob
+    dup
+    frame_bury 2
+    swap
+    dig 1
+    b<=
+    assert // Too short delegation period.
+    // smart_contracts/validator_ad/contract.py:931
+    // assert rounds_duration <= self.terms_time.value.rounds_duration_max, ERROR_DELEGATION_PERIOD_TOO_LONG
+    intc_0 // 0
+    bytec 6 // "T"
+    app_global_get_ex
+    assert // check self.terms_time exists
+    extract 24 8 // on error: Index access is out of bounds
+    b<=
+    assert // Too long delegation period.
+    // smart_contracts/validator_ad/contract.py:932
+    // assert Global.round + rounds_duration <= self.terms_time.value.round_max_end, ERROR_DELEGATION_ENDS_TOO_LATE
+    intc_0 // 0
+    bytec 6 // "T"
+    app_global_get_ex
+    assert // check self.terms_time exists
+    extract 32 8 // on error: Index access is out of bounds
+    global Round
+    frame_dig -6
+    +
+    itob
+    b>=
+    assert // Delegation would end at a later time than allowed by validator.
+    // smart_contracts/validator_ad/contract.py:934
+    // stake_max_scaled_price = stake_max // UInt64(FROM_BASE_TO_MICRO_MULTIPLIER)
+    frame_dig -5
+    intc_3 // 1000000
+    /
+    // smart_contracts/validator_ad/contract.py:935
+    // tmp = op.mulw(self.terms_price.value.fee_round_var.native, stake_max_scaled_price)
+    intc_0 // 0
+    bytec 7 // "P"
+    app_global_get_ex
+    assert // check self.terms_price exists
+    extract 16 8 // on error: Index access is out of bounds
+    btoi
+    mulw
+    // smart_contracts/validator_ad/contract.py:936
+    // fee_round_var = op.divw(tmp[0], tmp[1], UInt64(FROM_MILLI_TO_NANO_MULTIPLIER))
+    intc_3 // 1000000
+    divw
+    // smart_contracts/validator_ad/contract.py:938
+    // self.terms_price.value.fee_round_min.native,
+    intc_0 // 0
+    bytec 7 // "P"
+    app_global_get_ex
+    assert // check self.terms_price exists
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    // smart_contracts/validator_ad/contract.py:937-940
+    // fee_round = maximum(
+    //     self.terms_price.value.fee_round_min.native,
+    //     fee_round_var
+    // )
+    swap
+    callsub maximum
+    frame_bury 7
+    // smart_contracts/validator_ad/contract.py:941
+    // fee_setup = self.terms_price.value.fee_setup.native
+    intc_0 // 0
+    bytec 7 // "P"
+    app_global_get_ex
+    assert // check self.terms_price exists
+    extract 24 8 // on error: Index access is out of bounds
+    btoi
+    frame_bury 9
+    // smart_contracts/validator_ad/contract.py:943
+    // if partner_address != arc4.Address(Global.zero_address):
+    frame_dig -4
+    global ZeroAddress
+    !=
+    bz contract_create_else_body@7
+    // smart_contracts/validator_ad/contract.py:944
+    // tmp = op.mulw(fee_round, partner_commissions.commission_operational.native)
+    frame_dig -3
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    frame_dig 7
+    mulw
+    // smart_contracts/validator_ad/contract.py:945
+    // fee_round_partner = op.divw(tmp[0], tmp[1], UInt64(ONE_IN_PPM))
+    intc_3 // 1000000
+    divw
+    frame_bury 8
+    // smart_contracts/validator_ad/contract.py:947
+    // tmp = op.mulw(fee_setup, partner_commissions.commission_setup.native)
+    frame_dig -3
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    frame_dig 9
+    mulw
+    // smart_contracts/validator_ad/contract.py:948
+    // fee_setup_partner = op.divw(tmp[0], tmp[1], UInt64(ONE_IN_PPM))
+    intc_3 // 1000000
+    divw
+    b contract_create_after_if_else@8
+
+contract_create_else_body@7:
+    // smart_contracts/validator_ad/contract.py:950
+    // fee_round_partner = UInt64(0)
+    intc_0 // 0
+    frame_bury 8
+    // smart_contracts/validator_ad/contract.py:951
+    // fee_setup_partner = UInt64(0)
+    intc_0 // 0
+
+contract_create_after_if_else@8:
+    // smart_contracts/validator_ad/contract.py:954
+    // commission = self.terms_price.value.commission,
+    intc_0 // 0
+    bytec 7 // "P"
+    app_global_get_ex
+    assert // check self.terms_price exists
+    extract 0 8 // on error: Index access is out of bounds
+    // smart_contracts/validator_ad/contract.py:955
+    // fee_round = arc4.UInt64(fee_round),
+    frame_dig 7
+    itob
+    // smart_contracts/validator_ad/contract.py:956
+    // fee_setup = arc4.UInt64(fee_setup),
+    frame_dig 9
+    itob
+    // smart_contracts/validator_ad/contract.py:957
+    // fee_asset_id = self.terms_price.value.fee_asset_id,
+    intc_0 // 0
+    bytec 7 // "P"
+    app_global_get_ex
+    assert // check self.terms_price exists
+    extract 32 8 // on error: Index access is out of bounds
+    // smart_contracts/validator_ad/contract.py:959
+    // fee_round_partner = arc4.UInt64(fee_round_partner),
+    frame_dig 8
+    itob
+    // smart_contracts/validator_ad/contract.py:960
+    // fee_setup_partner = arc4.UInt64(fee_setup_partner),
+    uncover 5
+    itob
+    // smart_contracts/validator_ad/contract.py:961
+    // rounds_setup = self.terms_time.value.rounds_setup,
+    intc_0 // 0
+    bytec 6 // "T"
+    app_global_get_ex
+    assert // check self.terms_time exists
+    extract 0 8 // on error: Index access is out of bounds
+    // smart_contracts/validator_ad/contract.py:962
+    // rounds_confirm = self.terms_time.value.rounds_confirm,
+    intc_0 // 0
+    bytec 6 // "T"
+    app_global_get_ex
+    assert // check self.terms_time exists
+    extract 8 8 // on error: Index access is out of bounds
+    // smart_contracts/validator_ad/contract.py:953-963
+    // delegation_terms_general = DelegationTermsGeneral(
+    //     commission = self.terms_price.value.commission,
+    //     fee_round = arc4.UInt64(fee_round),
+    //     fee_setup = arc4.UInt64(fee_setup),
+    //     fee_asset_id = self.terms_price.value.fee_asset_id,
+    //     partner_address = partner_address,
+    //     fee_round_partner = arc4.UInt64(fee_round_partner),
+    //     fee_setup_partner = arc4.UInt64(fee_setup_partner),
+    //     rounds_setup = self.terms_time.value.rounds_setup,
+    //     rounds_confirm = self.terms_time.value.rounds_confirm,
+    // )
+    uncover 7
+    uncover 7
+    concat
+    uncover 6
+    concat
+    uncover 5
+    concat
+    frame_dig -4
+    concat
+    uncover 4
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    frame_bury 1
+    // smart_contracts/validator_ad/contract.py:965
+    // stake_max_max = self.terms_stake.value.stake_max.native
+    intc_0 // 0
+    bytec 9 // "S"
+    app_global_get_ex
+    assert // check self.terms_stake exists
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    dup
+    frame_bury 10
+    // smart_contracts/validator_ad/contract.py:966
+    // assert stake_max <= stake_max_max, ERROR_REQUESTED_MAX_STAKE_TOO_HIGH
+    frame_dig -5
+    dig 1
+    <=
+    assert // Delegator requested a stake above the maximum allowed by the validator.
+    // smart_contracts/validator_ad/contract.py:968
+    // tmp = op.mulw(stake_max, self.terms_stake.value.stake_gratis.native)
+    intc_0 // 0
+    bytec 9 // "S"
+    app_global_get_ex
+    assert // check self.terms_stake exists
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    frame_dig -5
+    mulw
+    // smart_contracts/validator_ad/contract.py:969
+    // stake_gratis_abs = op.divw(tmp[0], tmp[1], UInt64(STAKE_GRATIS_MAX))
+    intc_3 // 1000000
+    divw
+    // smart_contracts/validator_ad/contract.py:970
+    // stake_max_w_gratis = stake_max + stake_gratis_abs
+    frame_dig -5
+    +
+    dup
+    frame_bury 11
+    // smart_contracts/validator_ad/contract.py:971
+    // if stake_max_w_gratis < stake_max_max:
+    >
+    bz contract_create_else_body@10
+    frame_dig 11
+    b contract_create_after_if_else@11
+
+contract_create_else_body@10:
+    frame_dig 10
+
+contract_create_after_if_else@11:
+    // smart_contracts/validator_ad/contract.py:977
+    // stake_max = arc4.UInt64(stake_max_given),
+    itob
+    // smart_contracts/validator_ad/contract.py:978
+    // cnt_breach_del_max = self.terms_warn.value.cnt_warning_max,
+    intc_0 // 0
+    bytec 10 // "W"
+    app_global_get_ex
+    assert // check self.terms_warn exists
+    extract 0 8 // on error: Index access is out of bounds
+    // smart_contracts/validator_ad/contract.py:979
+    // rounds_breach = self.terms_warn.value.rounds_warning,
+    intc_0 // 0
+    bytec 10 // "W"
+    app_global_get_ex
+    assert // check self.terms_warn exists
+    extract 8 8 // on error: Index access is out of bounds
+    // smart_contracts/validator_ad/contract.py:980
+    // gating_asa_list = self.terms_reqs.value.gating_asa_list.copy(),
+    intc_0 // 0
+    bytec 16 // "G"
+    app_global_get_ex
+    assert // check self.terms_reqs exists
+    extract 0 32 // on error: Index access is out of bounds
+    // smart_contracts/validator_ad/contract.py:976-981
+    // delegation_terms_balance = DelegationTermsBalance(
+    //     stake_max = arc4.UInt64(stake_max_given),
+    //     cnt_breach_del_max = self.terms_warn.value.cnt_warning_max,
+    //     rounds_breach = self.terms_warn.value.rounds_warning,
+    //     gating_asa_list = self.terms_reqs.value.gating_asa_list.copy(),
+    // )
+    uncover 3
+    uncover 3
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    // smart_contracts/validator_ad/contract.py:983-990
+    // app_txn = arc4.abi_call(
+    //     DelegatorContract.contract_setup,
+    //     self.tc_sha256.copy(),
+    //     delegation_terms_general.copy(),
+    //     delegation_terms_balance.copy(),
+    //     rounds_duration,
+    //     app_id=del_app.id,
+    // )
+    itxn_begin
+    // smart_contracts/validator_ad/contract.py:985
+    // self.tc_sha256.copy(),
+    intc_0 // 0
+    bytec 15 // "tc_sha256"
+    app_global_get_ex
+    assert // check self.tc_sha256 exists
+    frame_dig 5
+    itxn_field ApplicationID
+    // smart_contracts/validator_ad/contract.py:983-990
+    // app_txn = arc4.abi_call(
+    //     DelegatorContract.contract_setup,
+    //     self.tc_sha256.copy(),
+    //     delegation_terms_general.copy(),
+    //     delegation_terms_balance.copy(),
+    //     rounds_duration,
+    //     app_id=del_app.id,
+    // )
+    pushbytes 0x7d3db474 // method "contract_setup(byte[32],(uint64,uint64,uint64,uint64,address,uint64,uint64,uint64,uint64),(uint64,uint64,uint64,(uint64,uint64)[2]),uint64)void"
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    frame_dig 1
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    frame_dig 2
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    // smart_contracts/validator_ad/contract.py:992-993
+    // # Check payment and forward it to the created delegator contract
+    // if txn.type == TransactionType.Payment:
+    frame_dig -1
+    gtxns TypeEnum
+    dup
+    frame_bury 12
+    intc_1 // pay
+    ==
+    bz contract_create_else_body@14
+    // smart_contracts/validator_ad/contract.py:994
+    // assert txn.receiver == Global.current_application_address, ERROR_RECEIVER
+    frame_dig -1
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert // Transaction must be to this contract.
+    // smart_contracts/validator_ad/contract.py:996
+    // type=TransactionType.Payment,
+    intc_1 // pay
+    frame_bury 19
+    // smart_contracts/validator_ad/contract.py:997
+    // receiver=del_app.address,
+    frame_dig 5
+    app_params_get AppAddress
+    assert // application exists
+    intc_1 // 1
+    frame_bury 15
+    // smart_contracts/validator_ad/contract.py:998
+    // amount=txn.amount,
+    frame_dig -1
+    gtxns Amount
+    frame_bury 17
+    intc_1 // 1
+    frame_bury 13
+    // smart_contracts/validator_ad/contract.py:995
+    // txn_forward = itxn.InnerTransaction(
+    intc_0 // 0
+    frame_bury 16
+    intc_0 // 0
+    frame_bury 14
+    intc_0 // 0
+    swap
+    frame_bury 4
+    b contract_create_after_if_else@18
+
+contract_create_else_body@14:
+    // smart_contracts/validator_ad/contract.py:1000
+    // elif txn.type == TransactionType.AssetTransfer:
+    frame_dig 12
+    pushint 4 // axfer
+    ==
+    assert // Transaction type must be either Payment or AssetTransfer.
+    // smart_contracts/validator_ad/contract.py:1001
+    // assert txn.asset_receiver == Global.current_application_address, ERROR_RECEIVER
+    frame_dig -1
+    gtxns AssetReceiver
+    global CurrentApplicationAddress
+    ==
+    assert // Transaction must be to this contract.
+    // smart_contracts/validator_ad/contract.py:1003
+    // type=TransactionType.AssetTransfer,
+    pushint 4 // axfer
+    frame_bury 19
+    // smart_contracts/validator_ad/contract.py:1004
+    // xfer_asset=txn.xfer_asset,
+    frame_dig -1
+    gtxns XferAsset
+    frame_bury 20
+    intc_1 // 1
+    frame_bury 16
+    // smart_contracts/validator_ad/contract.py:1005
+    // asset_receiver=del_app.address,
+    frame_dig 5
+    app_params_get AppAddress
+    assert // application exists
+    intc_1 // 1
+    swap
+    // smart_contracts/validator_ad/contract.py:1006
+    // asset_amount=txn.asset_amount,
+    frame_dig -1
+    gtxns AssetAmount
+    frame_bury 18
+    intc_1 // 1
+    frame_bury 14
+    // smart_contracts/validator_ad/contract.py:1002
+    // txn_forward = itxn.InnerTransaction(
+    intc_0 // 0
+    frame_bury 15
+    intc_0 // 0
+    frame_bury 13
+    frame_bury 3
+
+contract_create_after_if_else@18:
+    // smart_contracts/validator_ad/contract.py:1011-1016
+    // # Pay setup fee to the delegator contract
+    // app_txn = arc4.abi_call(  # noqa: F841
+    //     DelegatorContract.contract_pay,
+    //     txn_forward.copy(),
+    //     app_id=del_app.id,
+    // )
+    itxn_begin
+    intc_1 // 1
+    >=
+    // smart_contracts/validator_ad/contract.py:1014
+    // txn_forward.copy(),
+    bz contract_create_next_field@20
+    frame_dig 3
+    itxn_field AssetReceiver
+
+contract_create_next_field@20:
+    frame_dig 14
+    intc_1 // 1
+    >=
+    // smart_contracts/validator_ad/contract.py:1014
+    // txn_forward.copy(),
+    bz contract_create_next_field@22
+    frame_dig 18
+    itxn_field AssetAmount
+
+contract_create_next_field@22:
+    frame_dig 16
+    intc_1 // 1
+    >=
+    // smart_contracts/validator_ad/contract.py:1014
+    // txn_forward.copy(),
+    bz contract_create_next_field@24
+    frame_dig 20
+    itxn_field XferAsset
+
+contract_create_next_field@24:
+    frame_dig 13
+    intc_1 // 1
+    >=
+    // smart_contracts/validator_ad/contract.py:1014
+    // txn_forward.copy(),
+    bz contract_create_next_field@26
+    frame_dig 17
+    itxn_field Amount
+
+contract_create_next_field@26:
+    frame_dig 15
+    intc_1 // 1
+    >=
+    // smart_contracts/validator_ad/contract.py:1014
+    // txn_forward.copy(),
+    bz contract_create_next_field@28
+    frame_dig 4
+    itxn_field Receiver
+
+contract_create_next_field@28:
+    frame_dig 19
+    itxn_field TypeEnum
+    // smart_contracts/validator_ad/contract.py:995
+    // txn_forward = itxn.InnerTransaction(
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/validator_ad/contract.py:1011-1016
+    // # Pay setup fee to the delegator contract
+    // app_txn = arc4.abi_call(  # noqa: F841
+    //     DelegatorContract.contract_pay,
+    //     txn_forward.copy(),
+    //     app_id=del_app.id,
+    // )
+    itxn_next
+    frame_dig 5
+    dup
+    itxn_field ApplicationID
+    pushbytes 0xb47ef9eb // method "contract_pay(txn)void"
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    // smart_contracts/validator_ad/contract.py:1018-1019
+    // # Add created delegator contract to the list of active delegators of this validator ad
+    // assert self._add_del_to_list(del_app.id), ERROR_DELEGATOR_LIST_FULL
+    dup
+    callsub _add_del_to_list
+    assert // Could not add delegator contract to delegator contract list.
+    // smart_contracts/validator_ad/contract.py:1020-1021
+    // # Check if validator ad has reached its limit on maximum accepted delegators
+    // assert self.cnt_del <= self.cnt_del_max, ERROR_VALIDATOR_FULL
+    intc_0 // 0
+    bytec 4 // "cnt_del"
+    app_global_get_ex
+    assert // check self.cnt_del exists
+    intc_0 // 0
+    bytec 17 // "cnt_del_max"
+    app_global_get_ex
+    assert // check self.cnt_del_max exists
+    <=
+    assert // Validator ad has reach the limit of maximum number of active delegators accepted.
+    // smart_contracts/validator_ad/contract.py:1023-1025
+    // # Check if the input MBR payment transaction was sufficient for increase validator ad's MBR and
+    // # for funding the delegator contract's MBR
+    // mbr_new = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/validator_ad/contract.py:1026
+    // amt = del_mbr_fund + (mbr_new - mbr_cur)
+    frame_dig 21
+    -
+    frame_dig 6
+    +
+    // smart_contracts/validator_ad/contract.py:1027
+    // assert mbr_txn.receiver == Global.current_application_address, ERROR_RECEIVER
+    frame_dig -2
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert // Transaction must be to this contract.
+    // smart_contracts/validator_ad/contract.py:1028
+    // assert mbr_txn.amount == amt, ERROR_AMOUNT
+    frame_dig -2
+    gtxns Amount
+    ==
+    assert // Sent amount doesn't match the agreed one.
+    // smart_contracts/validator_ad/contract.py:1030
+    // return arc4.UInt64(del_app.id)
+    itob
+    frame_bury 0
+    retsub
+
+
+// smart_contracts.helpers.common.maximum(a: uint64, b: uint64) -> uint64:
+maximum:
+    // smart_contracts/helpers/common.py:769-773
+    // @subroutine
+    // def maximum(
+    //     a: UInt64,
+    //     b: UInt64,
+    // ) -> UInt64:
+    proto 2 1
+    // smart_contracts/helpers/common.py:777
+    // if a < b:
+    frame_dig -2
+    frame_dig -1
+    <
+    bz maximum_else_body@2
+    frame_dig -1
+    b maximum_after_if_else@3
+
+maximum_else_body@2:
+    frame_dig -2
+
+maximum_after_if_else@3:
+    // smart_contracts/helpers/common.py:781
+    // return c
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd._add_del_to_list(del_app_id: uint64) -> uint64:
+_add_del_to_list:
+    // smart_contracts/validator_ad/contract.py:1538-1542
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // # ----- ----- ----- Internal functions ----- ----- -----
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // @subroutine
+    // def _add_del_to_list(self, del_app_id: UInt64) -> bool:
+    proto 1 1
+    pushbytes ""
+    dupn 2
+    // smart_contracts/validator_ad/contract.py:1544
+    // del_added = False
+    intc_0 // 0
+    // smart_contracts/validator_ad/contract.py:1545
+    // for del_idx in urange(MAXIMUM_NUMBER_OF_DELEGATOR_CONTRACTS_PER_VALIDATOR_AD):
+    dup
+
+_add_del_to_list_for_header@1:
+    // smart_contracts/validator_ad/contract.py:1545
+    // for del_idx in urange(MAXIMUM_NUMBER_OF_DELEGATOR_CONTRACTS_PER_VALIDATOR_AD):
+    frame_dig 4
+    pushint 14 // 14
+    <
+    dup
+    frame_bury 0
+    frame_dig 3
+    frame_bury 1
+    bz _add_del_to_list_after_for@6
+    // smart_contracts/validator_ad/contract.py:1546
+    // if self.del_app_list[del_idx] == arc4.UInt64(0):
+    intc_0 // 0
+    bytec 5 // "del_app_list"
+    app_global_get_ex
+    assert // check self.del_app_list exists
+    frame_dig 4
+    pushint 8 // 8
+    *
+    dup
+    frame_bury 2
+    pushint 8 // 8
+    extract3 // on error: Index access is out of bounds
+    bytec 24 // 0x0000000000000000
+    b==
+    bz _add_del_to_list_after_if_else@4
+    // smart_contracts/validator_ad/contract.py:1547
+    // self.del_app_list[del_idx] = arc4.UInt64(del_app_id)
+    frame_dig -1
+    itob
+    intc_0 // 0
+    bytec 5 // "del_app_list"
+    app_global_get_ex
+    assert // check self.del_app_list exists
+    frame_dig 0
+    assert // Index access is out of bounds
+    frame_dig 2
+    uncover 2
+    replace3
+    bytec 5 // "del_app_list"
+    swap
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:1548
+    // del_added = True
+    intc_1 // 1
+    // smart_contracts/validator_ad/contract.py:1549
+    // self.cnt_del += 1
+    intc_0 // 0
+    bytec 4 // "cnt_del"
+    app_global_get_ex
+    assert // check self.cnt_del exists
+    intc_1 // 1
+    +
+    bytec 4 // "cnt_del"
+    swap
+    app_global_put
+    frame_bury 1
+    // smart_contracts/validator_ad/contract.py:1550
+    // break
+    b _add_del_to_list_after_for@6
+
+_add_del_to_list_after_if_else@4:
+    // smart_contracts/validator_ad/contract.py:1545
+    // for del_idx in urange(MAXIMUM_NUMBER_OF_DELEGATOR_CONTRACTS_PER_VALIDATOR_AD):
+    frame_dig 4
+    intc_1 // 1
+    +
+    frame_bury 4
+    b _add_del_to_list_for_header@1
+
+_add_del_to_list_after_for@6:
+    frame_dig 1
+    // smart_contracts/validator_ad/contract.py:1552
+    // return del_added
+    frame_bury 0
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.keys_confirm(del_manager: bytes, del_app: uint64) -> void:
+keys_confirm:
+    // smart_contracts/validator_ad/contract.py:1032-1037
+    // @arc4.abimethod()
+    // def keys_confirm(
+    //     self,
+    //     del_manager: arc4.Address,
+    //     del_app: Application,
+    // ) -> None:
+    proto 2 0
+    // smart_contracts/validator_ad/contract.py:1050
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:1052
+    // assert self._exists_del_in_list(del_app.id), ERROR_DELEGATOR_DOES_NOT_EXIST_AT_VALIDATOR_AD
+    frame_dig -1
+    callsub _exists_del_in_list
+    assert // Delegator contract does not exist in the list of active delegators of the validator ad.
+    // smart_contracts/validator_ad/contract.py:1054-1059
+    // # Call keys_confirm of the delegator contract
+    // app_txn = arc4.abi_call(  # noqa: F841
+    //     DelegatorContract.keys_confirm,
+    //     del_manager,
+    //     app_id=del_app.id,
+    // )
+    itxn_begin
+    frame_dig -1
+    itxn_field ApplicationID
+    pushbytes 0xcaeb1a7b // method "keys_confirm(address)void"
+    itxn_field ApplicationArgs
+    frame_dig -2
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    // smart_contracts/validator_ad/contract.py:1061
+    // return
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd._exists_del_in_list(del_app_id: uint64) -> uint64:
+_exists_del_in_list:
+    // smart_contracts/validator_ad/contract.py:1567-1568
+    // @subroutine
+    // def _exists_del_in_list(self, del_app_id: UInt64) -> bool:
+    proto 1 1
+    pushbytes ""
+    // smart_contracts/validator_ad/contract.py:1570
+    // del_exists = False
+    intc_0 // 0
+    // smart_contracts/validator_ad/contract.py:1571
+    // for del_idx in urange(MAXIMUM_NUMBER_OF_DELEGATOR_CONTRACTS_PER_VALIDATOR_AD):
+    dup
+
+_exists_del_in_list_for_header@1:
+    // smart_contracts/validator_ad/contract.py:1571
+    // for del_idx in urange(MAXIMUM_NUMBER_OF_DELEGATOR_CONTRACTS_PER_VALIDATOR_AD):
+    frame_dig 2
+    pushint 14 // 14
+    <
+    frame_dig 1
+    frame_bury 0
+    bz _exists_del_in_list_after_for@6
+    // smart_contracts/validator_ad/contract.py:1572
+    // if self.del_app_list[del_idx] == arc4.UInt64(del_app_id):
+    intc_0 // 0
+    bytec 5 // "del_app_list"
+    app_global_get_ex
+    assert // check self.del_app_list exists
+    frame_dig 2
+    pushint 8 // 8
+    *
+    pushint 8 // 8
+    extract3 // on error: Index access is out of bounds
+    frame_dig -1
+    itob
+    b==
+    bz _exists_del_in_list_after_if_else@4
+    // smart_contracts/validator_ad/contract.py:1573
+    // del_exists = True
+    intc_1 // 1
+    frame_bury 0
+    // smart_contracts/validator_ad/contract.py:1574
+    // break
+    b _exists_del_in_list_after_for@6
+
+_exists_del_in_list_after_if_else@4:
+    // smart_contracts/validator_ad/contract.py:1571
+    // for del_idx in urange(MAXIMUM_NUMBER_OF_DELEGATOR_CONTRACTS_PER_VALIDATOR_AD):
+    frame_dig 2
+    intc_1 // 1
+    +
+    frame_bury 2
+    b _exists_del_in_list_for_header@1
+
+_exists_del_in_list_after_for@6:
+    // smart_contracts/validator_ad/contract.py:1576
+    // return del_exists
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.keys_not_confirmed(del_app: uint64) -> bytes:
+keys_not_confirmed:
+    // smart_contracts/validator_ad/contract.py:1063-1067
+    // @arc4.abimethod()
+    // def keys_not_confirmed(
+    //     self,
+    //     del_app: Application,
+    // ) -> Message:
+    proto 1 1
+    // smart_contracts/validator_ad/contract.py:1084
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:1086
+    // assert self._exists_del_in_list(del_app.id), ERROR_DELEGATOR_DOES_NOT_EXIST_AT_VALIDATOR_AD
+    frame_dig -1
+    callsub _exists_del_in_list
+    assert // Delegator contract does not exist in the list of active delegators of the validator ad.
+    // smart_contracts/validator_ad/contract.py:1088-1092
+    // # Call keys_not_confirmed of the delegator contract
+    // res, app_txn = arc4.abi_call(
+    //     DelegatorContract.keys_not_confirmed,
+    //     app_id=del_app.id,
+    // )
+    itxn_begin
+    frame_dig -1
+    itxn_field ApplicationID
+    pushbytes 0x261bd199 // method "keys_not_confirmed()(address,byte[100])"
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_0 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/validator_ad/contract.py:1094-1095
+    // # Remove the delegator contract from the list
+    // assert self._remove_del_from_list(del_app.id), ERROR_FAIL_TO_REMOVE_DELEGATOR_CONTRACT_FROM_LIST
+    frame_dig -1
+    callsub _remove_del_from_list
+    assert // Failed to remove delegator contract from the list of active delegators of the validator ad.
+    // smart_contracts/validator_ad/contract.py:1098
+    // del_manager=res.del_manager,
+    dup
+    extract 0 32 // on error: Index access is out of bounds
+    // smart_contracts/validator_ad/contract.py:1099
+    // msg=res.msg.copy(),
+    swap
+    extract 32 100 // on error: Index access is out of bounds
+    // smart_contracts/validator_ad/contract.py:1097-1100
+    // return Message(
+    //     del_manager=res.del_manager,
+    //     msg=res.msg.copy(),
+    // )
+    concat
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd._remove_del_from_list(del_app_id: uint64) -> uint64:
+_remove_del_from_list:
+    // smart_contracts/validator_ad/contract.py:1554-1555
+    // @subroutine
+    // def _remove_del_from_list(self, del_app_id: UInt64) -> bool:
+    proto 1 1
+    pushbytes ""
+    dupn 2
+    // smart_contracts/validator_ad/contract.py:1557
+    // del_removed = False
+    intc_0 // 0
+    // smart_contracts/validator_ad/contract.py:1558
+    // for del_idx in urange(MAXIMUM_NUMBER_OF_DELEGATOR_CONTRACTS_PER_VALIDATOR_AD):
+    dup
+
+_remove_del_from_list_for_header@1:
+    // smart_contracts/validator_ad/contract.py:1558
+    // for del_idx in urange(MAXIMUM_NUMBER_OF_DELEGATOR_CONTRACTS_PER_VALIDATOR_AD):
+    frame_dig 4
+    pushint 14 // 14
+    <
+    dup
+    frame_bury 0
+    frame_dig 3
+    frame_bury 1
+    bz _remove_del_from_list_after_for@6
+    // smart_contracts/validator_ad/contract.py:1559
+    // if self.del_app_list[del_idx] == arc4.UInt64(del_app_id):
+    intc_0 // 0
+    bytec 5 // "del_app_list"
+    app_global_get_ex
+    assert // check self.del_app_list exists
+    frame_dig 4
+    pushint 8 // 8
+    *
+    dup
+    frame_bury 2
+    pushint 8 // 8
+    extract3 // on error: Index access is out of bounds
+    frame_dig -1
+    itob
+    b==
+    bz _remove_del_from_list_after_if_else@4
+    // smart_contracts/validator_ad/contract.py:1560
+    // self.del_app_list[del_idx] = arc4.UInt64(0)
+    intc_0 // 0
+    bytec 5 // "del_app_list"
+    app_global_get_ex
+    assert // check self.del_app_list exists
+    frame_dig 0
+    assert // Index access is out of bounds
+    frame_dig 2
+    bytec 24 // 0x0000000000000000
+    replace3
+    bytec 5 // "del_app_list"
+    swap
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:1561
+    // del_removed = True
+    intc_1 // 1
+    // smart_contracts/validator_ad/contract.py:1562
+    // self.cnt_del -= 1
+    intc_0 // 0
+    bytec 4 // "cnt_del"
+    app_global_get_ex
+    assert // check self.cnt_del exists
+    intc_1 // 1
+    -
+    bytec 4 // "cnt_del"
+    swap
+    app_global_put
+    frame_bury 1
+    // smart_contracts/validator_ad/contract.py:1563
+    // break
+    b _remove_del_from_list_after_for@6
+
+_remove_del_from_list_after_if_else@4:
+    // smart_contracts/validator_ad/contract.py:1558
+    // for del_idx in urange(MAXIMUM_NUMBER_OF_DELEGATOR_CONTRACTS_PER_VALIDATOR_AD):
+    frame_dig 4
+    intc_1 // 1
+    +
+    frame_bury 4
+    b _remove_del_from_list_for_header@1
+
+_remove_del_from_list_after_for@6:
+    frame_dig 1
+    // smart_contracts/validator_ad/contract.py:1565
+    // return del_removed
+    frame_bury 0
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.keys_not_submitted(del_app: uint64) -> bytes:
+keys_not_submitted:
+    // smart_contracts/validator_ad/contract.py:1102-1106
+    // @arc4.abimethod()
+    // def keys_not_submitted(
+    //     self,
+    //     del_app: Application,
+    // ) -> Message:
+    proto 1 1
+    // smart_contracts/validator_ad/contract.py:1123
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:1125
+    // assert self._exists_del_in_list(del_app.id), ERROR_DELEGATOR_DOES_NOT_EXIST_AT_VALIDATOR_AD
+    frame_dig -1
+    callsub _exists_del_in_list
+    assert // Delegator contract does not exist in the list of active delegators of the validator ad.
+    // smart_contracts/validator_ad/contract.py:1127-1131
+    // # Call keys_not_submitted of the delegator contract
+    // res, app_txn = arc4.abi_call(
+    //     DelegatorContract.keys_not_submitted,
+    //     app_id=del_app.id,
+    // )
+    itxn_begin
+    frame_dig -1
+    itxn_field ApplicationID
+    pushbytes 0xfe811ae7 // method "keys_not_submitted()(address,byte[100])"
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_0 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/validator_ad/contract.py:1133-1134
+    // # Remove the delegator contract from the list
+    // assert self._remove_del_from_list(del_app.id), ERROR_FAIL_TO_REMOVE_DELEGATOR_CONTRACT_FROM_LIST
+    frame_dig -1
+    callsub _remove_del_from_list
+    assert // Failed to remove delegator contract from the list of active delegators of the validator ad.
+    // smart_contracts/validator_ad/contract.py:1137
+    // del_manager=res.del_manager,
+    dup
+    extract 0 32 // on error: Index access is out of bounds
+    // smart_contracts/validator_ad/contract.py:1138
+    // msg=res.msg.copy(),
+    swap
+    extract 32 100 // on error: Index access is out of bounds
+    // smart_contracts/validator_ad/contract.py:1136-1139
+    // return Message(
+    //     del_manager=res.del_manager,
+    //     msg=res.msg.copy(),
+    // )
+    concat
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.keys_submit(val_manager: bytes, del_app: uint64, key_reg_txn_info: bytes) -> bytes:
+keys_submit:
+    // smart_contracts/validator_ad/contract.py:1141-1147
+    // @arc4.abimethod()
+    // def keys_submit(
+    //     self,
+    //     val_manager: arc4.Address,
+    //     del_app: Application,
+    //     key_reg_txn_info : KeyRegTxnInfo,
+    // ) -> Message:
+    proto 3 1
+    // smart_contracts/validator_ad/contract.py:1168
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:1170
+    // assert self._exists_del_in_list(del_app.id), ERROR_DELEGATOR_DOES_NOT_EXIST_AT_VALIDATOR_AD
+    frame_dig -2
+    callsub _exists_del_in_list
+    assert // Delegator contract does not exist in the list of active delegators of the validator ad.
+    // smart_contracts/validator_ad/contract.py:1172
+    // assert self.val_manager == val_manager.native, ERROR_CALLED_BY_NOT_VAL_MANAGER
+    intc_0 // 0
+    bytec 11 // "val_manager"
+    app_global_get_ex
+    assert // check self.val_manager exists
+    frame_dig -3
+    ==
+    assert // Can only be called by validator manager.
+    // smart_contracts/validator_ad/contract.py:1174-1179
+    // # Call keys_submit of the delegator contract
+    // res, app_txn = arc4.abi_call(
+    //     DelegatorContract.keys_submit,
+    //     key_reg_txn_info,
+    //     app_id=del_app.id,
+    // )
+    itxn_begin
+    frame_dig -2
+    itxn_field ApplicationID
+    pushbytes 0x1f3399a8 // method "keys_submit((uint64,uint64,uint64,byte[32],byte[32],byte[64],address))((uint64,uint64,uint64),address,byte[100])"
+    itxn_field ApplicationArgs
+    frame_dig -1
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_0 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/validator_ad/contract.py:1180
+    // earnings_distribution = res.earnings_distribution.copy()
+    dup
+    extract 0 24 // on error: Index access is out of bounds
+    // smart_contracts/validator_ad/contract.py:1182-1183
+    // # Mark increase in validator's earnings
+    // self._mark_validator_earnings(earnings_distribution.copy())
+    callsub _mark_validator_earnings
+    pop
+    // smart_contracts/validator_ad/contract.py:1186
+    // del_manager=res.del_manager,
+    dup
+    extract 24 32 // on error: Index access is out of bounds
+    // smart_contracts/validator_ad/contract.py:1187
+    // msg=res.msg.copy(),
+    swap
+    extract 56 100 // on error: Index access is out of bounds
+    // smart_contracts/validator_ad/contract.py:1185-1188
+    // return Message(
+    //     del_manager=res.del_manager,
+    //     msg=res.msg.copy(),
+    // )
+    concat
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd._mark_validator_earnings(earnings_distribution: bytes) -> bytes:
+_mark_validator_earnings:
+    // smart_contracts/validator_ad/contract.py:1578-1579
+    // @subroutine
+    // def _mark_validator_earnings(self, earnings_distribution: EarningsDistribution) -> None:
+    proto 1 1
+    // smart_contracts/validator_ad/contract.py:1581
+    // asset_id = earnings_distribution.asset_id.native
+    frame_dig -1
+    extract 16 8 // on error: Index access is out of bounds
+    btoi
+    dup
+    // smart_contracts/validator_ad/contract.py:1582
+    // if asset_id != UInt64(ALGO_ASA_ID):
+    bz _mark_validator_earnings_else_body@2
+    // smart_contracts/validator_ad/contract.py:1585
+    // self.asas[asset].total_earning.native + earnings_distribution.user.native
+    frame_dig 0
+    itob
+    bytec 13 // 0x6173615f
+    swap
+    concat
+    dup
+    box_get
+    assert // check self.asas entry exists
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    frame_dig -1
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    +
+    // smart_contracts/validator_ad/contract.py:1584-1586
+    // self.asas[asset].total_earning = arc4.UInt64(
+    //     self.asas[asset].total_earning.native + earnings_distribution.user.native
+    // )
+    itob
+    // smart_contracts/validator_ad/contract.py:1584
+    // self.asas[asset].total_earning = arc4.UInt64(
+    dig 1
+    box_get
+    assert // check self.asas entry exists
+    // smart_contracts/validator_ad/contract.py:1584-1586
+    // self.asas[asset].total_earning = arc4.UInt64(
+    //     self.asas[asset].total_earning.native + earnings_distribution.user.native
+    // )
+    swap
+    replace2 0
+    dig 1
+    swap
+    box_put
+    // smart_contracts/validator_ad/contract.py:1588
+    // self.asas[asset].total_fees_generated.native + earnings_distribution.platform.native
+    dup
+    box_get
+    assert // check self.asas entry exists
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    frame_dig -1
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    +
+    // smart_contracts/validator_ad/contract.py:1587-1589
+    // self.asas[asset].total_fees_generated = arc4.UInt64(
+    //     self.asas[asset].total_fees_generated.native + earnings_distribution.platform.native
+    // )
+    itob
+    // smart_contracts/validator_ad/contract.py:1587
+    // self.asas[asset].total_fees_generated = arc4.UInt64(
+    dig 1
+    box_get
+    assert // check self.asas entry exists
+    // smart_contracts/validator_ad/contract.py:1587-1589
+    // self.asas[asset].total_fees_generated = arc4.UInt64(
+    //     self.asas[asset].total_fees_generated.native + earnings_distribution.platform.native
+    // )
+    swap
+    replace2 8
+    box_put
+    b _mark_validator_earnings_after_if_else@3
+
+_mark_validator_earnings_else_body@2:
+    // smart_contracts/validator_ad/contract.py:1591
+    // self.total_algo_earned += earnings_distribution.user.native
+    intc_0 // 0
+    bytec 18 // "total_algo_earned"
+    app_global_get_ex
+    assert // check self.total_algo_earned exists
+    frame_dig -1
+    extract 0 8 // on error: Index access is out of bounds
+    btoi
+    +
+    bytec 18 // "total_algo_earned"
+    swap
+    app_global_put
+    // smart_contracts/validator_ad/contract.py:1592
+    // self.total_algo_fees_generated += earnings_distribution.platform.native
+    intc_0 // 0
+    bytec 19 // "total_algo_fees_generated"
+    app_global_get_ex
+    assert // check self.total_algo_fees_generated exists
+    frame_dig -1
+    extract 8 8 // on error: Index access is out of bounds
+    btoi
+    +
+    bytec 19 // "total_algo_fees_generated"
+    swap
+    app_global_put
+
+_mark_validator_earnings_after_if_else@3:
+    // smart_contracts/validator_ad/contract.py:1594
+    // return
+    frame_dig -1
+    swap
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.breach_limits(del_app: uint64) -> bytes:
+breach_limits:
+    // smart_contracts/validator_ad/contract.py:1190-1194
+    // @arc4.abimethod()
+    // def breach_limits(
+    //     self,
+    //     del_app: Application,
+    // ) -> BreachLimitsReturn:
+    proto 1 1
+    // smart_contracts/validator_ad/contract.py:1217
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:1219
+    // assert self._exists_del_in_list(del_app.id), ERROR_DELEGATOR_DOES_NOT_EXIST_AT_VALIDATOR_AD
+    frame_dig -1
+    callsub _exists_del_in_list
+    assert // Delegator contract does not exist in the list of active delegators of the validator ad.
+    // smart_contracts/validator_ad/contract.py:1221-1225
+    // # Call breach_limits of the delegator contract
+    // res, app_txn = arc4.abi_call(
+    //     DelegatorContract.breach_limits,
+    //     app_id=del_app.id,
+    // )
+    itxn_begin
+    frame_dig -1
+    itxn_field ApplicationID
+    pushbytes 0xc1773ee0 // method "breach_limits()(bool,(uint64,uint64,uint64),address,byte[100])"
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    dup
+    uncover 2
+    extract 0 4
+    bytec_0 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/validator_ad/contract.py:1227-1228
+    // # Mark increase in validator's earnings
+    // self._mark_validator_earnings(res.earnings_distribution.copy())
+    dup
+    extract 1 24 // on error: Index access is out of bounds
+    callsub _mark_validator_earnings
+    pop
+    // smart_contracts/validator_ad/contract.py:1230
+    // if res.max_breach_reached.native:
+    intc_0 // 0
+    getbit
+    pushbytes 0x00
+    intc_0 // 0
+    uncover 2
+    setbit
+    intc_0 // 0
+    getbit
+    bz breach_limits_after_if_else@3
+    // smart_contracts/validator_ad/contract.py:1231-1232
+    // # Remove the delegator contract from the list
+    // assert self._remove_del_from_list(del_app.id), ERROR_FAIL_TO_REMOVE_DELEGATOR_CONTRACT_FROM_LIST
+    frame_dig -1
+    callsub _remove_del_from_list
+    assert // Failed to remove delegator contract from the list of active delegators of the validator ad.
+
+breach_limits_after_if_else@3:
+    // smart_contracts/validator_ad/contract.py:1234
+    // return res.copy()
+    frame_dig 0
+    swap
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.breach_pay(del_app: uint64) -> bytes:
+breach_pay:
+    // smart_contracts/validator_ad/contract.py:1236-1240
+    // @arc4.abimethod()
+    // def breach_pay(
+    //     self,
+    //     del_app: Application,
+    // ) -> Message:
+    proto 1 1
+    // smart_contracts/validator_ad/contract.py:1258
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:1260
+    // assert self._exists_del_in_list(del_app.id), ERROR_DELEGATOR_DOES_NOT_EXIST_AT_VALIDATOR_AD
+    frame_dig -1
+    callsub _exists_del_in_list
+    assert // Delegator contract does not exist in the list of active delegators of the validator ad.
+    // smart_contracts/validator_ad/contract.py:1262-1266
+    // # Call breach_pay of the delegator contract
+    // res, app_txn = arc4.abi_call(
+    //     DelegatorContract.breach_pay,
+    //     app_id=del_app.id,
+    // )
+    itxn_begin
+    frame_dig -1
+    itxn_field ApplicationID
+    pushbytes 0x9516245e // method "breach_pay()(address,byte[100])"
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_0 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/validator_ad/contract.py:1268-1269
+    // # Remove the delegator contract from the list
+    // assert self._remove_del_from_list(del_app.id), ERROR_FAIL_TO_REMOVE_DELEGATOR_CONTRACT_FROM_LIST
+    frame_dig -1
+    callsub _remove_del_from_list
+    assert // Failed to remove delegator contract from the list of active delegators of the validator ad.
+    // smart_contracts/validator_ad/contract.py:1271
+    // return res.copy()
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.breach_suspended(del_app: uint64) -> bytes:
+breach_suspended:
+    // smart_contracts/validator_ad/contract.py:1273-1277
+    // @arc4.abimethod()
+    // def breach_suspended(
+    //     self,
+    //     del_app: Application,
+    // ) -> EarningsDistributionAndMessage:
+    proto 1 1
+    // smart_contracts/validator_ad/contract.py:1298
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:1300
+    // assert self._exists_del_in_list(del_app.id), ERROR_DELEGATOR_DOES_NOT_EXIST_AT_VALIDATOR_AD
+    frame_dig -1
+    callsub _exists_del_in_list
+    assert // Delegator contract does not exist in the list of active delegators of the validator ad.
+    // smart_contracts/validator_ad/contract.py:1302-1306
+    // # Call breach_suspended of the delegator contract
+    // res, app_txn = arc4.abi_call(
+    //     DelegatorContract.breach_suspended,
+    //     app_id=del_app.id,
+    // )
+    itxn_begin
+    frame_dig -1
+    itxn_field ApplicationID
+    pushbytes 0x9044e21f // method "breach_suspended()((uint64,uint64,uint64),address,byte[100])"
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_0 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/validator_ad/contract.py:1308-1309
+    // # Mark increase in validator's earnings
+    // self._mark_validator_earnings(res.earnings_distribution.copy())
+    dup
+    extract 0 24 // on error: Index access is out of bounds
+    callsub _mark_validator_earnings
+    pop
+    // smart_contracts/validator_ad/contract.py:1311-1312
+    // # Remove the delegator contract from the list
+    // assert self._remove_del_from_list(del_app.id), ERROR_FAIL_TO_REMOVE_DELEGATOR_CONTRACT_FROM_LIST
+    frame_dig -1
+    callsub _remove_del_from_list
+    assert // Failed to remove delegator contract from the list of active delegators of the validator ad.
+    // smart_contracts/validator_ad/contract.py:1314
+    // return res.copy()
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.contract_claim(del_app: uint64) -> bytes:
+contract_claim:
+    // smart_contracts/validator_ad/contract.py:1316-1320
+    // @arc4.abimethod()
+    // def contract_claim(
+    //     self,
+    //     del_app: Application,
+    // ) -> EarningsDistribution:
+    proto 1 1
+    // smart_contracts/validator_ad/contract.py:1338
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:1340
+    // assert self._exists_del_in_list(del_app.id), ERROR_DELEGATOR_DOES_NOT_EXIST_AT_VALIDATOR_AD
+    frame_dig -1
+    callsub _exists_del_in_list
+    assert // Delegator contract does not exist in the list of active delegators of the validator ad.
+    // smart_contracts/validator_ad/contract.py:1342-1346
+    // # Call keys_not_submitted of the delegator contract
+    // earnings_distribution, app_txn = arc4.abi_call(
+    //     DelegatorContract.contract_claim,
+    //     app_id=del_app.id,
+    // )
+    itxn_begin
+    frame_dig -1
+    itxn_field ApplicationID
+    pushbytes 0x26f59a46 // method "contract_claim()(uint64,uint64,uint64)"
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_0 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/validator_ad/contract.py:1348-1349
+    // # Mark increase in validator's earnings
+    // self._mark_validator_earnings(earnings_distribution.copy())
+    dup
+    callsub _mark_validator_earnings
+    pop
+    // smart_contracts/validator_ad/contract.py:1351
+    // return earnings_distribution.copy()
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.contract_expired(del_app: uint64) -> bytes:
+contract_expired:
+    // smart_contracts/validator_ad/contract.py:1353-1357
+    // @arc4.abimethod()
+    // def contract_expired(
+    //     self,
+    //     del_app: Application,
+    // ) -> Message:
+    proto 1 1
+    // smart_contracts/validator_ad/contract.py:1374
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:1376
+    // assert self._exists_del_in_list(del_app.id), ERROR_DELEGATOR_DOES_NOT_EXIST_AT_VALIDATOR_AD
+    frame_dig -1
+    callsub _exists_del_in_list
+    assert // Delegator contract does not exist in the list of active delegators of the validator ad.
+    // smart_contracts/validator_ad/contract.py:1378-1382
+    // # Call contract_expired of the delegator contract
+    // res, app_txn = arc4.abi_call(
+    //     DelegatorContract.contract_expired,
+    //     app_id=del_app.id,
+    // )
+    itxn_begin
+    frame_dig -1
+    itxn_field ApplicationID
+    pushbytes 0xb88322bb // method "contract_expired()((uint64,uint64,uint64),address,byte[100])"
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_0 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/validator_ad/contract.py:1384-1385
+    // # Mark increase in validator's earnings
+    // self._mark_validator_earnings(res.earnings_distribution.copy())
+    dup
+    extract 0 24 // on error: Index access is out of bounds
+    callsub _mark_validator_earnings
+    pop
+    // smart_contracts/validator_ad/contract.py:1387-1388
+    // # Remove the delegator contract from the list
+    // assert self._remove_del_from_list(del_app.id), ERROR_FAIL_TO_REMOVE_DELEGATOR_CONTRACT_FROM_LIST
+    frame_dig -1
+    callsub _remove_del_from_list
+    assert // Failed to remove delegator contract from the list of active delegators of the validator ad.
+    // smart_contracts/validator_ad/contract.py:1391
+    // del_manager=res.del_manager,
+    dup
+    extract 24 32 // on error: Index access is out of bounds
+    // smart_contracts/validator_ad/contract.py:1392
+    // msg=res.msg.copy(),
+    swap
+    extract 56 100 // on error: Index access is out of bounds
+    // smart_contracts/validator_ad/contract.py:1390-1393
+    // return Message(
+    //     del_manager=res.del_manager,
+    //     msg=res.msg.copy(),
+    // )
+    concat
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.contract_withdraw(del_manager: bytes, del_app: uint64) -> void:
+contract_withdraw:
+    // smart_contracts/validator_ad/contract.py:1395-1400
+    // @arc4.abimethod()
+    // def contract_withdraw(
+    //     self,
+    //     del_manager: arc4.Address,
+    //     del_app: Application,
+    // ) -> None:
+    proto 2 0
+    // smart_contracts/validator_ad/contract.py:1413
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:1415
+    // assert self._exists_del_in_list(del_app.id), ERROR_DELEGATOR_DOES_NOT_EXIST_AT_VALIDATOR_AD
+    frame_dig -1
+    callsub _exists_del_in_list
+    assert // Delegator contract does not exist in the list of active delegators of the validator ad.
+    // smart_contracts/validator_ad/contract.py:1417-1422
+    // # Call contract_withdraw of the delegator contract
+    // earnings_distribution, app_txn = arc4.abi_call(
+    //     DelegatorContract.contract_withdraw,
+    //     del_manager,
+    //     app_id=del_app.id,
+    // )
+    itxn_begin
+    frame_dig -1
+    itxn_field ApplicationID
+    pushbytes 0xf53b95cd // method "contract_withdraw(address)(uint64,uint64,uint64)"
+    itxn_field ApplicationArgs
+    frame_dig -2
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_0 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/validator_ad/contract.py:1424-1425
+    // # Mark increase in validator's earnings
+    // self._mark_validator_earnings(earnings_distribution.copy())
+    callsub _mark_validator_earnings
+    pop
+    // smart_contracts/validator_ad/contract.py:1427-1428
+    // # Remove the delegator contract from the list
+    // assert self._remove_del_from_list(del_app.id), ERROR_FAIL_TO_REMOVE_DELEGATOR_CONTRACT_FROM_LIST
+    frame_dig -1
+    callsub _remove_del_from_list
+    assert // Failed to remove delegator contract from the list of active delegators of the validator ad.
+    // smart_contracts/validator_ad/contract.py:1430
+    // return
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.contract_delete(del_manager: bytes, del_app: uint64) -> bytes:
+contract_delete:
+    // smart_contracts/validator_ad/contract.py:1432-1437
+    // @arc4.abimethod()
+    // def contract_delete(
+    //     self,
+    //     del_manager: arc4.Address,
+    //     del_app: Application,
+    // ) -> ContractDeleteReturn:
+    proto 2 1
+    // smart_contracts/validator_ad/contract.py:1449
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:1451
+    // mbr_cur = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/validator_ad/contract.py:1453-1458
+    // # Call contract_delete of the delegator contract
+    // remaining_balance, app_txn = arc4.abi_call(
+    //     DelegatorContract.contract_delete,
+    //     del_manager,
+    //     app_id=del_app.id,
+    // )
+    itxn_begin
+    pushint 5 // DeleteApplication
+    itxn_field OnCompletion
+    frame_dig -1
+    itxn_field ApplicationID
+    pushbytes 0xf2e67934 // method "contract_delete(address)(uint64,uint64)"
+    itxn_field ApplicationArgs
+    frame_dig -2
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_0 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/validator_ad/contract.py:1460
+    // mbr_new = Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // smart_contracts/validator_ad/contract.py:1461
+    // amt = mbr_cur - mbr_new
+    uncover 2
+    swap
+    -
+    // smart_contracts/validator_ad/contract.py:1463-1467
+    // # Send the freed MBR to delegator manager
+    // itxn.Payment(
+    //     receiver=del_manager.native,
+    //     amount=amt,
+    // ).submit()
+    itxn_begin
+    itxn_field Amount
+    frame_dig -2
+    itxn_field Receiver
+    // smart_contracts/validator_ad/contract.py:1463-1464
+    // # Send the freed MBR to delegator manager
+    // itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/validator_ad/contract.py:1463-1467
+    // # Send the freed MBR to delegator manager
+    // itxn.Payment(
+    //     receiver=del_manager.native,
+    //     amount=amt,
+    // ).submit()
+    itxn_submit
+    // smart_contracts/validator_ad/contract.py:1469
+    // return remaining_balance
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.contract_report_expiry_soon(before_expiry: uint64, report_period: uint64, del_app: uint64) -> bytes:
+contract_report_expiry_soon:
+    // smart_contracts/validator_ad/contract.py:1471-1477
+    // @arc4.abimethod()
+    // def contract_report_expiry_soon(
+    //     self,
+    //     before_expiry: UInt64,
+    //     report_period: UInt64,
+    //     del_app: Application,
+    // ) -> Message:
+    proto 3 1
+    // smart_contracts/validator_ad/contract.py:1498
+    // assert Txn.sender == Global.creator_address, ERROR_CALLED_BY_NOT_CREATOR
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Can only be called by smart contract creator.
+    // smart_contracts/validator_ad/contract.py:1500-1506
+    // # Call contract_report_expiry_soon of the delegator contract
+    // res, app_txn = arc4.abi_call(
+    //     DelegatorContract.contract_report_expiry_soon,
+    //     before_expiry,
+    //     report_period,
+    //     app_id=del_app.id,
+    // )
+    itxn_begin
+    // smart_contracts/validator_ad/contract.py:1503
+    // before_expiry,
+    frame_dig -3
+    itob
+    // smart_contracts/validator_ad/contract.py:1504
+    // report_period,
+    frame_dig -2
+    itob
+    frame_dig -1
+    itxn_field ApplicationID
+    // smart_contracts/validator_ad/contract.py:1500-1506
+    // # Call contract_report_expiry_soon of the delegator contract
+    // res, app_txn = arc4.abi_call(
+    //     DelegatorContract.contract_report_expiry_soon,
+    //     before_expiry,
+    //     report_period,
+    //     app_id=del_app.id,
+    // )
+    pushbytes 0xeafa1e15 // method "contract_report_expiry_soon(uint64,uint64)(address,byte[100])"
+    itxn_field ApplicationArgs
+    swap
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    intc_2 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_0 // 0x151f7c75
+    ==
+    assert // ARC4 prefix is valid
+    // smart_contracts/validator_ad/contract.py:1508
+    // return res
+    retsub
+
+
+// smart_contracts.validator_ad.contract.ValidatorAd.get_validator_asa(asset_id: uint64) -> bytes:
+get_validator_asa:
+    // smart_contracts/validator_ad/contract.py:1519-1526
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // # ----- ----- ----- Read-only functions ----- ----- ----
+    // # ----- ----- ----- ------------------ ----- ----- -----
+    // @arc4.abimethod(readonly=True)
+    // def get_validator_asa(
+    //     self,
+    //     asset_id : UInt64,
+    // ) -> ValidatorASA:
+    proto 1 1
+    // smart_contracts/validator_ad/contract.py:1536
+    // return self.asas[Asset(asset_id)]
+    frame_dig -1
+    itob
+    bytec 13 // 0x6173615f
+    swap
+    concat
+    box_get
+    assert // check self.asas entry exists
+    retsub
