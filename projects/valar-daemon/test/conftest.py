@@ -228,6 +228,8 @@ def action_inputs(
         #     gating_asa_list=[(0,0), (0,0), (0,0), (0,0)],
         # )
     )
+    ai.noticeboard_terms_timing.before_expiry = 20
+    ai.noticeboard_terms_timing.report_period = 10
     ai.terms_reqs.gating_asa_list = [
         (0, 0), 
         (gating_asset_id, asa_limit) # Work with only one ASA

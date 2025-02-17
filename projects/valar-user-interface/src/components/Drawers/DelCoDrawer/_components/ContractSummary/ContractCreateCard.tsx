@@ -1,15 +1,13 @@
-import { DelegatorApiCall } from "@/api/contract/DelegatorCall";
 import { InfoItem, InfoLabel, InfoValue } from "@/components/Info/InfoUtilsCompo";
-import { notify } from "@/components/Notification/notification";
 import TermsAndConditions from "@/components/TermsAndConditions/TermsAndConditions";
 import ITooltip from "@/components/Tooltip/ITooltip";
-import { LoadingButton } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import LinkExt from "@/components/ui/link-ext";
 import { Separator } from "@/components/ui/separator";
 import { CURRENCIES } from "@/constants/platform";
 import {
+  ASA_ID_ALGO,
   FEE_OPT_IN_PERFORMANCE_TRACKING,
   MBR_USER_BOX,
   MBR_VALIDATOR_AD_DELEGATOR_CONTRACT_INCREASE,
@@ -21,7 +19,6 @@ import { ALGORAND_DEPOSIT_DECIMALS, APY_DECIMALS, AssetParams, TimeParams } from
 import { useAppGlobalState } from "@/contexts/AppGlobalStateContext";
 import { useDelCoDrawer } from "@/contexts/DelCoDrawerContext";
 import { cn } from "@/lib/shadcn-utils";
-import useTxnLoader from "@/store/txnLoaderStore";
 import useUserStore from "@/store/userStore";
 import { getExplorerConfigFromViteEnvironment } from "@/utils/config/getExplorerConfig";
 import { adjustedMaxStakeForGratis, calculateGivenMaxStake, calculateNodeRunnerFee } from "@/utils/contract/helpers";
@@ -30,17 +27,17 @@ import { estimateRateForRounds } from "@/utils/helper";
 import { ParamsCache } from "@/utils/paramsCache";
 import { useWallet } from "@txnlab/use-wallet-react";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
+
+import ConcludeContractButton from "./ContractActions/ConcludeContractButton";
 
 const ContractCreateCard: React.FC<{
   partnerAddress?: string;
   className?: string;
 }> = ({ partnerAddress, className }) => {
-  const { activeAddress, transactionSigner } = useWallet();
-  const { user, setUser } = useUserStore();
-  const { algorandClient, noticeboardApp, stakingData } = useAppGlobalState();
-  const { accountUrl, appUrl } = getExplorerConfigFromViteEnvironment();
-  const { txnLoading, setTxnLoading } = useTxnLoader();
+  const { activeAddress } = useWallet();
+  const { user } = useUserStore();
+  const { stakingData } = useAppGlobalState();
+  const { accountUrl } = getExplorerConfigFromViteEnvironment();
 
   const [role, setRole] = useState<string>("");
   const [termsChecked, setTermsChecked] = useState<boolean>(false);
@@ -50,7 +47,7 @@ const ContractCreateCard: React.FC<{
 
   const [possibleReward, setPossibleReward] = useState<bigint | undefined>(undefined);
 
-  const { setDelAppId, setRefetch, gsValAd, stakeReqs } = useDelCoDrawer();
+  const { gsValAd, stakeReqs } = useDelCoDrawer();
 
   // Get possible reward estimation
   useEffect(() => {
@@ -66,12 +63,12 @@ const ContractCreateCard: React.FC<{
           setPossibleReward(possibleReward);
         }
       } catch (error) {
-        console.error("Error fetching estimating possilbe reward:", error);
+        console.error("Error fetching estimating possible reward:", error);
       }
     };
 
     fetch();
-  }, [stakingData, user, stakeReqs]);
+  }, [stakingData, user?.beneficiary?.algo, stakeReqs]);
 
   // const partnerInfo = await PartnerInfo.getUserInfo(
   //   algorandClient.client.algod,
@@ -108,81 +105,6 @@ const ContractCreateCard: React.FC<{
       setAlgoDeposit(MBR_VALIDATOR_AD_DELEGATOR_CONTRACT_INCREASE + MBR_USER_BOX);
     }
   }, [activeAddress]);
-
-  const handleConclude = async () => {
-    console.log("Submit txn");
-
-    if (!gsValAd) return console.log("ValAd GS not found");
-
-    setTxnLoading(true);
-    if (role === "") {
-      try {
-        const res = await DelegatorApiCall.userCreateAndContractCreate({
-          algorandClient: algorandClient,
-          noticeBoardClient: noticeboardApp.client,
-          gsNoticeBoard: noticeboardApp!.globalState!,
-          gsValidatorAd: gsValAd,
-          userAddress: activeAddress!,
-          maxStake: maxStakeAdjusted,
-          duration: stakeReqs!.duration,
-          delBeneficiary: user!.beneficiary!.address,
-          partner: partner,
-          signer: transactionSigner,
-        });
-
-        if (res.returns[2]) {
-          console.log("Created contract with ID: " + res.returns[2]);
-          console.log(res.transactions[0].txID());
-
-          // // Fetch userInfo and set it to UserStore
-          // const userInfo = await UserInfo.getUserInfo(algorandClient.client.algod, activeAddress!);
-          // setUser({ ...user!, userInfo: userInfo });
-
-          setDelAppId(res.returns[2]);
-          setRefetch(true);
-        }
-      } catch (error) {
-        console.error("Error in submit:", error);
-      }
-    } else {
-      try {
-        const res = await DelegatorApiCall.contractCreate({
-          algorandClient: algorandClient,
-          noticeBoardClient: noticeboardApp.client,
-          gsNoticeBoard: noticeboardApp!.globalState!,
-          gsValidatorAd: gsValAd,
-          userAddress: activeAddress!,
-          maxStake: maxStakeAdjusted,
-          duration: stakeReqs!.duration,
-          delBeneficiary: user!.beneficiary!.address,
-          partner: partner,
-          delUserInfo: user?.userInfo!,
-          signer: transactionSigner,
-        });
-
-        if (res.returns[1]) {
-          console.log("Created contract with ID: " + res.returns[1]);
-          console.log(res.transactions[0].txID());
-          notify({ title: "Contract created successfully", variant: "success", onMountDismiss: ["txnLoading"] });
-          // // Contract creation was successful
-          // // Update userInfo without need for refetch
-          // const updatedAppIds = [...user!.userInfo!.appIds];
-          // const idx = user!.userInfo!.getFreeAppIndex();  // Know where it is stored
-          // updatedAppIds[idx] = res.returns[1];
-          // setUser({ ...user!, userInfo: new UserInfo({ ...user!.userInfo!, appIds: updatedAppIds}) });
-
-          setDelAppId(res.returns[1]);
-          setRefetch(true);
-        }
-      } catch (error) {
-        console.error("Error in submit:", error);
-        notify({ title: "Contract creation failed", variant: "error", onMountDismiss: ["txnLoading"] });
-      }
-    }
-    setTxnLoading(false);
-
-    console.log("Submitted txn");
-  };
 
   if (!user) return;
 
@@ -281,15 +203,12 @@ const ContractCreateCard: React.FC<{
             I have read, understand, and agree with <TermsAndConditions terms={TC_LATEST} />.
           </Label>
         </div>
-        <LoadingButton
-          loading={txnLoading}
-          variant={"v_primary"}
-          className="w-full"
-          disabled={!termsChecked || txnLoading}
-          onClick={handleConclude}
-        >
-          Conclude Contract & Pay
-        </LoadingButton>
+        <ConcludeContractButton
+          termsChecked={termsChecked}
+          role={role}
+          maxStakeAdjusted={maxStakeAdjusted}
+          algoPayment={stakeReqs!.currency === ASA_ID_ALGO ? Number(nodeRunnerFee) + algoDeposit : algoDeposit}
+        />
       </div>
     </div>
   );

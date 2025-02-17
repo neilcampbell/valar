@@ -48,7 +48,7 @@ const Dashboard = () => {
       // Set to role that is passed during navigation
       _setRole(role);
     }
-  }, [user, location]);
+  }, [user?.userInfo, location]);
 
   // Display correct dashboard depending on user role
 

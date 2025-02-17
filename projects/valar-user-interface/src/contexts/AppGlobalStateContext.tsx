@@ -1,9 +1,9 @@
 import { NFDApi } from "@/api/nfd";
-import { UserQuery } from "@/api/queries/user";
 import { ValidatorQuery } from "@/api/queries/validator-ads";
 import { noticeboardAppID } from "@/constants/platform";
 import { NoticeboardClient } from "@/contracts/Noticeboard";
 import { NoticeboardApp } from "@/interfaces/client/NoticeboardApp";
+import { DelegatorContractGlobalState } from "@/interfaces/contracts/DelegatorContract";
 import { NoticeboardGlobalState } from "@/interfaces/contracts/Noticeboard";
 import { ValidatorAdGlobalState } from "@/interfaces/contracts/ValidatorAd";
 import { Nfd } from "@/interfaces/nfd";
@@ -57,9 +57,10 @@ const AppGlobalStateContext = createContext<
       noticeboardApp: NoticeboardApp;
       algorandClient: AlgorandClient;
       valAdsMap: Map<bigint, ValidatorAdGlobalState> | undefined;
-      valsMap: Map<string, bigint[]> | undefined;
       valNfdsMap: Map<string, Nfd | null> | undefined;
       stakingData: StakingData | undefined;
+      renewDelCo: DelegatorContractGlobalState | undefined;
+      setRenewDelCo: React.Dispatch<React.SetStateAction<DelegatorContractGlobalState | undefined>>;
     }
   | undefined
 >(undefined);
@@ -68,9 +69,9 @@ export const AppGlobalStateProvider: React.FC<{ children: ReactNode }> = ({ chil
   const [noticeboardApp, setNoticeboardApp] = useState<NoticeboardApp>(defaultNoticeboardApp);
   const [algorandClient, setAlgorandClient] = useState<AlgorandClient>(defaultAlgorandClient);
   const [valAdsMap, setValAdsMap] = useState<Map<bigint, ValidatorAdGlobalState> | undefined>(undefined);
-  const [valOwnersAdsMap, setValOwnersAdsMap] = useState<Map<string, bigint[]> | undefined>(undefined);
   const [valOwnersNfdsMap, setValOwnersNfdsMap] = useState<Map<string, Nfd | null> | undefined>(undefined);
   const [stakingData, setStakingData] = useState<StakingData | undefined>(undefined);
+  const [renewDelCo, setRenewDelCo] = useState<DelegatorContractGlobalState | undefined>(undefined);
 
   //Fetching Noticeboard GlobalState
   useEffect(() => {
@@ -89,41 +90,30 @@ export const AppGlobalStateProvider: React.FC<{ children: ReactNode }> = ({ chil
   useEffect(() => {
     const fetch = async () => {
       if (noticeboardApp.globalState != undefined) {
-        // Fetch all Validator Owners' information
-        const validators = await UserQuery.fetchAllValidatorUserInfo(algorandClient.client.algod, noticeboardApp.globalState);
-
-        // Keep just app IDs
-        const validatorsMapped = new Map(
-          Array.from(validators || [], ([address, userInfo]) => [
-            address,
-            userInfo.appIds.filter((appId) => appId !== 0n),
-          ]),
-        );
-
-        console.log("Validator Owners Map ::", validatorsMapped);
-        setValOwnersAdsMap(validatorsMapped);
-
-        // Fetch NFDs of validators
-        const validatorsNfdsArray: [string, Nfd | null][] = await Promise.all(
-          Array.from(validators || [], async ([address]) => {
-            const nfd = await NFDApi.fetchNfdReverseLookup(address, { view: "thumbnail" });
-            return [address, nfd];
-          })
-        );
-        
-        const validatorsNfds = new Map<string, Nfd | null>(validatorsNfdsArray);
-        setValOwnersNfdsMap(validatorsNfds);
-
-        // Fetch all Ads of all Validator Owners
-        const valAdIds = Array.from(validatorsMapped.values()).flatMap((appIds) => appIds);
-
-        const res = await ValidatorQuery.fetchValidatorAds(algorandClient.client.algod, valAdIds);
+        // Fetch all validator ads
+        const res = await ValidatorQuery.fetchAllValidatorAds(algorandClient.client.algod);
 
         setValAdsMap(() => {
           console.log("Ad Map Set");
           console.log("Ads Map ::", res);
           return res;
         });
+
+        // Extract unique all validator owners
+        const validators = res && [...new Set([...res.values()].map((state) => state.valOwner))];
+
+        console.log("Validator owner addresses:", validators);
+
+        // Fetch NFDs of validators
+        const validatorsNfdsArray: [string, Nfd | null][] = await Promise.all(
+          (validators || []).map(async (address) => {
+            const nfd = await NFDApi.fetchNfdReverseLookup(address, { view: "thumbnail" });
+            return [address, nfd];
+          }),
+        );
+
+        const validatorsNfds = new Map<string, Nfd | null>(validatorsNfdsArray);
+        setValOwnersNfdsMap(validatorsNfds);
       }
     };
 
@@ -174,9 +164,10 @@ export const AppGlobalStateProvider: React.FC<{ children: ReactNode }> = ({ chil
         noticeboardApp,
         algorandClient,
         valAdsMap,
-        valsMap: valOwnersAdsMap,
         valNfdsMap: valOwnersNfdsMap,
         stakingData,
+        renewDelCo,
+        setRenewDelCo,
       }}
     >
       {children}

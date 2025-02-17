@@ -53,7 +53,7 @@ const ValAdListCard = () => {
     };
 
     fetch();
-  }, [user, valAdRefetch]);
+  }, [user?.userInfo, valAdRefetch]);
 
   // Convert Validator Ads to table items, fetching earnings of each Validator Ad
   useEffect(() => {

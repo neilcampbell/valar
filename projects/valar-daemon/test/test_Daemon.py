@@ -40,6 +40,8 @@ from valar_daemon.constants import (
     DELCO_READY_STATUS_PENDING,
     DELCO_READY_STATUS_SUBMITTED,
     DELCO_READY_STATUS_URL_ERROR,
+    DELCO_LIVE_STATUS_EXPIRES_SOON,
+    DELCO_LIVE_STATUS_NO_CHANGE,
     VALAD_STATE_READY,
     VALAD_STATE_NOT_READY,
     VALAD_STATE_NOT_LIVE,
@@ -70,6 +72,8 @@ from test.utils import (
 # sys.path.insert(0, str(Path(*Path(__file__).parent.parts[:-2], 'valar-smart-contracts')))
 from tests.noticeboard.utils import Noticeboard # type: ignore
 from tests.noticeboard.config import ActionInputs # type: ignore
+from tests.noticeboard.client_helper import NoticeboardGlobalState
+
 
 
 ### Helpers ############################################################################################################
@@ -1060,6 +1064,81 @@ class TestDelcoLiveStateHandler():
         )
         delco_state = delco_app.delco_client.get_global_state().state.as_bytes
         assert(delco_state == expected_delco_state)
+
+
+    @staticmethod
+    @pytest.mark.parametrize(
+        "algo_fee_asset, breach_pay, breach_stake, breach_gating, "
+        "valad_state, delben_equal_delman, delco_state, "
+        "should_wait_to_notify, expected_return_value", 
+        [
+            ( # Live with a faraway expiry, same delegator manager and beneficiary
+                False, False, False, False, 
+                VALAD_STATE_READY, True, DELCO_STATE_LIVE, 
+                False, DELCO_LIVE_STATUS_NO_CHANGE
+            ),
+            ( # Eligible for expiry notification, same delegator manager and beneficiary
+                False, False, False, False, 
+                VALAD_STATE_READY, True, DELCO_STATE_LIVE, 
+                True, DELCO_LIVE_STATUS_EXPIRES_SOON
+            )
+        ]
+    )
+    def test_expires_soon(
+        algorand_client: AlgorandClient,
+        noticeboard: Noticeboard,
+        valad_and_delco_app_wrapper_and_valman: Callable[
+            [AlgorandClient, Noticeboard, ActionInputs, bytes], 
+            Tuple[ValadAppWrapper, DelcoAppWrapper, AddressAndSigner]
+        ],
+        logger_mockup: logging.Logger,
+        should_wait_to_notify: bool,
+        expected_return_value: int
+    ):
+        """Test contract expiry notification (successfully ends / expires soon).
+
+        Parameters
+        ----------
+        algorand_client : AlgorandClient
+            [fixture] Algorand client.
+        valad_and_delco_app_wrapper_and_valman : Callable[ ..., Tuple[...] ]
+            [fixture] Function to make a validator ad and delegator contract in the desired state.
+        logger_mockup : logging.Logger
+            [fixture] Logger.
+        should_wait_to_notify : bool
+            [param] Flag whether to wait until the notification of expiry should go through.
+        expected_return_value : int
+            [param] The expected return value of the live state handler.
+        """
+        _, delco_app, valad_manager = valad_and_delco_app_wrapper_and_valman
+        # Wait / progress rounds until delco expiry notification should go through
+        if should_wait_to_notify:
+            # Fetch expiry and notification data from Delegator Contract and Noticeboard
+            global_state_delco = DelegatorContractGlobalState.from_global_state(
+                delco_app.delco_client.get_global_state()
+            )
+            global_state_notbd = NoticeboardGlobalState.from_global_state(
+                noticeboard.noticeboard_client.get_global_state()
+            )
+            # Derive the first round on which the expiry notification should go through
+            round_end = global_state_delco.round_end
+            rounds_before_expiry = global_state_notbd.noticeboard_terms_timing.before_expiry
+            round_notification = round_end - rounds_before_expiry
+            current_round = algorand_client.client.algod.status()["last-round"]
+            num_of_rounds_to_wait = round_notification - current_round
+            # Now wait for the corresponding number of rounds
+            wait_for_rounds(
+                algorand_client,
+                num_of_rounds_to_wait
+            )
+        # Try calling handler and check return result
+        res = Daemon.delco_live_state_handler(
+            algorand_client,
+            valad_manager,
+            delco_app,
+            logger_mockup
+        )
+        assert res == expected_return_value
 
 
 class TestDelcoEndedStateHandler():

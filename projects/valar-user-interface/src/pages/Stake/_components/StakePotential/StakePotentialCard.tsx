@@ -40,7 +40,7 @@ const StakePotentialCard = ({ stakeReqs, className }: { stakeReqs: StakeReqs; cl
     };
 
     fetch();
-  }, [stakingData, user, stakeReqs]);
+  }, [stakingData, user?.beneficiary?.algo, stakeReqs]);
 
   return (
     <div className={cn("w-full rounded-lg bg-transparent lg:bg-background-light lg:px-2 lg:py-3", className)}>

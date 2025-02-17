@@ -1,3 +1,4 @@
+import { noticeboardAppID } from "@/constants/platform";
 import { ASA_ID_ALGO, BOX_ASA_KEY_PREFIX } from "@/constants/smart-contracts";
 import { UserInfo } from "@/interfaces/contracts/User";
 import { ValidatorAdGlobalState } from "@/interfaces/contracts/ValidatorAd";
@@ -8,7 +9,6 @@ import { ABITupleType, ABIUintType, getApplicationAddress } from "algosdk";
 import AlgodClient from "algosdk/dist/types/client/v2/algod/algod";
 
 export class ValidatorQuery {
-
   /**
    *
    *  Fetch the all the Ads of an Owner
@@ -18,9 +18,7 @@ export class ValidatorQuery {
     validatorOwnerUserInfo: UserInfo,
   ): Promise<Map<bigint, ValidatorAdGlobalState> | undefined> {
     try {
-      const valAdIds: bigint[] = [
-        ...validatorOwnerUserInfo.appIds.filter((id) => id != 0n),
-      ];
+      const valAdIds: bigint[] = [...validatorOwnerUserInfo.appIds.filter((id) => id != 0n)];
       const valAdsMap = ValidatorQuery.fetchValidatorAds(algodClient, valAdIds);
       return valAdsMap;
     } catch {
@@ -47,10 +45,30 @@ export class ValidatorQuery {
     return valAdsMap;
   }
 
-  static async fetchValEarnings(
-    algodClient: AlgodClient,
-    gsValAd: ValidatorAdGlobalState,
-  ): Promise<Earning[]> {
+  static async fetchAllValidatorAds(algodClient: AlgodClient): Promise<Map<bigint, ValidatorAdGlobalState> | undefined> {
+    const valAdsMap: Map<bigint, ValidatorAdGlobalState> = new Map();
+
+    try {
+      const noticeboardAddress = getApplicationAddress(noticeboardAppID);
+      const res = await algodClient.accountInformation(noticeboardAddress).do();
+      console.log("Noticeboard account info: ", res);
+
+      const ads = res["created-apps"];
+
+      for (let ad of ads) {
+        const gsValAd = ValidatorAdGlobalState.getGlobalStateFromJson(ad);
+        if (gsValAd) {
+          valAdsMap.set(gsValAd.appId, gsValAd);
+        }
+      }
+
+      return valAdsMap;
+    } catch {
+      return undefined;
+    }
+  }
+
+  static async fetchValEarnings(algodClient: AlgodClient, gsValAd: ValidatorAdGlobalState): Promise<Earning[]> {
     const abi = new ABITupleType([
       new ABIUintType(64), //total_earning
       new ABIUintType(64), //total_fees_generated

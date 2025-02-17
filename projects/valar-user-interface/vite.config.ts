@@ -28,6 +28,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""), // Remove '/api' prefix
       },
+      "/gov": {
+        target: "https://governance.algorand.foundation/api/periods/governance-period-14/",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/gov/, ""), // Remove '/gob' prefix
+      },
     },
   },
   define: {

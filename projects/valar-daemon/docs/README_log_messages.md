@@ -1,6 +1,6 @@
 # Log messages
 
-There are a total of 64 Valar Daemon log messages, listed below.
+There are a total of 74 Valar Daemon log messages, listed below.
 
 
 ## Level 10 (DEBUG)
@@ -64,6 +64,18 @@ Module: Daemon
 
 Message: The status of the payment asset on the delegator contract has been checked and is OK. I.e. payments can be carried out. This error message is typical for public deployments.
 
+**Checked if still time to submit partkeys for delco with ID {app_id}.**
+
+Module: Daemon
+
+Message: The daemon still has time to submit the participation keys (self-report unsuccessful). This report is done in order to remove delegator contracts which can no longer be serviced, making way for new ones. This error message is typical for localnet deployments.
+
+**Checked if still time to submit partkeys for delco with ID {app_id}.**
+
+Module: Daemon
+
+Message: The daemon still has time to submit the participation keys (self-report unsuccessful). This report is done in order to remove delegator contracts which can no longer be serviced, making way for new ones. This error message is typical for public network deployments.
+
 **Partkey generation pending for delco with ID {app_id}.**
 
 Module: Daemon
@@ -99,6 +111,18 @@ Message: Tried reporting the delegator contract as expired without success.  The
 Module: Daemon
 
 Message: Tried reporting the delegator contract as expired without success.  The delegator contract is still active. This error message is typical for public deployments.
+
+**Tried to issue expiry notification for delco with ID {app_id}.**
+
+Module: Daemon
+
+Message: Tried to issue delegator contract expiry notification without success.  The delegator contract is still active and the expiry is not imminent. This error message is typical for localnet deployments.
+
+**Tried to issue expiry notification for delco with ID {app_id}.**
+
+Module: Daemon
+
+Message: Tried to issue delegator contract expiry notification without success.  The delegator contract is still active and the expiry is not imminent. This error message is typical for public deployments.
 
 **Gating and stake limits OK for delco with ID {app_id}.**
 
@@ -203,6 +227,12 @@ Module: Daemon
 
 Message: The delegator contract can no longer transfer the payment asset to the validator ad. This should lead to automatic termination of the contract.
 
+**Cannot submit partkeys for delco with ID {app_id}.**
+
+Module: Daemon
+
+Message: The time for submitting participation keys according to the validator ad's terms is up. This should lead to automatic termination of the contract.
+
 **Submitted partkey parameters for delco with ID {app_id}.**
 
 Module: Daemon
@@ -226,6 +256,12 @@ Message: The participation keys have not been confirmed within the agreed time. 
 Module: Daemon
 
 Message: Indicates the delegator contract has expired (ended normally / fulfilled).  This should lead to automatic termination of the contract.
+
+**Sent expires soon notification for delco with ID {app_id}.**
+
+Module: Daemon
+
+Message: Indicates that a notification about an imminent expiry of the delegator contract was sent. 
 
 **Gating or stake limit breach for delco with ID {app_id}.**
 
@@ -276,6 +312,12 @@ Module: Daemon
 
 Message: Warns that the daemon could not go to sleep. This is often the result of long loop execution times.
 
+**Requested partkey generation with past validity.**
+
+Module: PartkeyManager
+
+Message: Requested the generation of a participation key with its validity in the past (current round > last round).
+
 **Pending buffer is full ({num_of_keys} partkeys).**
 
 Module: PartkeyManager
@@ -319,6 +361,12 @@ Module: Daemon
 
 Message: The status of the payment asset on the delegator contract cannot be checked due to an attribute error. This is likely the result of a problem with algod, such as a wrong URL or an interrupted internet connection.
 
+**Cannot check partkey not submitted for delco with ID {app_id}.**
+
+Module: Daemon
+
+Message: The remaining time for submitting participation keys for a delegator contract cannot be checked due to an attribute error. This is likely the result of a problem with algod, such as a wrong URL or an interrupted internet connection.
+
 **Cannot submit partkey params for delco with ID {app_id}.**
 
 Module: Daemon
@@ -336,6 +384,12 @@ Message: Received AttributeError while trying to check if the participation keys
 Module: Daemon
 
 Message: Received AttributeError while trying to report the delegator contract as expired.  This is likely the result of a problem with algod, such as a wrong URL or an interrupted internet connection.
+
+**Cannot issue expiry notification for delco with ID {app_id}.**
+
+Module: Daemon
+
+Message: Received AttributeError while trying to issue delegator contract expiry notification.  This is likely the result of a problem with algod, such as a wrong URL or an interrupted internet connection.
 
 **Attribute error for gating and stake limits for delco with ID {app_id}.**
 
@@ -378,6 +432,12 @@ Message: Encountered an unknown exception wen trying to create app wrapper.
 Module: AppWrapper
 
 Message: Encountered an unknown exception wen trying to update dynamic app wrapper parameters.
+
+**Algod error, {e}.**
+
+Module: PartkeyManager
+
+Message: An error was encountered when checking the last round number.
 
 ## Level 50 (CRITICAL)
 **Unknown delco state {state}.**

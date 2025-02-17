@@ -32,6 +32,7 @@ from valar_daemon.utils import (
     report_unconfirmed_partkeys,
     report_contract_expired,
     report_delben_breach_limits,
+    report_contract_expiry_soon
 )
 from valar_daemon.constants import (
     VALAD_NOT_READY_STATUS_CHANGE_OK,
@@ -48,7 +49,12 @@ from valar_daemon.constants import (
     DELCO_STATE_READY,
     DELCO_STATE_SUBMITTED,
     DELCO_STATE_LIVE,
-    DELCO_STATE_ENDED_WITHDREW
+    DELCO_STATE_ENDED_WITHDREW,
+    DELCO_LIVE_STATUS_EXPIRED,
+    DELCO_LIVE_STATUS_EXPIRES_SOON,
+    DELCO_LIVE_STATUS_BREACH_LIMITS,
+    DELCO_LIVE_STATUS_BREACH_PAY,
+    DELCO_LIVE_STATUS_NO_CHANGE
 ) 
 
 
@@ -378,12 +384,12 @@ class Daemon(object):
             logger.log_attributeerror_cannot_pay(app_id=delco_app.app_id)
         except LogicError: # Failed transaction on LocalNet
             logger.log_logicerror_cannot_pay(app_id=delco_app.app_id)
-        except HTTPError: # Failed transaction on public network
+        except HTTPError: # Failed transaction on local network
             logger.log_httperror_cannot_pay(app_id=delco_app.app_id)
         except AlgodHTTPError: # Failed transaction on public network
             logger.log_httperror_cannot_pay(app_id=delco_app.app_id)
             # Proceed to possible self-reporting
-        try: # Check if can pay (funds not frozen)
+        try: # Check if daemon can self-report (not submitted on time - free up space on node for new delegators)
             report_partkeys_not_submitted( # Error if still time
                 algorand_client=algorand_client,
                 valown_address=delco_app.valown_address,
@@ -400,10 +406,10 @@ class Daemon(object):
             logger.log_attributeerror_partkeys_not_submitted(app_id=delco_app.app_id)
         except LogicError: # Failed transaction on LocalNet
             logger.log_logicerror_partkeys_not_submitted(app_id=delco_app.app_id)
-        except HTTPError: # Failed transaction on public network
+        except HTTPError: # Failed transaction on local network
             logger.log_httperror_partkeys_not_submitted(app_id=delco_app.app_id)
         except AlgodHTTPError: # Failed transaction on public network
-            logger.log_httperror_cannot_pay(app_id=delco_app.app_id)
+            logger.log_httperror_partkeys_not_submitted(app_id=delco_app.app_id)
         # Check if partkeys already generated / exist
         try:
             is_generated = partkey_manager.is_partkey_generated(
@@ -504,7 +510,7 @@ class Daemon(object):
             logger.log_attributeerror_partkeys_not_confirmed(delco_app.app_id)
         except LogicError:
             logger.log_logicerror_partkeys_not_confirmed(delco_app.app_id)
-        except HTTPError: # Failed transaction on public network
+        except HTTPError: # Failed transaction on local network
             logger.log_httperror_partkeys_not_confirmed(app_id=delco_app.app_id)
         except AlgodHTTPError: # Failed transaction on public network
             logger.log_httperror_cannot_pay(app_id=delco_app.app_id)
@@ -516,12 +522,17 @@ class Daemon(object):
         valman: AddressAndSigner,
         delco_app: DelcoAppWrapper,
         logger: Logger,
-    ):
+    ) -> int:
         """Handle a live delegator contract (check different limit breaches and expiry).
 
         Parameters
         ----------
         delco_app : DelcoAppWrapper
+
+        Returns
+        -------
+        int
+            The sub-state status flag.
         """
         logger.log_delco_in_live_handler(app_id=delco_app.app_id)
         # Call the corresponding checkup functions, which could result in a state change
@@ -539,12 +550,12 @@ class Daemon(object):
                 noticeboard_client=delco_app.notbd_client
             )
             logger.log_contract_expired(delco_app.app_id)
-            return
+            return DELCO_LIVE_STATUS_EXPIRED
         except AttributeError:
             logger.log_expired_attribute_error(app_id=delco_app.app_id)
         except LogicError:
             logger.log_tried_contract_expired(app_id=delco_app.app_id)
-        except HTTPError: # Failed transaction on public network
+        except HTTPError: # Failed transaction on local network
             logger.log_httperror_contract_expired(app_id=delco_app.app_id)
         except AlgodHTTPError: # Failed transaction on public network
             logger.log_httperror_contract_expired(app_id=delco_app.app_id)
@@ -564,12 +575,12 @@ class Daemon(object):
                 noticeboard_client=delco_app.notbd_client
             )
             logger.log_gating_or_stake_limit_breached(app_id=delco_app.app_id)
-            return
+            return DELCO_LIVE_STATUS_BREACH_LIMITS
         except AttributeError:
             logger.log_gating_or_stake_limit_breached_attribute_error(app_id=delco_app.app_id)
         except LogicError:
             logger.log_logicerror_gating_or_stake_limit_breached(app_id=delco_app.app_id)
-        except HTTPError: # Failed transaction on public network
+        except HTTPError: # Failed transaction on local network
             logger.log_httperror_gating_or_stake_limit_breached(app_id=delco_app.app_id)
         except AlgodHTTPError: # Failed transaction on public network
             logger.log_httperror_gating_or_stake_limit_breached(app_id=delco_app.app_id)
@@ -585,15 +596,36 @@ class Daemon(object):
                 noticeboard_client=delco_app.notbd_client
             )
             logger.log_delco_cannot_pay(app_id=delco_app.app_id)
-            return
+            return DELCO_LIVE_STATUS_BREACH_PAY
         except AttributeError:
             logger.log_attributeerror_cannot_pay(app_id=delco_app.app_id)
         except LogicError:
             logger.log_logicerror_cannot_pay(app_id=delco_app.app_id)
-        except HTTPError: # Failed transaction on public network
+        except HTTPError: # Failed transaction on local network
             logger.log_httperror_cannot_pay(app_id=delco_app.app_id)
         except AlgodHTTPError: # Failed transaction on public network
             logger.log_httperror_cannot_pay(app_id=delco_app.app_id)
+        try: # Check if expiry soon
+            report_contract_expiry_soon(
+                algorand_client=algorand_client,
+                valown_address=delco_app.valown_address,
+                delman_address=delco_app.delman_address,
+                valad_id=delco_app.valad_id,
+                delco_id=delco_app.app_id,
+                valman=valman,
+                noticeboard_client=delco_app.notbd_client
+            )
+            logger.log_delco_expires_soon(app_id=delco_app.app_id)
+            return DELCO_LIVE_STATUS_EXPIRES_SOON
+        except AttributeError:
+            logger.log_attributeerror_delco_expires_soon(app_id=delco_app.app_id)
+        except LogicError:
+            logger.log_logicerror_delco_expires_soon(app_id=delco_app.app_id)
+        except HTTPError: # Failed transaction on local network
+            logger.log_httperror_delco_expires_soon(app_id=delco_app.app_id)
+        except AlgodHTTPError: # Failed transaction on public network
+            logger.log_httperror_delco_expires_soon(app_id=delco_app.app_id)
+        return DELCO_LIVE_STATUS_NO_CHANGE
 
 
     @staticmethod

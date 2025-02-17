@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { useAppGlobalState } from "@/contexts/AppGlobalStateContext";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { DelegatorContractGlobalState } from "@/interfaces/contracts/DelegatorContract";
+import { UserInfo } from "@/interfaces/contracts/User";
 import { ellipseAddress } from "@/utils/convert";
 import {
   ColumnFiltersState,
@@ -33,7 +34,7 @@ const ValDelCoListCard = () => {
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
 
   const { activeAddress } = useWallet();
-  const { algorandClient, valAdsMap, valsMap } = useAppGlobalState();
+  const { algorandClient, valAdsMap } = useAppGlobalState();
 
   const [delCoMap, setDelCoMap] = useState<Map<bigint, DelegatorContractGlobalState> | undefined>(undefined);
   const [tableData, setTableData] = useState<ValDelCoListItem[]>([]);
@@ -42,9 +43,10 @@ const ValDelCoListCard = () => {
   //Fetching all Delegator Contracts of under all Validator Ads of current account
   useEffect(() => {
     const fetch = async () => {
-      if (activeAddress && valsMap && valAdsMap) {
+      if (activeAddress && valAdsMap) {
         // Get all Ad IDs of current account
-        const adIds = valsMap.get(activeAddress);
+        const userInfo = await UserInfo.getUserInfo(algorandClient.client.algod, activeAddress);
+        const adIds = userInfo?.appIds.filter((id) => id != 0n);
         if (adIds) {
           // Get global state for all Ad IDs of current account
           const adsGS = adIds!.map((adId) => valAdsMap.get(adId));
@@ -65,7 +67,7 @@ const ValDelCoListCard = () => {
     };
 
     fetch();
-  }, [activeAddress, valsMap, valAdsMap, delCoRefetch]);
+  }, [activeAddress, valAdsMap, delCoRefetch]);
 
   // Convert Delegator Contracts to table items
   useEffect(() => {

@@ -1,8 +1,9 @@
 import { CURRENCIES } from "@/constants/platform";
-import { ROLE_DEL_STR } from "@/constants/smart-contracts";
-import { VA_STATE_READY } from "@/constants/states";
+import { ROLE_DEL_STR, ROLE_VAL_STR } from "@/constants/smart-contracts";
+import { DC_STATE_ENDED_MASK, DC_STATE_LIVE, VA_STATE_READY } from "@/constants/states";
 import { TC_LATEST } from "@/constants/terms-and-conditions";
 import { TimeParams } from "@/constants/units";
+import { DelegatorContractGlobalState } from "@/interfaces/contracts/DelegatorContract";
 import { ValidatorAdGlobalState } from "@/interfaces/contracts/ValidatorAd";
 import { StakeReqs } from "@/lib/types";
 import { User } from "@/store/userStore";
@@ -11,9 +12,19 @@ import { calculateNodeRunnerFee } from "./contract/helpers";
 import { algoBigIntToDisplay, bytesToHex, bytesToStr, roundsToDate, roundsToDuration } from "./convert";
 import { ParamsCache } from "./paramsCache";
 
+export type NodeRelation =
+  | "your-ad"
+  | "staking-you"
+  | "staking-others"
+  | "awaiting-you"
+  | "awaiting-others"
+  | "used"
+  | undefined;
+
 export type Stakable = {
   possible: boolean;
   reasons: string[];
+  relation: NodeRelation;
 };
 
 export class StakingUtils {
@@ -23,13 +34,57 @@ export class StakingUtils {
    * =======================
    */
 
-  static async canStake(gsValAd: ValidatorAdGlobalState, user: User | null, stakeReqs: StakeReqs): Promise<Stakable> {
+  static async canStake(
+    gsValAd: ValidatorAdGlobalState,
+    user: User | null,
+    stakeReqs: StakeReqs,
+    renewDelCo: DelegatorContractGlobalState | undefined,
+  ): Promise<Stakable> {
     const reasons: string[] = [];
+    let relation: NodeRelation = undefined;
 
     // If user is null, show it as possible, although it isn't
     // until they connect wallet, when the possibility is re-resolved.
     if (user === null) {
-      return { possible: true, reasons };
+      return { possible: true, reasons, relation };
+    }
+
+    // Check relationship
+    if (user.userApps && user.userInfo) {
+      if (bytesToStr(user.userInfo.role) === ROLE_DEL_STR) {
+        //User is a Delegator
+
+        //Checking if Using
+        const gsDelCoUsing = Array.from((user.userApps as Map<bigint, DelegatorContractGlobalState>).values()).find(
+          (gsDelCo) =>
+            gsValAd.appId === gsDelCo.validatorAdAppId &&
+            bytesToStr(gsDelCo.stateCur) < bytesToStr(DC_STATE_ENDED_MASK),
+        );
+
+        if (gsDelCoUsing) {
+          //Found Using
+          relation = ((bytesToStr(gsDelCoUsing.stateCur) === bytesToStr(DC_STATE_LIVE) ? "staking-" : "awaiting-") +
+            (gsDelCoUsing.delBeneficiary === user.beneficiary.address ? "you" : "others")) as NodeRelation;
+          console.log(relation);
+        } else {
+          //Not Using
+
+          //Checking if Used
+          const gsDelCoUsed = Array.from((user.userApps as Map<bigint, DelegatorContractGlobalState>).values()).find(
+            (gsDelCo) =>
+              gsValAd.appId === gsDelCo.validatorAdAppId &&
+              bytesToStr(gsDelCo.stateCur) >= bytesToStr(DC_STATE_ENDED_MASK),
+          );
+
+          relation = gsDelCoUsed ? "used" : relation;
+        }
+      } else if (bytesToStr(user.userInfo.role) === ROLE_VAL_STR) {
+        //User Validator
+
+        relation = gsValAd.valOwner === user.address ? "your-ad" : relation;
+      }
+    } else {
+      console.log("Unknown role.");
     }
 
     // Check if beneficiary is passing gating requirement
@@ -56,6 +111,11 @@ export class StakingUtils {
     const endRound = duration + roundCurrent;
     const roundMaxEnd = gsValAd.termsTime.roundMaxEnd;
     const endDate = await roundsToDate(roundMaxEnd);
+
+    // If validator ad is full, it isn't an issue if contract is being renewed and the selected ad is the one with the current DelCo
+    const occupied =
+      renewDelCo && gsValAd.appId === renewDelCo.validatorAdAppId ? false : gsValAd.cntDel >= gsValAd.cntDelMax;
+
     // Condition checks
     if (user.userInfo && bytesToStr(user.userInfo.role) !== ROLE_DEL_STR) {
       reasons.push("You cannot stake with this account because you have already registered as a node runner.");
@@ -93,7 +153,7 @@ export class StakingUtils {
     if (!user || (user.assets.get(valAssetId) || 0n) <= calculateNodeRunnerFee(stakeReqs, gsValAd)) {
       reasons.push(`You do not have enough ${CURRENCIES.get(valAssetId)!.ticker} to pay for the node runner fees.`);
     }
-    if (gsValAd.cntDel >= gsValAd.cntDelMax) {
+    if (occupied) {
       reasons.push("This node runner is currently fully occupied and will not be able to serve you.");
     }
     if (bytesToStr(gsValAd.state) !== bytesToStr(VA_STATE_READY)) {
@@ -103,6 +163,7 @@ export class StakingUtils {
       reasons.push("This node runner has not agreed to the platform's terms and conditions.");
     }
     const possible = reasons.length === 0;
-    return { possible, reasons };
+
+    return { possible, reasons, relation };
   }
 }

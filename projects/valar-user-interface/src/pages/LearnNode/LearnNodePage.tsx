@@ -157,7 +157,7 @@ const LearnNodePage = () => {
                           The URL and port of Algod running on your node: <code className={codeStyle}>algod_config_server = http://localhost:8080</code>.
                         </p>
                         <p>
-                          You can find this in your node's files, for example, usually under <code className={codeStyle}>var/lin/algorand/algo.net</code> for Linux users.
+                          You can find this in your node's files, for example, usually under <code className={codeStyle}>var/lib/algorand/algo.net</code> for Linux users.
                         </p>
                       </li>
                       <li>
@@ -165,7 +165,7 @@ const LearnNodePage = () => {
                         The admin API token to access Algod on your node: <code className={codeStyle}>algod_config_token = aaaaaa...aaaaaa</code>
                         </p>
                         <p>
-                          You can find this in your node's files, for example, usually under <code className={codeStyle}>var/lin/algorand/algo.admin.token</code> for Linux users.
+                          You can find this in your node's files, for example, usually under <code className={codeStyle}>var/lib/algorand/algo.admin.token</code> for Linux users.
                         </p>
                       </li>
                     </ul>

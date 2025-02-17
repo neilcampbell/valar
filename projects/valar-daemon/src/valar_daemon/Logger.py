@@ -696,8 +696,8 @@ class Logger():
         app_id: int
     ):
         self._log(
-            self.log_messages["delco_in_live_handler"]["level"],
-            self.log_messages["delco_in_live_handler"]["message"].format(app_id=app_id)
+            self.log_messages["contract_expired"]["level"],
+            self.log_messages["contract_expired"]["message"].format(app_id=app_id)
         )
 
     def log_expired_attribute_error(
@@ -725,6 +725,42 @@ class Logger():
         self._log(
             self.log_messages["httperror_contract_expired"]["level"],
             self.log_messages["httperror_contract_expired"]["message"].format(app_id=app_id)
+        )
+
+    def log_delco_expires_soon(
+        self,
+        app_id: int
+    ):
+        self._log(
+            self.log_messages["delco_expires_soon"]["level"],
+            self.log_messages["delco_expires_soon"]["message"].format(app_id=app_id)
+        )
+
+    def log_attributeerror_delco_expires_soon(
+        self,
+        app_id: int
+    ):
+        self._log(
+            self.log_messages["attributeerror_delco_expires_soon"]["level"],
+            self.log_messages["attributeerror_delco_expires_soon"]["message"].format(app_id=app_id)
+        )
+
+    def log_logicerror_delco_expires_soon(
+        self,
+        app_id: int
+    ):
+        self._log(
+            self.log_messages["logicerror_delco_expires_soon"]["level"],
+            self.log_messages["logicerror_delco_expires_soon"]["message"].format(app_id=app_id)
+        )
+
+    def log_httperror_delco_expires_soon(
+        self,
+        app_id: int
+    ):
+        self._log(
+            self.log_messages["httperror_delco_expires_soon"]["level"],
+            self.log_messages["httperror_delco_expires_soon"]["message"].format(app_id=app_id)
         )
 
     def log_gating_or_stake_limit_breached(

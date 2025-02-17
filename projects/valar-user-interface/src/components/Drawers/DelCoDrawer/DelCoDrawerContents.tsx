@@ -16,7 +16,7 @@ import ContractActiveCard from "./_components/ContractSummary/ContractActiveCard
 import ContractCreateCard from "./_components/ContractSummary/ContractCreateCard";
 
 const DelCoDrawerContents = () => {
-  const { algorandClient } = useAppGlobalState();
+  const { algorandClient, renewDelCo } = useAppGlobalState();
   const { activeAddress } = useWallet();
   const { user } = useUserStore();
   const { openDrawer, delAppId, valAppId, gsDelCo, setGsDelCo, gsValAd, setGsValAd, refetch, setRefetch, stakeReqs } =
@@ -28,12 +28,12 @@ const DelCoDrawerContents = () => {
   useEffect(() => {
     const fetch = async () => {
       if (gsValAd && stakeReqs) {
-        const res = await StakingUtils.canStake(gsValAd, user, stakeReqs);
+        const res = await StakingUtils.canStake(gsValAd, user, stakeReqs, renewDelCo);
         setStakable(res);
       }
     };
     fetch();
-  }, [gsValAd, user, stakeReqs]);
+  }, [gsValAd, user, stakeReqs, renewDelCo]);
 
   // -----------------------------------
   // Periodically fetch data or when delAppId or open status change
