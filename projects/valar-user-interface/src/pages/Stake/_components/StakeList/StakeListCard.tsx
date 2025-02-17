@@ -6,16 +6,16 @@ import TableSearch from "@/components/DataTable/TableSearch";
 import DelCoDrawer from "@/components/Drawers/DelCoDrawer/DelCoDrawer";
 import AdStatus from "@/components/Status/AdStatus";
 import ITooltip from "@/components/Tooltip/ITooltip";
+import ValTooltip from "@/components/Tooltip/ValTooltip";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import LinkExt from "@/components/ui/link-ext";
 import { Separator } from "@/components/ui/separator";
-import { ROLE_VAL_STR } from "@/constants/smart-contracts";
 import { ToolTips } from "@/constants/tooltips";
 import { useAppGlobalState } from "@/contexts/AppGlobalStateContext";
 import { StakeReqs } from "@/lib/types";
 import useUserStore from "@/store/userStore";
-import { bytesToStr, ellipseAddress } from "@/utils/convert";
+import { ellipseAddress } from "@/utils/convert";
 import { getNfdProfileUrl } from "@/utils/nfd";
 import {
   ColumnFiltersState,
@@ -39,20 +39,14 @@ function StakeListCard({ stakeReqs }: { stakeReqs: StakeReqs }) {
   const [searchParams] = useSearchParams();
   const nodeRunnerParam = searchParams.get("nodeRunner") ?? searchParams.get("node_runner");
 
-  const { valAdsMap, valNfdsMap } = useAppGlobalState();
+  const { valAdsMap, valNfdsMap, renewDelCo } = useAppGlobalState();
   const { user } = useUserStore();
   const [tableData, setTableData] = useState<StakeListItem[]>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [isStakablePresent, setIsStakablePresent] = useState<boolean>(true);
-  const [mount, setMount] = useState<boolean>(true);
-  const [loadingList, setLoadingList] = useState<boolean>(true);
 
-  const [showAll, setShowAll] = useState<boolean>(() => {
-    //True: if Validator
-    return (user?.userInfo?.role && bytesToStr(user?.userInfo?.role) === ROLE_VAL_STR) as boolean;
-  });
+  const [showAll, setShowAll] = useState<boolean>(true);
 
   /**
    * =====================================
@@ -74,6 +68,7 @@ function StakeListCard({ stakeReqs }: { stakeReqs: StakeReqs }) {
                 )}
                 <p className="text-sm">{ellipseAddress(info.getValue())}</p>
               </div>
+              <ValTooltip relation={info.row.original.nodeRelation} />
             </div>
           );
         },
@@ -123,6 +118,10 @@ function StakeListCard({ stakeReqs }: { stakeReqs: StakeReqs }) {
         header: undefined,
         enableHiding: false,
       }),
+      columnHelper.accessor("hasNodeRelation", {
+        header: undefined,
+        enableHiding: false,
+      }),
     ],
     [tableData],
   );
@@ -144,6 +143,7 @@ function StakeListCard({ stakeReqs }: { stakeReqs: StakeReqs }) {
       maxWarnings: false,
       gated: false,
       canStake: false,
+      hasNodeRelation: false,
     }),
     [],
   );
@@ -184,16 +184,15 @@ function StakeListCard({ stakeReqs }: { stakeReqs: StakeReqs }) {
     const fetch = async () => {
       if (!valAdsMap) return;
 
-      setLoadingList(true);
-      const stakeList = await getStakeList(valAdsMap, stakeReqs, user, valNfdsMap);
+      const stakeList = await getStakeList(valAdsMap, stakeReqs, user, renewDelCo, valNfdsMap);
 
-      //Checking if any stakableAd is present or not.
-      const isStakablePresent = stakeList.some((item) => item.canStake === true);
-      setIsStakablePresent(isStakablePresent);
-
-      //If nodeRunnerParam is present the TableData is Sorted else default.
+      //If nodeRunnerParam is present, the TableData is sorted, else default.
       setTableData(() => {
         if (nodeRunnerParam) {
+          const stakableMatchesMine = [];
+          const nonStakableMatchesMine = [];
+          const stakableNonMatchesMine = [];
+          const nonStakableNonMatchesMine = [];
           const stakableMatches = [];
           const nonStakableMatches = [];
           const stakableNonMatches = [];
@@ -202,73 +201,60 @@ function StakeListCard({ stakeReqs }: { stakeReqs: StakeReqs }) {
           for (let item of stakeList) {
             if (item.name === nodeRunnerParam) {
               if (item.canStake) {
-                stakableMatches.push(item);
+                if (item.hasNodeRelation) {
+                  stakableMatchesMine.push(item);
+                } else {
+                  stakableMatches.push(item);
+                }
               } else {
-                nonStakableMatches.push(item);
+                if (item.hasNodeRelation) {
+                  nonStakableMatchesMine.push(item);
+                } else {
+                  nonStakableMatches.push(item);
+                }
               }
             } else {
               if (item.canStake) {
-                stakableNonMatches.push(item);
+                if (item.hasNodeRelation) {
+                  stakableNonMatchesMine.push(item);
+                } else {
+                  stakableNonMatches.push(item);
+                }
               } else {
-                nonStakableNonMatches.push(item);
+                if (item.hasNodeRelation) {
+                  nonStakableNonMatchesMine.push(item);
+                } else {
+                  nonStakableNonMatches.push(item);
+                }
               }
             }
           }
 
-          //If no stakable match found, set ShowAll=true to show unstakable ads of that node_runner.
-          if (stakableMatches.length === 0 && nonStakableMatches.length !== 0) setShowAll(true);
-
-          return [...stakableMatches, ...nonStakableMatches, ...stakableNonMatches, ...nonStakableNonMatches];
+          return [
+            ...stakableMatchesMine,
+            ...nonStakableMatchesMine,
+            ...stakableMatches,
+            ...nonStakableMatches,
+            ...stakableNonMatchesMine,
+            ...nonStakableNonMatchesMine,
+            ...stakableNonMatches,
+            ...nonStakableNonMatches,
+          ];
         } else {
-          setSorting([{ id: "canStake", desc: true }]);
+          setSorting([
+            { id: "hasNodeRelation", desc: true },
+            { id: "canStake", desc: true },
+          ]);
         }
 
         return stakeList;
       });
 
-      setLoadingList(false);
-
       console.log("Updating table data due to change in valAdsMap, stakeReqs, user", valAdsMap, stakeReqs, user);
     };
 
     fetch();
-  }, [valAdsMap, stakeReqs, user]);
-
-  /**
-   * ==============================================================
-   *  This is the main method to decide, whether to showAll or not
-   * ==============================================================
-   */
-  useEffect(() => {
-    if (loadingList) return;
-
-    //If nodeRunnerParam and Mounting then no Modification needed.
-    if (nodeRunnerParam && mount) return setMount(false);
-
-    if (!user) {
-      //User Wallet Not-Connected (all ads are stakable)
-      setShowAll(false);
-    } else if (user.userInfo?.role && bytesToStr(user?.userInfo?.role) === ROLE_VAL_STR) {
-      //User is Validator
-      setShowAll(true);
-    } else if (!isStakablePresent && mount) {
-      /**
-       * No-Stakable Ad Present and Mounting.
-       * Mounting is included to prevent changing of showAll when adjusting StakeReqs.
-       */
-      setShowAll(true);
-    }
-
-    setMount(false); //Mounting Complete
-  }, [loadingList]);
-
-  /**
-   * ==============================================================
-   *          If the user swtiches account then mounting=true,
-   *          so that isStakablePresent logic is applied.
-   * ==============================================================
-   */
-  useEffect(() => setMount(true), [user]);
+  }, [valAdsMap, valNfdsMap, stakeReqs, user, renewDelCo]);
 
   /**
    * ==============================================================

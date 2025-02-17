@@ -8,7 +8,7 @@ Three steps are required to set up your node for Valar:
 
 These steps are described below.
 
-*Please refer to [the Daemon's repository](https://github.com/ValarStaking/valar/tree/master/projects/valar-daemon) for the [changelog](https://github.com/ValarStaking/valar/tree/master/projects/valar-daemon/CHANGELOG.md), source code, tests, and a broader description of the Valar Daemon.*
+*Please refer to [the Daemon's repository](https://github.com/ValarStaking/valar/tree/master/projects/valar-daemon) for the [changelog](https://github.com/ValarStaking/valar/blob/master/projects/valar-daemon/CHANGELOG.md), source code, tests, and a broader description of the Valar Daemon.*
 *Additionally, you can find smart contract and user interface (UI) source code in [the master repository](https://github.com/ValarStaking/valar/tree/master).* 
 *Furthermore, you can find answers to FAQ, the Valar platform's terms of usage, and other information at [stake.valar.solutions](https://stake.valar.solutions).*
 *The Valar Daemon is provided under the [GNU Affero General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/).*
@@ -103,17 +103,17 @@ It is recommended that you make an additional directory (e.g. `mkdir ~/valar_dae
 
 You can copy the template of the configuration file to the current directory using `wget https://raw.githubusercontent.com/ValarStaking/valar/refs/heads/master/projects/valar-daemon/daemon.config`.
 
-Alternatively, you can navigate to the [provided URL](https://github.com/ValarStaking/valar/tree/master/projects/valar-daemon/daemon.config) and copy-paste the template to an empty file named `daemon.config`.
+Alternatively, you can navigate to the [provided URL](https://github.com/ValarStaking/valar/blob/master/projects/valar-daemon/daemon.config) and copy-paste the template to an empty file named `daemon.config`.
 
 #### Configuring the Daemon
 
 In the config file, you should update the following parameters in accordance with your setup:
 - The ID of your ad `validator_ad_id_list = [<validator_ad_id>]`.
 - The mnemonic of your Validator Manager (hot wallet) `validator_manager_mnemonic = <validator_manager_mnemonic>`.
-- The URL and port of Algod running on your node, `algod_config_server = <URL:port>`. You can find this in your node's files, for example, usually under `var/lin/algorand/algo.net` for Linux users. 
-- The admin API token to access Algod on your node, `algod_config_token = <token>`. You can find this in your node's files, for example, usually under `var/lin/algorand/algo.admin.token` for Linux users.
+- The URL and port of Algod running on your node, `algod_config_server = <URL:port>`. You can find this in your node's files, for example, usually under `var/lib/algorand/algo.net` for Linux users. 
+- The admin API token to access Algod on your node, `algod_config_token = <token>`. You can find this in your node's files, for example, usually under `var/lib/algorand/algo.admin.token` for Linux users.
 
-The other parameters offer advanced features and you can read up more about these in [the daemon's repository](https://github.com/ValarStaking/valar/tree/master/projects/valar-daemon/README.md).
+The other parameters offer advanced features and you can read up more about these in [the daemon's repository](https://github.com/ValarStaking/valar/blob/master/projects/valar-daemon/README.md).
 
 ### Starting the Daemon
 
@@ -136,19 +136,19 @@ These are described in more detail in [a later section](#logs).
 You can run the Daemon in the background and keep it running even after you close the terminal or SSH connection using:
 
 - `nohup python -m valar_daemon.run_daemon &` for Linux/macOS 
-- `Start-Process python -ArgumentList "-m valar_daemon.run_daemon" -WindowStyle Hidden` for Windows (using Windows PowerShell)
+- `pythonw -m valar_daemon.run_daemon` for Windows
 
 To verify that the Daemon is running successfully, you can:
 - Check the logs in `valar-daemon-log`.
 - Search the running processes on your system for `valar_daemon.run_daemon` (Linux/macOS) or `Python` (Windows).
 
 For example, on Linux you can search for the Valar Daemon process using `ps aux | grep "valar_daemon.run_daemon"` and gracefully terminate it with `kill <PID>`.
-On Windows, you can find the process in cmd with `wmic process where "name='python.exe'" get Commandline, ProcessId`.
+On Windows, you can find the process in cmd with `wmic process where "name='pythonw.exe'" get Commandline, ProcessId` (or `wmic process where "name='python.exe'" get Commandline, ProcessId` if you used `python` to start the daemon instead of `pythonw`) and terminate it with `taskkill /F /pid <PID>`.
 
 One of the alternatives is to deploy a screen (`screen`), launch the Daemon inside the screen (`python -m valar_daemon.run_daemon`), and detach from the screen (`ctrl+a+d`) before closing the terminal or SSH connection. 
 You can later get the screen's ID (`screen -ls`) and re-attach to it (`screen -x <screen_ID>`).
 
-Additionally, you can follow [the below guide on setting up a cron job](#cron), which will periodically check that the Daemon is running and run it if it isn't.
+Additionally, you can follow [the below guide on setting up a system service or cron job](#autorun), which will periodically check that the Daemon is running and run it if it isn't.
 
 
 ## Additional considerations 
@@ -175,9 +175,9 @@ For example, the log `50-critical/critical.log` includes only critical error mes
 It is recommended that you regularly check in on the error messages with warning priority or higher in order to detect any malfunctions. 
 Note that logs get eventually overwritten due to their size limit, thus is recommended that you duplicate the log file if it seems to include potentially relevant information.
 
-*Please refer to [the log message README](https://github.com/ValarStaking/valar/tree/master/projects/valar-daemon/docs/README_log_messages.md) for a list of expected log messages.*
+*Please refer to [the log message README](https://github.com/ValarStaking/valar/blob/master/projects/valar-daemon/docs/README_log_messages.md) for a list of expected log messages.*
 
-<a id="cron"></a>
+<a id="autorun"></a>
 
 ### Automatically starting the Valar Daemon
 
@@ -185,12 +185,43 @@ Your node may suffer from power, connectivity, or other issues.
 While the Valar Damon has several built-in mechanisms to provide resilience in such circumstances, it does not automatically start up after it has been terminated. 
 To achieve this, you can employ a job scheduler on your system. 
 
-The procedure for setting up cron on Linux systems is described below. 
+The procedure for setting up a system service on Linux, a cron job on Linux/macOS, or Task Scheduler on Windows are described below. 
 Please first verify that the Valar Daemon runs on you machine using the preceding steps and **terminate any running instances** before continuing.
 
-#### Obtaining and configuring the script for checking the status of the Valar Daemon
+#### Using Systemd on Linux
 
-You can download from repository a [bash script](https://github.com/ValarStaking/valar/tree/master/projects/validator-daemon/check_script.sh) that checks whether the Valar Daemon is running and, if it is not running, starts it. 
+After setting up the `valar-daemon` directory and Python within it, you can instruct the Linux system daemon to monitor the Valar Daemon and start it in case it is not running (after reboot and during normal system operation). 
+You can create a file on the path `/etc/systemd/system/valar.service` and populate its contents according to the following template:  
+
+```
+[Unit]
+Description=Valar Daemon
+After=network.target
+
+[Service]
+Type=simple
+Environment="ALGORAND_DATA=/var/lib/algorand"
+WorkingDirectory=<path-to-valar-daemon>
+ExecStart=<interpreter-path> -m valar_daemon.run_daemon
+User=<username>
+Group=<username>
+Restart=always
+RestartSec=30s
+ProtectSystem=false
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Reload the configuration using `systemctl daemon-reload`, enable the Valar Daemon service `systemctl enable valar.service`, and start it  `systemctl start valar.service`.
+
+
+
+#### Using Cron on Linux/macOS
+
+##### Obtaining and configuring the script for checking the status of the Valar Daemon
+
+You can download from repository [a template bash script](https://github.com/ValarStaking/valar/blob/master/projects/valar-daemon/check_script.sh) that checks whether the Valar Daemon is running and, if it is not running, starts it. 
 Navigate to a directory where you want to keep the script and download the provided bash script using
 
 `wget https://raw.githubusercontent.com/ValarStaking/valar/refs/heads/master/projects/valar-daemon/check_script.sh`
@@ -199,7 +230,6 @@ Next, open the script and point it to the necessary locations on your system.
 You can configure the script using an editor of your liking, for example, by using `nano check_script.sh` or `vim check_script.sh`.
 There you can adjust the following parameters:
 - `INTERPRETER_PATH`: Path to the Python interpreter that you have set up or the corresponding alias.
-- `SCRIPT_PATH`: Path to the `run_daemon.py` script path.
 - `LOG_PATH`: Path to the directory where the Valar Daemon will place its log.
 - `CONFIG_PATH`: Path to the `daemon.config` file.
 Note that all paths should preferably be absolute, i.e. starting with `/`.
@@ -209,7 +239,7 @@ You can verify that the Valar Daemon is working by checking that the debug log a
 You can use `tail -10 <path>/10-debug/debug.log` to confirm that the timestamps of the logged messages are recent (several seconds, depending on the Daemon's configuration). 
 Alternatively, you can observe the log in real-time using `watch -n 1 "tail -n 10 <path>/10-debug/debug.log`.
 
-#### Setting up cron
+##### Setting up cron
 
 Cron is a job scheduler, which you can configure to periodically run `check_script.sh`. 
 Hence, cron will monitor the Valar Daemon's status and start the Daemon if needed. 
@@ -230,7 +260,7 @@ For example, you can run the job at the beginning of every full hour by setting 
 
 It is recommended to monitor the status of your ads and your node in general, regardless of cron.
 
-#### Additional troubleshooting
+##### Additional troubleshooting
 
 There are three basic steps for debugging possible issues with the bash script or cron:
 - Try to execute the `check_script.sh` manually, without cron.
@@ -241,3 +271,48 @@ In addition, you can check:
 - That you successfully updated cron's configuration with `crontab -l`. 
 - If cron is running using `systemctl status cron`.
 - Cron's log with `grep CRON /var/log/syslog`.
+
+#### Using Task Scheduler on Windows
+
+With Task Scheduler you can run a program on different trigger events on Windows.
+Type `Task Scheduler` in Windows search bar.
+A new window will open.
+
+Click on `Task Scheduler Library` and create a new folder.
+Name the folder e.g. `MyTasks` and click on the created folder.
+In the menu bar then click on  `Action` and then `Create Task...`.
+A new window appears.
+Give the task a name, e.g. `Valar Daemon`.
+Under `Security options` in `General` select the `Run whether user is logged on or not`.
+This will start the daemon even if you are not logged into the computer.
+Admin rights are needed for this.
+
+Go to `Triggers` and create a new trigger.
+Choose `At startup` under `Begin the task`.
+This is start the daemon when the computer is started.
+Optionally add `Repeat task every` e.g. `15 min` for an indefinite duration to periodically check if the daemon is running and start it if it in case it is not.
+Ensure the task is enabled and it does not expire or is stopped.
+
+Go to `Actions` and create a new action.
+As `Program/script` select `pythonw.exe` under the correct installation path.
+You can find its installation path by opening `cmd` and run `python`, where you can then enter:
+```
+import os, sys
+os.path.dirname(sys.executable)
+```
+The path to python will be displayed.
+
+Under `Add arguments (optional)` add `-m valar_daemon.run_daemon --config_path "<absolute-path>\daemon.config" --log_path "<absolute-path>\valar-daemon-log"`
+
+Go to `Conditions` and disable `Start the task only if the computer is on AC power` under `Power`.
+
+Go to `Settings` and enable `Run task as soon as possible after a scheduled start is missed` and disable `Stop the task if it runs longer than`.
+Ensure also that `Do not start a new instance` is selected under `If the task is already running, then the following rule applies:`.
+
+Click `OK` when all info is entered.
+Enter admin password if prompted.
+
+To check if the Task Scheduler has been correctly set, restart your computer.
+After restart, run `wmic process where "name='pythonw.exe'" get Commandline, ProcessId`.
+There should be one task `pythonw  -m valar_daemon.run_daemon` with the paths that were configured.
+You can also open again the Task Scheduler and navigate to `Task Scheduler Library > MyTasks > Valar Daemon` to see information about its last run time and last run results, which should be `The task is currently running.`.

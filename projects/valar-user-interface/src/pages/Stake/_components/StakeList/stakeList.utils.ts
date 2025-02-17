@@ -1,5 +1,6 @@
 import { CURRENCIES } from "@/constants/platform";
 import { AssetParams, TimeParams } from "@/constants/units";
+import { DelegatorContractGlobalState } from "@/interfaces/contracts/DelegatorContract";
 import { ValidatorAdGlobalState } from "@/interfaces/contracts/ValidatorAd";
 import { Nfd } from "@/interfaces/nfd";
 import { StakeReqs, ValAdStatus } from "@/lib/types";
@@ -12,7 +13,7 @@ import {
   roundsToDate,
   roundsToDuration,
 } from "@/utils/convert";
-import { StakingUtils } from "@/utils/staking-utils";
+import { NodeRelation, StakingUtils } from "@/utils/staking-utils";
 
 export type StakeListItem = {
   name: string;
@@ -35,6 +36,8 @@ export type StakeListItem = {
   maxWarnings: number;
   gated: string;
   canStake: boolean;
+  nodeRelation: NodeRelation;
+  hasNodeRelation: boolean;
 };
 
 /**
@@ -47,12 +50,13 @@ export async function getStakeList(
   valAdsMap: Map<bigint, ValidatorAdGlobalState>,
   stakeReqs: StakeReqs,
   user: User | null,
+  renewDelCo: DelegatorContractGlobalState | undefined,
   valNfdsMap?: Map<string, Nfd | null>,
   partner?: string,
 ): Promise<StakeListItem[]> {
   const stakeListItems = Promise.all(
     [...valAdsMap.values()].map(async (gsValAd) => {
-      const res = await StakingUtils.canStake(gsValAd, user, stakeReqs);
+      const res = await StakingUtils.canStake(gsValAd, user, stakeReqs, renewDelCo);
 
       const valOwner = gsValAd.valOwner;
       const nfd = valNfdsMap?.get(valOwner) || null;
@@ -98,6 +102,8 @@ export async function getStakeList(
         maxWarnings: Number(gsValAd.termsWarn.cntWarningMax),
         gated: gated,
         canStake: res.possible,
+        nodeRelation: res.relation,
+        hasNodeRelation: !!res.relation,
       } as StakeListItem;
     }),
   );

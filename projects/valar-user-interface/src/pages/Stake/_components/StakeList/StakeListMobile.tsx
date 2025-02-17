@@ -1,7 +1,10 @@
-import IdenticonAvatar from "@/components/Identicon/Identicon";
+import Avatar from "@/components/Avatar/Avatar";
+import ValTooltip from "@/components/Tooltip/ValTooltip";
+import LinkExt from "@/components/ui/link-ext";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/shadcn-utils";
 import { ellipseAddress } from "@/utils/convert";
+import { getNfdProfileUrl } from "@/utils/nfd";
 import { Cell, flexRender, Row, Table } from "@tanstack/react-table";
 
 import { StakeListItem } from "./stakeList.utils";
@@ -27,16 +30,27 @@ const StakeListItemMobile = ({ className, row }: { className?: string; row: Row<
       <div className="flex items-center justify-between">
         <div>
           <div className="flex gap-1">
-            <div className="text-sm">Node Runner Name:</div>
+            <div className="text-sm">Node Runner:</div>
             <div className="text-sm text-secondary">{ellipseAddress(cells.name.getValue() as string)}</div>
           </div>
+          {row.original.nfd && (
+            <div className="flex gap-1">
+              <div className="text-sm">More Info:</div>
+              <LinkExt
+                href={getNfdProfileUrl(row.original.nfd.name)}
+                children={row.original.nfd.name}
+                className={"text-sm text-secondary"}
+              />
+            </div>
+          )}
           <div className="flex gap-1">
             <div className="text-sm">Ad Id:</div>
             <div className="text-sm text-secondary">{renderCell("adId")}</div>
+            <ValTooltip relation={row.original.nodeRelation} className="ml-2" />
           </div>
         </div>
         <div>
-          <IdenticonAvatar value={cells.name.getValue() as string} />
+          <Avatar address={row.original.name} nfd={row.original.nfd} className="h-10 w-10" />
         </div>
       </div>
       <Separator className="mb-3 mt-2 bg-border" />

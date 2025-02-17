@@ -3,6 +3,21 @@
 Below is a summary of changes per Valar Daemon version (newest at the top).
 
 
+## v0.3.2
+
+- None (propagating to version release).
+
+
+## v0.3.2-rc2
+
+- Added expiry notification issuing - notify delegator manager of an imminent contract expiry.
+
+
+## v0.3.2-rc1
+
+- Added systemd template/guide, corrected cron template/guide, and added Windows autorun instructions.
+
+
 ## v0.3.1
 
 - None (propagating to version release).

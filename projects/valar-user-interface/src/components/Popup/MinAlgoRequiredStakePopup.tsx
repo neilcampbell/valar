@@ -31,7 +31,7 @@ const MinAlgoRequiredStakePopup = () => {
     ) {
       setOpen(true);
     }
-  }, [user]);
+  }, [user?.userInfo, user?.beneficiary?.algo]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

@@ -1,13 +1,10 @@
+import { Buffer } from "buffer";
 import { ValidatorAdClient } from "@/contracts/ValidatorAd";
 import { bytesToStr, strToBytes } from "@/utils/convert";
-import {
-  ABIAddressType,
-  ABIArrayStaticType,
-  ABIByteType,
-  ABITupleType,
-  ABIUintType,
-} from "algosdk";
+import { ABIAddressType, ABIArrayStaticType, ABIByteType, ABITupleType, ABIUintType } from "algosdk";
 import AlgodClient from "algosdk/dist/types/client/v2/algod/algod";
+
+import { GlobalState, GlobalStateJSONConfig } from "./GlobalState";
 
 /**
  * =====================================
@@ -106,6 +103,7 @@ export class ValidatorAdGlobalState implements ValAdGlobalStateInterface {
 
   cntAsa: bigint;
 
+  // Constructor
   constructor({
     appId,
     noticeboardAppId,
@@ -150,10 +148,80 @@ export class ValidatorAdGlobalState implements ValAdGlobalStateInterface {
     this.cntAsa = cntAsa;
   }
 
-  static async getGlobalState(
-    algodClient: AlgodClient,
-    valAppID: bigint,
-  ): Promise<ValidatorAdGlobalState | undefined> {
+  // JSON Config
+  private static readonly jsonConfig: GlobalStateJSONConfig<ValAdGlobalStateInterface> = {
+    noticeboard_app_id: {
+      fieldName: "noticeboardAppId",
+      getValue: (v) => BigInt(v.uint),
+    },
+    T: {
+      fieldName: "termsTime",
+      getValue: (v) => ValTermsTiming.decodeBytes(Buffer.from(v.bytes, "base64")),
+    },
+    P: {
+      fieldName: "termsPrice",
+      getValue: (v) => ValTermsPricing.decodeBytes(Buffer.from(v.bytes, "base64")),
+    },
+    S: {
+      fieldName: "termsStake",
+      getValue: (v) => ValTermsStakeLimits.decodeBytes(Buffer.from(v.bytes, "base64")),
+    },
+    G: {
+      fieldName: "termsReqs",
+      getValue: (v) => ValTermsGating.decodeBytes(Buffer.from(v.bytes, "base64")),
+    },
+    W: {
+      fieldName: "termsWarn",
+      getValue: (v) => ValTermsWarnings.decodeBytes(Buffer.from(v.bytes, "base64")),
+    },
+    V: {
+      fieldName: "valInfo",
+      getValue: (v) => ValSelfDisclosure.decodeBytes(Buffer.from(v.bytes, "base64")),
+    },
+    val_owner: {
+      fieldName: "valOwner",
+      getValue: (v) => new ABIAddressType().decode(Buffer.from(v.bytes, "base64")),
+    },
+    val_manager: {
+      fieldName: "valManager",
+      getValue: (v) => new ABIAddressType().decode(Buffer.from(v.bytes, "base64")),
+    },
+    state: {
+      fieldName: "state",
+      getValue: (v) => Buffer.from(v.bytes, "base64"),
+    },
+    cnt_del: {
+      fieldName: "cntDel",
+      getValue: (v) => BigInt(v.uint),
+    },
+    cnt_del_max: {
+      fieldName: "cntDelMax",
+      getValue: (v) => BigInt(v.uint),
+    },
+    del_app_list: {
+      fieldName: "delAppList",
+      getValue: (v) => DelAppList.decodeBytes(Buffer.from(v.bytes, "base64")),
+    },
+    tc_sha256: {
+      fieldName: "tcSha256",
+      getValue: (v) => Buffer.from(v.bytes, "base64"),
+    },
+    total_algo_earned: {
+      fieldName: "totalAlgoEarned",
+      getValue: (v) => BigInt(v.uint),
+    },
+    total_algo_fees_generated: {
+      fieldName: "totalAlgoFeesGenerated",
+      getValue: (v) => BigInt(v.uint),
+    },
+    cnt_asa: {
+      fieldName: "cntAsa",
+      getValue: (v) => BigInt(v.uint),
+    },
+  };
+
+  // Fetch Global State
+  static async getGlobalState(algodClient: AlgodClient, valAppID: bigint): Promise<ValidatorAdGlobalState | undefined> {
     try {
       const valClient = new ValidatorAdClient(
         {
@@ -162,7 +230,7 @@ export class ValidatorAdGlobalState implements ValAdGlobalStateInterface {
         },
         algodClient,
       );
-      
+
       const gs = await valClient.getGlobalState();
 
       return new ValidatorAdGlobalState({
@@ -187,6 +255,27 @@ export class ValidatorAdGlobalState implements ValAdGlobalStateInterface {
         totalAlgoFeesGenerated: gs.totalAlgoFeesGenerated!.asBigInt(),
         cntAsa: gs.cntAsa!.asBigInt(),
       });
+    } catch (err) {
+      console.log(err);
+      return undefined;
+    }
+  }
+
+  // Fetch Global State from JSON
+  static getGlobalStateFromJson(json: any): ValidatorAdGlobalState | undefined {
+    try {
+      const appId = BigInt(json["id"]);
+
+      if (!json["params"]?.["global-state"]) {
+        throw new Error("Invalid JSON structure: missing params.global-state");
+      }
+
+      const rawGlobalState = GlobalState.getRawGlobalStateFromJSON(
+        json["params"]["global-state"],
+        ValidatorAdGlobalState.jsonConfig,
+      );
+
+      return new ValidatorAdGlobalState({ ...rawGlobalState, appId } as ValAdGlobalStateInterface);
     } catch (err) {
       console.log(err);
       return undefined;
@@ -257,13 +346,7 @@ export class ValTermsTiming implements ValTermsTimingInterface {
     roundsDurationMax,
     roundMaxEnd,
   }: ValTermsTiming | ValTermsTimingInterface): ValTermsTimingArray {
-    return [
-      roundsSetup,
-      roundsConfirm,
-      roundsDurationMin,
-      roundsDurationMax,
-      roundMaxEnd,
-    ];
+    return [roundsSetup, roundsConfirm, roundsDurationMin, roundsDurationMax, roundMaxEnd];
   }
 }
 
@@ -298,13 +381,7 @@ export class ValTermsPricing implements ValTermsPricingInterface {
     new ABIUintType(64), //Round Max End
   ]);
 
-  constructor({
-    commission,
-    feeAssetId,
-    feeRoundMin,
-    feeRoundVar,
-    feeSetup,
-  }: ValTermsPricingInterface) {
+  constructor({ commission, feeAssetId, feeRoundMin, feeRoundVar, feeSetup }: ValTermsPricingInterface) {
     this.commission = commission;
     this.feeRoundMin = feeRoundMin;
     this.feeSetup = feeSetup;
@@ -373,9 +450,7 @@ export class ValTermsStakeLimits implements ValTermsStakeLimitsInterface {
   static encodeArray({
     stakeMax,
     stakeGratis,
-  }:
-    | ValTermsStakeLimits
-    | ValTermsStakeLimitsInterface): ValTermsStakeLimitsArray {
+  }: ValTermsStakeLimits | ValTermsStakeLimitsInterface): ValTermsStakeLimitsArray {
     return [stakeMax, stakeGratis];
   }
 }
@@ -394,9 +469,7 @@ export type ValTermsGatingArray = [[[bigint, bigint], [bigint, bigint]]];
 export class ValTermsGating implements ValTermsGatingInterface {
   gatingAsaList: [[bigint, bigint], [bigint, bigint]];
 
-  static readonly abi = new ABITupleType([
-    new ABIArrayStaticType(new ABIArrayStaticType(new ABIUintType(64), 2), 2),
-  ]);
+  static readonly abi = new ABITupleType([new ABIArrayStaticType(new ABIArrayStaticType(new ABIUintType(64), 2), 2)]);
 
   constructor({ gatingAsaList }: ValTermsGatingInterface) {
     this.gatingAsaList = gatingAsaList;
@@ -471,13 +544,7 @@ export interface ValSelfDisclosureInterface {
   nodeVersion: string;
 }
 
-export type ValSelfDisclosureArray = [
-  Uint8Array,
-  Uint8Array,
-  Uint8Array,
-  bigint,
-  Uint8Array,
-];
+export type ValSelfDisclosureArray = [Uint8Array, Uint8Array, Uint8Array, bigint, Uint8Array];
 
 export class ValSelfDisclosure implements ValSelfDisclosureInterface {
   name: string;
@@ -494,13 +561,7 @@ export class ValSelfDisclosure implements ValSelfDisclosureInterface {
     new ABIArrayStaticType(new ABIByteType(), 20), // nodeVersion
   ]);
 
-  constructor({
-    name,
-    https,
-    countryCode,
-    hwCat,
-    nodeVersion,
-  }: ValSelfDisclosureInterface) {
+  constructor({ name, https, countryCode, hwCat, nodeVersion }: ValSelfDisclosureInterface) {
     this.name = name;
     this.https = https;
     this.countryCode = countryCode;
@@ -523,13 +584,7 @@ export class ValSelfDisclosure implements ValSelfDisclosureInterface {
   static encodeArray(data: ValSelfDisclosure): ValSelfDisclosureArray {
     const { name, https, countryCode, hwCat, nodeVersion } = data;
 
-    return [
-      strToBytes(name),
-      strToBytes(https),
-      strToBytes(countryCode),
-      hwCat,
-      strToBytes(nodeVersion),
-    ];
+    return [strToBytes(name), strToBytes(https), strToBytes(countryCode), hwCat, strToBytes(nodeVersion)];
   }
 }
 

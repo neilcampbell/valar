@@ -1,5 +1,7 @@
 import { FolksFinance } from "@/api/contract/galgo/helpers";
+import { DelegatorQuery } from "@/api/queries/delegator-contracts";
 import { UserQuery } from "@/api/queries/user";
+import { ValidatorQuery } from "@/api/queries/validator-ads";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,12 +12,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MBR_ACCOUNT, MIN_ALGO_STAKE_FOR_REWARDS } from "@/constants/smart-contracts";
+import { MBR_ACCOUNT, MIN_ALGO_STAKE_FOR_REWARDS, ROLE_DEL_STR, ROLE_VAL_STR } from "@/constants/smart-contracts";
 import { useAppGlobalState } from "@/contexts/AppGlobalStateContext";
 import { UserInfo } from "@/interfaces/contracts/User";
 import { cn } from "@/lib/shadcn-utils";
 import useUserStore, { AccountInfo } from "@/store/userStore";
-import { ellipseAddress } from "@/utils/convert";
+import { bytesToStr, ellipseAddress } from "@/utils/convert";
 import { useWallet } from "@txnlab/use-wallet-react";
 import { LogOut } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -35,7 +37,7 @@ export const Wallet = ({
 }) => {
   const { activeAddress, wallets, activeWallet, activeAccount, activeWalletAccounts } = useWallet();
   const { user, setUser } = useUserStore();
-  const { algorandClient } = useAppGlobalState();
+  const { algorandClient, setRenewDelCo } = useAppGlobalState();
   const algodClient = algorandClient.client.algod;
   const [open, onOpenChange] = useState<boolean | undefined>(undefined);
 
@@ -46,6 +48,18 @@ export const Wallet = ({
       if (activeAddress) {
         try {
           const userInfo = await UserInfo.getUserInfo(algodClient, activeAddress);
+
+          let userApps = undefined;
+          if (userInfo?.role) {
+            if (bytesToStr(userInfo.role) === ROLE_VAL_STR) {
+              userApps = await ValidatorQuery.fetchValOwnerAds(algodClient, userInfo);
+            } else if (bytesToStr(userInfo.role) === ROLE_DEL_STR) {
+              const delAppIds: bigint[] = [...userInfo.appIds.filter((id) => id != 0n)];
+              userApps = await DelegatorQuery.fetchDelegatorContracts(algodClient, delAppIds);
+            } else {
+              console.error("Unexpected role.");
+            }
+          }
 
           const account = await UserQuery.getAccountInfo(algodClient, activeAddress);
 
@@ -73,9 +87,13 @@ export const Wallet = ({
           setUser({
             ...account,
             userInfo: userInfo,
+            userApps: userApps,
             beneficiary: beneficiary,
             galgo: galgoAccount,
           });
+
+          // When new address is connected, reset any contract renewal that's in progress
+          setRenewDelCo(undefined);
         } catch (error) {
           console.error("Error in fetching user:", error);
         }

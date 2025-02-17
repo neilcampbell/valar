@@ -107,7 +107,7 @@ removed_ended_or_deleted_delco:
   level: 10
   module: Daemon
   description: >
-    Inidcates the daemon is checking the status of the delegator contracts connected to the validator ads.
+    Indicates the daemon is checking the status of the delegator contracts connected to the validator ads.
   action: >
     NA.Daemon
   message: >
@@ -237,6 +237,7 @@ logicerror_partkeys_not_submitted:
   description: >
     The daemon still has time to submit the participation keys (self-report unsuccessful).
     This report is done in order to remove delegator contracts which can no longer be serviced, making way for new ones.
+    This error message is typical for localnet deployments.
   action: >
     NA.
   message: >
@@ -248,6 +249,7 @@ httperror_partkeys_not_submitted:
   description: >
     The daemon still has time to submit the participation keys (self-report unsuccessful).
     This report is done in order to remove delegator contracts which can no longer be serviced, making way for new ones.
+    This error message is typical for public network deployments.
   action: >
     NA.
   message: >
@@ -417,6 +419,51 @@ httperror_contract_expired:
     NA.
   message: >
     Tried calling expired for delco with ID {app_id}.
+
+delco_expires_soon:
+  level: 20
+  module: Daemon
+  description: >
+    Indicates that a notification about an imminent expiry of the delegator contract was sent. 
+  action: >
+    NA.
+  message: >
+    Sent expires soon notification for delco with ID {app_id}.
+
+attributeerror_delco_expires_soon:
+  level: 40
+  module: Daemon
+  description: >
+    Received AttributeError while trying to issue delegator contract expiry notification. 
+    This is likely the result of a problem with algod, such as a wrong URL or an interrupted internet connection.
+  action: >
+    Check algod configuration and status; verify the network is accessible.
+  message: >
+    Cannot issue expiry notification for delco with ID {app_id}.
+
+logicerror_delco_expires_soon:
+  level: 10
+  module: Daemon
+  description: >
+    Tried to issue delegator contract expiry notification without success. 
+    The delegator contract is still active and the expiry is not imminent.
+    This error message is typical for localnet deployments.
+  action: >
+    NA.
+  message: >
+    Tried to issue expiry notification for delco with ID {app_id}.
+
+httperror_delco_expires_soon:
+  level: 10
+  module: Daemon
+  description: >
+    Tried to issue delegator contract expiry notification without success. 
+    The delegator contract is still active and the expiry is not imminent.
+    This error message is typical for public deployments.
+  action: >
+    NA.
+  message: >
+    Tried to issue expiry notification for delco with ID {app_id}.
 
 gating_or_stake_limit_breached:
   level: 20

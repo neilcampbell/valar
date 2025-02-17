@@ -6,8 +6,7 @@ import { NoticeboardGlobalState } from "@/interfaces/contracts/Noticeboard";
 import { PartnerInfo } from "@/interfaces/contracts/Partners";
 import { UserInfo } from "@/interfaces/contracts/User";
 import { ValidatorAdGlobalState } from "@/interfaces/contracts/ValidatorAd";
-import { KeyRegParams } from "@/lib/types";
-import { AccountInfo, User } from "@/store/userStore";
+import { User } from "@/store/userStore";
 import { DelegatorApiBuilder } from "@/utils/api-builder/DelegatorApiBuilder";
 import { bytesToHex, bytesToStr, strToBytes } from "@/utils/convert";
 import { TxnParams } from "@/utils/txn-params";
@@ -601,4 +600,180 @@ export class DelegatorApiCall {
 
     return res;
   }
+
+  /**
+   * ================================
+   *         Contract Renew
+   * ================================
+   */
+  static async contractRenew({
+    algorandClient,
+    noticeBoardClient,
+    gsNoticeBoard,
+    gsValAdOld,
+    gsValAdNew,
+    gsDelCo,
+    user,
+    maxStake,
+    duration,
+    delBeneficiary,
+    partner,
+    delUserInfo,
+    signer,
+  }: {
+    algorandClient: AlgorandClient;
+    noticeBoardClient: NoticeboardClient;
+    gsNoticeBoard: NoticeboardGlobalState;
+    gsValAdOld: ValidatorAdGlobalState;
+    gsValAdNew: ValidatorAdGlobalState;
+    gsDelCo: DelegatorContractGlobalState;
+    user: User;
+    maxStake: bigint;
+    duration: bigint;
+    delBeneficiary: string;
+    partner?: PartnerInfo;
+    delUserInfo: UserInfo;
+    signer: TransactionSigner;
+  }) {
+
+    const ntc = noticeBoardClient.compose();
+
+    // Withdraw from current contract
+    const {
+      delAppId,
+      valAppId,
+      delAppIdx,
+      valAppIdx,
+      valOwner,
+      foreignAssets,
+      foreignAccounts,
+      txns,
+      boxesContractWithdraw,
+      txnParams,
+    } = await DelegatorApiBuilder.contractWithdraw({
+      algorandClient,
+      gsValAd: gsValAdOld,
+      gsDelCo,
+      user,
+      signer,
+    });
+
+    txns.forEach((txn) => {
+      ntc.addTransaction({
+        txn,
+        signer,
+      });
+    });
+
+    ntc.contractWithdraw(
+      {
+        delApp: delAppId,
+        delAppIdx,
+        valOwner,
+        valApp: valAppId,
+        valAppIdx,
+      },
+      {
+        sender: {
+          addr: user.address,
+          signer,
+        },
+        boxes: boxesContractWithdraw,
+        assets: foreignAssets,
+        accounts: foreignAccounts,
+        sendParams: { fee: microAlgos(txnParams.fee) },
+      },
+    );
+
+    // Delete current contract
+    const txnParamsDelete = await TxnParams.setTxnFees(6, true);
+    ntc.contractDelete(
+      {
+        delApp: delAppId,
+        valApp: valAppId,
+        valOwner,
+        delAppIdx,
+        valAppIdx,
+      },
+      {
+        sender: {
+          addr: user.address,
+          signer,
+        },
+        sendParams: { fee: microAlgos(txnParamsDelete.fee) },
+      },
+    );
+
+    // Create new contract
+    const {
+      tcSha256,
+      foreignApps: foreignAppsNew,
+      foreignAssets: foreignAssetsNew,
+      foreignAccounts: foreignAccountsNew,
+      valAppId: valAppIdNew,
+      valAppIdx: valAppIdxNew,
+      delAppIdx: delAppIdxNew,
+      valOwner: valOwnerNew,
+      partnerAddress,
+      boxesDel_ValAd,
+      boxesContractCreate,
+      txnParams: txnParamsNew,
+      mbrTxn,
+      feeTxn,
+    } = await DelegatorApiBuilder.contractCreate({
+      algorandClient,
+      gsNoticeBoard,
+      gsValidatorAd: gsValAdNew,
+      userAddress: user.address,
+      partner,
+      delUserInfo,
+      stakeMax: maxStake,
+      roundsDuration: duration,
+      delBeneficiary,
+      signer,
+    });
+
+    ntc.gas(
+      {},
+      {
+        sender: {
+          addr: user.address,
+          signer,
+        },
+        boxes: boxesDel_ValAd,
+        assets: foreignAssetsNew,
+        apps: foreignAppsNew,
+      },
+    )
+    .contractCreate(
+      {
+        delBeneficiary: delBeneficiary,
+        roundsDuration: duration,
+        stakeMax: maxStake,
+        valOwner: valOwnerNew,
+        valApp: valAppIdNew,
+        valAppIdx: valAppIdxNew,
+        delAppIdx: delAppIdxNew,
+        tcSha256,
+        partnerAddress,
+        mbrTxn,
+        txn: feeTxn,
+      },
+      {
+        sender: {
+          addr: user.address,
+          signer,
+        },
+        boxes: boxesContractCreate,
+        assets: foreignAssetsNew,
+        accounts: foreignAccountsNew,
+        sendParams: { fee: microAlgos(txnParamsNew.fee) },
+      },
+    );
+
+    const res = await ntc.execute();
+
+    return res;
+  }
+
 }

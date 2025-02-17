@@ -1,6 +1,6 @@
 import { cn } from "@/lib/shadcn-utils";
 import { cva } from "class-variance-authority";
-import { Check, Info, Italic, X } from "lucide-react";
+import { Check, Info, X } from "lucide-react";
 import { ExternalToast, toast } from "sonner";
 
 const notificationVariants = cva("w-[22rem] rounded-lg p-4", {
@@ -23,6 +23,7 @@ export function notify({
   title,
   description,
   variant = "success",
+  duration,
   onMountEffect,
   onMountDismiss,
   ...rest
@@ -30,6 +31,7 @@ export function notify({
   title: string;
   description?: string;
   variant?: "success" | "error" | "info";
+  duration?: number;
   onMountEffect?: () => void;
   onMountDismiss?: string[];
 } & ExternalToast) {
@@ -47,7 +49,7 @@ export function notify({
         </div>
       </div>
     ),
-    { ...rest },
+    { duration, ...rest },
   );
 
   if (onMountEffect) onMountEffect();

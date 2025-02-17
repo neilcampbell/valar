@@ -8,6 +8,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useAppGlobalState } from "@/contexts/AppGlobalStateContext";
 import { DelCoDrawerProvider } from "@/contexts/DelCoDrawerContext";
 import { StakeReqs } from "@/lib/types";
 import { X } from "lucide-react";
@@ -25,6 +26,10 @@ const DelCoDrawer: React.FC<
   } & DialogProps
 > = ({ delAppId, valAppId, stakeReqs, canStake, ...props }) => {
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
+  const { renewDelCo } = useAppGlobalState();
+
+  //Boolean flag
+  const isRenewing = !!renewDelCo;
 
   return (
     <DelCoDrawerProvider
@@ -39,7 +44,7 @@ const DelCoDrawer: React.FC<
         <DrawerTrigger asChild>
           {!delAppId ? (
             <Button variant={canStake ? "v_primary" : "v_outline"} className="w-full">
-              {canStake ? "Stake" : "View"}
+              {canStake ? (isRenewing ? "Renew" : "Stake") : "View"}
             </Button>
           ) : (
             <div>

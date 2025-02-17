@@ -27,6 +27,21 @@ DELCO_READY_STATUS_PENDING          =  1
 DELCO_READY_STATUS_SUBMITTED        =  2
 
 """
+Delegator contract live sub-state constants, indicating:
+
+EXPIRED         - Contract has expired.
+EXPIRES_SOON    - Contract is expiring soon.
+BREACH_LIMITS   - Limits breached.
+BREACH_PAY      - Payment breached.
+NO_CHANGE       - Nothing to do, all good.
+"""
+DELCO_LIVE_STATUS_EXPIRED           = -4
+DELCO_LIVE_STATUS_EXPIRES_SOON      = -3
+DELCO_LIVE_STATUS_BREACH_LIMITS     = -2
+DELCO_LIVE_STATUS_BREACH_PAY        = -1
+DELCO_LIVE_STATUS_NO_CHANGE         =  0
+
+"""
 Validator ad not ready sub-state constants, indicating:
 
 VALAD_NOT_READY_STATUS_NO_CHANGE        - No change needed, no error recorded.

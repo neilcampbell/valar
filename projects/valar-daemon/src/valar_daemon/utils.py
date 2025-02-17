@@ -1127,3 +1127,75 @@ def report_delben_breach_limits(
             boxes=boxes,
         ),
     ).execute()
+
+
+def report_contract_expiry_soon(
+    algorand_client: AlgorandClient,
+    valown_address: str,
+    delman_address: str,
+    valad_id: int,
+    delco_id: int,
+    valman: AddressAndSigner,
+    noticeboard_client: NoticeboardClient
+) -> ABITransactionResponse[None]:
+    """Report to the delegator manager that the delegator contract is about to expire.
+
+    Parameters
+    ----------
+    algorand_client : AlgorandClient
+        Algorand client.
+    valown_address : str
+        Validator ad owner address.
+    delman_address : str
+        Delegator manager address.
+    valad_id : int
+        Validator ad app id.
+    delco_id : int
+        Delegator contract app id.
+    valman : AddressAndSigner
+        Validator manager address and signer.
+    noticeboard_client : NoticeboardClient
+        Noticeboard client.
+
+    Returns
+    -------
+    ABITransactionResponse[None]
+    """        
+    boxes = valown_and_delman_boxes(
+        valown_address=valown_address,
+        delman_address=delman_address
+    )
+
+    val_app_idx, del_app_idx = get_val_and_del_app_idx(
+        algorand_client=algorand_client,
+        noticeboard_app_id=noticeboard_client.app_id,
+        valown_address=valown_address,
+        delman_address=delman_address,
+        valad_id=valad_id,
+        delco_id=delco_id
+    )
+
+    # Add delegator manager account to the foreign account array
+    foreign_accounts = [delman_address]
+
+    # Increase fee for forwarding the call to validator ad (1), and delegator contract (1),
+    # as well as for (potential) notification message (1), and the app call (1).
+    sp = algorand_client.client.algod.suggested_params()
+    sp.fee = 4 * sp.min_fee
+    sp.flat_fee = True
+
+    return noticeboard_client.contract_report_expiry_soon(
+        del_manager=delman_address,
+        del_app=delco_id,
+        del_app_idx=del_app_idx,
+        val_owner=valown_address,
+        val_app=valad_id,
+        val_app_idx=val_app_idx,
+        transaction_parameters = TransactionParameters(
+            sender = valman.address,
+            signer = valman.signer,
+            suggested_params=sp,
+            accounts=foreign_accounts,
+            boxes=boxes,
+        ),
+    )

@@ -34,7 +34,7 @@ export class UserQuery {
     address: string,
   ): Promise<AccountInfo> {
     const res = await algodClient.accountInformation(address).do();
-    const algo: bigint = res["amount"];
+    const algo = BigInt(res["amount"]);
     const assets = new Map<bigint, bigint>();
     assets.set(ASA_ID_ALGO, algo);
     res["assets"].forEach(

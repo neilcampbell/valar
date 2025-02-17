@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 
 import ArchiveContractButton from "./ContractActions/ArchiveContractButton";
 import ConfirmSetupButton from "./ContractActions/ConfirmSetupButton";
-import ExtendContractButton from "./ContractActions/ExtendContractButton";
+import RenewContractButton from "./ContractActions/RenewContractButton";
 import WithdrawContractButton from "./ContractActions/WithdrawContractButton";
 import { DelCoSummary, getDelCoSummary } from "./utils";
 
@@ -163,7 +163,7 @@ const ContractActiveCard: React.FC<{ className?: string }> = ({ className }) => 
           {bytesToStr(gsDelCo!.stateCur) === bytesToStr(DC_STATE_LIVE) && (
             <>
               <WithdrawContractButton delAppId={gsDelCo!.appId} />
-              {/* <ExtendContractButton /> */}
+              <RenewContractButton valAppId={gsDelCo!.validatorAdAppId} />
             </>
           )}
           {(bytesToStr(gsDelCo!.stateCur) === bytesToStr(DC_STATE_READY) ||

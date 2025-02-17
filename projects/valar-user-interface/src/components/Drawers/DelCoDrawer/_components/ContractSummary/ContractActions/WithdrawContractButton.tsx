@@ -59,7 +59,7 @@ const WithdrawContractButton = ({ delAppId }: { delAppId: bigint }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant={"v_outline"} className="w-full text-sm">
+        <Button variant={"v_outline"} className="w-1/2 text-sm">
           Withdraw from Contract
         </Button>
       </DialogTrigger>

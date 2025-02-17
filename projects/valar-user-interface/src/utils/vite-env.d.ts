@@ -30,6 +30,8 @@ interface ImportMetaEnv {
   readonly VITE_EXPLORER_APPLICATION_URL: string
 
   readonly VITE_RETI_URL: string
+  
+  readonly VITE_GOVERNANCE_URL: string
 }
 
 interface ImportMeta {
