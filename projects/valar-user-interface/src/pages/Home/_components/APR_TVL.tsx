@@ -10,7 +10,7 @@ const APR_TVL = () => {
     <div className="flex">
       <div>
         <h1 className="text-lg lg:text-3xl font-bold">{stakingData ? (stakingData.apy.toFixed(APY_DECIMALS) + "%") : "N/A"}</h1>
-        <p className="text-sm lg:text-xl font-semibold">APY</p>
+        <p className="text-sm lg:text-xl font-semibold">Yearly Reward Rate</p>
       </div>
       <Separator className="mx-6" orientation={"vertical"} />
       <div>
