@@ -932,8 +932,12 @@ const AlgorandFAQs: FAQ[] = [
     ques: "How to become a node runner?",
     ans: (
       <span>
-        See our detailed guide on how to become a node runner and offer your node running services via Valar.
-
+        See our <LinkExt
+          href={"/learn-node"}
+          children={"guide"}
+          className={"text-secondary"}
+        /> {" "}
+        on how to become a node runner and offer your node running services via Valar.
       </span>
     ),
   },
