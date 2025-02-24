@@ -1199,3 +1199,95 @@ def report_contract_expiry_soon(
             boxes=boxes,
         ),
     )
+
+
+def claim_used_up_operational_fee(
+    algorand_client: AlgorandClient,
+    valown_address: str,
+    delman_address: str,
+    partner_address: str,
+    valad_id: int,
+    delco_id: int,
+    fee_asset_id: int,
+    valman: AddressAndSigner,
+    noticeboard_client: NoticeboardClient
+) -> ABITransactionResponse[None]:
+    """Transfer used up operational fee from delegator contract to the corresponding validator ad.
+
+    Notes
+    -----
+    Automatically deducts commission and transfers it to the noticeboard and partner (if applicable).
+
+    Parameters
+    ----------
+    algorand_client : AlgorandClient
+        Algorand client.
+    valown_address : str
+        Validator ad owner address.
+    delman_address : str
+        Delegator manager address.
+    partner_address : str
+        Address of partner for commissions.
+    valad_id : int
+        Validator ad app id.
+    delco_id : int
+        Delegator contract app id.
+    fee_asset_id : int
+        ID of the asset user for payments.
+    valman : AddressAndSigner
+        Validator manager address and signer.
+    noticeboard_client : NoticeboardClient
+        Noticeboard client.
+
+    Returns
+    -------
+    ABITransactionResponse[None]
+    """        
+    boxes = valown_and_delman_boxes(
+        valown_address=valown_address,
+        delman_address=delman_address
+    )
+
+    val_app_idx, del_app_idx = get_val_and_del_app_idx(
+        algorand_client=algorand_client,
+        noticeboard_app_id=noticeboard_client.app_id,
+        valown_address=valown_address,
+        delman_address=delman_address,
+        valad_id=valad_id,
+        delco_id=delco_id
+    )
+
+    # Add asset to the foreign asset array and box array
+    if fee_asset_id != ALGO_ASA_ID:
+        foreign_assets = [fee_asset_id]
+        boxes_asset = [(valad_id, BOX_ASA_KEY_PREFIX + fee_asset_id.to_bytes(8, byteorder="big"))]
+        boxes += boxes_asset
+    else:
+        foreign_assets = None
+
+    # Add foreign addresses (add manager even if equal to beneficiary)
+    foreign_accounts = [partner_address, delman_address]
+
+    # Increase fee for forwarding the call to validator ad (1) and then delegator contract (1),
+    # as well as for (potential) distribution of earnings (2),
+    # and (potential) payout of partner fee (1).
+    sp = algorand_client.client.algod.suggested_params()
+    sp.fee = 6 * sp.min_fee
+    sp.flat_fee = True
+
+    return noticeboard_client.contract_claim(
+        del_manager=delman_address,
+        del_app=delco_id,
+        del_app_idx=del_app_idx,
+        val_owner=valown_address,
+        val_app=valad_id,
+        val_app_idx=val_app_idx,
+        transaction_parameters = TransactionParameters(
+            sender = valman.address,
+            signer = valman.signer,
+            suggested_params=sp,
+            foreign_assets=foreign_assets,
+            accounts=foreign_accounts,
+            boxes=boxes,
+        ),
+    )

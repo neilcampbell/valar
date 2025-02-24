@@ -2,6 +2,7 @@
 """
 import time
 import threading
+from pathlib import Path
 from typing import List, Tuple
 
 from algokit_utils.beta.composer import PayParams
@@ -670,3 +671,66 @@ def get_existing_partkey_parameters(
             ]):
                 return entry
     return None
+
+
+### Daemon config setup ###############################################################################################
+
+"""Values used for populating the daemon config file. 
+Reasonable and localnet values by default, as these are used for local testing.
+"""
+default_config_params = {
+    "validator_ad_id_list": [9999, 8888, 7777],
+    "validator_manager_mnemonic": "xyz xyz xyz xyz xyz xyz xyz xyz xyz xyz xyz xyz xyz xyz xyz xyz xyz xyz xyz xyz xyz xyz xyz xyz xyz",
+    "algod_config_server": "http://localhost:4001",
+    "algod_config_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "loop_period_s": 15,
+    "claim_period_s": 10800,
+    "claim_period_h": 3,
+    "max_log_file_size_B": 40*1024,
+    "num_of_log_files_per_level": 3
+}
+
+def create_daemon_config_file(
+    config_path: str | Path,
+    config_filename: Path,
+    config_params: dict,
+    include_claim_period: bool=True
+) -> None:
+    """Make config string and write it to a file.
+
+    Parameters
+    ----------
+    config_path : str | Path
+        Path to the config file.
+    config_filename : Path
+        Name of the config file.
+    include_claim_period : bool, optional
+        Indication whether to include the claim period in the config, by default True
+    """
+    config_content_string = '\n' + \
+    '[validator_config] #####################################################################################################' + '\n' + \
+    '\n' + \
+    f'validator_ad_id_list = {config_params["validator_ad_id_list"]}' + '\n' + \
+    f'validator_manager_mnemonic = {config_params["validator_manager_mnemonic"]}' + '\n' + \
+    '\n\n' + \
+    '[algo_client_config] ###################################################################################################' + '\n' + \
+    '\n' + \
+    f'algod_config_server = {config_params["algod_config_server"]}' + '\n' + \
+    f'algod_config_token = {config_params["algod_config_token"]}' + '\n' + \
+    '\n\n' + \
+    '[logging_config] #######################################################################################################' + '\n' + \
+    '\n' + \
+    f'max_log_file_size_B = {config_params["max_log_file_size_B"]}' + '\n' \
+    f'num_of_log_files_per_level = {config_params["num_of_log_files_per_level"]}' + '\n' \
+    '\n\n' + \
+    '[runtime_config] #######################################################################################################' + '\n' + \
+    '\n' + \
+    f'loop_period_s = {config_params["loop_period_s"]}'
+    
+    if include_claim_period: 
+        config_content_string += '\n' + f'claim_period_h = {config_params["claim_period_h"]}' 
+        
+    config_content_string += '\n'
+
+    with open(Path(config_path, config_filename), 'w') as f:
+        f.write(config_content_string)

@@ -1,6 +1,6 @@
 # Log messages
 
-There are a total of 74 Valar Daemon log messages, listed below.
+There are a total of 81 Valar Daemon log messages, listed below.
 
 
 ## Level 10 (DEBUG)
@@ -208,6 +208,24 @@ Module: Daemon
 
 Message: Displays the sleep duration in seconds.
 
+**Calling claim operational fee for delco with ID {app_id}.**
+
+Module: Daemon
+
+Message: The daemon will call the function to claim the used up operational fee of a delegator contract in live state.
+
+**Trying to claim operational fee for delco with ID {app_id}.**
+
+Module: Daemon
+
+Message: The daemon will try to claim the used up operational fee of a delegator contract in live state.
+
+**Skipping claiming of operational fee for non-live delco with ID {app_id}.**
+
+Module: Daemon
+
+Message: The daemon will skip trying to claim the operational fee of a delegator contract that is not in live state.
+
 **Partkey generation request for address {address} and for rounds {vote_first_valid} to {vote_last_valid}.**
 
 Module: PartkeyManager
@@ -274,6 +292,12 @@ Message: The delegator beneficiary breached the terms regarding gating assets an
 Module: Daemon
 
 Message: Scheduled the deletion of the participation keys for ended or deleted delegator contract.
+
+**Claimed operational fee for delco with ID {app_id}.**
+
+Module: Daemon
+
+Message: The daemon has successfully claimed the used up operational fee of a delegator contract in live state.
 
 **Partkey generation started for address {address} and for rounds {vote_first_valid} to {vote_last_valid}.**
 
@@ -408,6 +432,24 @@ Message: Displays the uncaught error that has been recorded during contract main
 Module: Daemon
 
 Message: Displays the uncaught error that has been recorded during the participation key manager's refresh procedure.
+
+**Error when trying to claim operational fee, {e}.**
+
+Module: Daemon
+
+Message: Displays the uncaught error that has been recorded during the claiming of operational fees.
+
+**Cannot claim operational fee for delco with ID {app_id}.**
+
+Module: Daemon
+
+Message: The used up operational fee on the delegator contract cannot be claimed due to an attribute error. This is likely the result of a problem with algod, such as a wrong URL or an interrupted internet connection.
+
+**Error when trying to claim operational fee for delco with ID {app_id}, {e}.**
+
+Module: Daemon
+
+Message: The used up operational fee on the delegator contract cannot be claimed due to an unknown error.
 
 **App ID {app_id}, URLError {errno}: {strerror}.**
 

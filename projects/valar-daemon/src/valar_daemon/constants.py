@@ -48,10 +48,21 @@ VALAD_NOT_READY_STATUS_NO_CHANGE        - No change needed, no error recorded.
 VALAD_NOT_READY_STATUS_CHANGE_OK        - Switch from not ready to ready successful.
 VALAD_NOT_READY_STATUS_ATTRIBUTE_ERROR  - AttributeError during switch, likely due to broken algod connection.
 """
-VALAD_NOT_READY_STATUS_NO_CHANGE =  1
-VALAD_NOT_READY_STATUS_CHANGE_OK =  0
-VALAD_NOT_READY_STATUS_ATTRIBUTE_ERROR = -1
+VALAD_NOT_READY_STATUS_NO_CHANGE =           1
+VALAD_NOT_READY_STATUS_CHANGE_OK =           0
+VALAD_NOT_READY_STATUS_ATTRIBUTE_ERROR =    -1
 
+
+"""
+Claim validator earnings (and platform/partner commission) indicator:
+
+CLAIM_OPERATIONAL_FEE_ERROR        - An error was encountered (e.g., Algod offline).
+CLAIM_OPERATIONAL_FEE_SUCCESS      - Claimed successfully.
+CLAIM_OPERATIONAL_FEE_NOT_LIVE     - Delegator contract is not live - will not try to claim.
+"""
+CLAIM_OPERATIONAL_FEE_ERROR =      -1
+CLAIM_OPERATIONAL_FEE_SUCCESS =     0
+CLAIM_OPERATIONAL_FEE_NOT_LIVE =    1
 
 ### From the smart contracts
 

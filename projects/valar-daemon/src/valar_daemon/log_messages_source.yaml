@@ -693,6 +693,87 @@ could_not_sleep:
   message: >
     Could not sleep for {duration_s} s, {e}
 
+generic_claim_operational_fee_error:
+  level: 40
+  module: Daemon
+  description: >
+    Displays the uncaught error that has been recorded during the claiming of operational fees.
+  action: >
+    Contact the Valar team, sending the the log files, information about your system, and participation key info.
+  message: >
+    Error when trying to claim operational fee, {e}.
+
+attributeerror_claim_operational_fee:
+  level: 40
+  module: Daemon
+  description: >
+    The used up operational fee on the delegator contract cannot be claimed due to an attribute error.
+    This is likely the result of a problem with algod, such as a wrong URL or an interrupted internet connection.
+  action: >
+    Check algod configuration and status; verify the network is accessible.
+  message: >
+    Cannot claim operational fee for delco with ID {app_id}.
+
+unknownerror_claim_operational_fee:
+  level: 40
+  module: Daemon
+  description: >
+    The used up operational fee on the delegator contract cannot be claimed due to an unknown error.
+  action: >
+    Contact the Valar team, sending the app ID, the log files, and information about your system.
+  message: >
+    Error when trying to claim operational fee for delco with ID {app_id}, {e}.
+
+calling_claim_operational_fee:
+  level: 10
+  module: Daemon
+  description: >
+    The daemon will try to claim the used up operational fee of a delegator contract in live state.
+  action: >
+    NA.
+  message: >
+    Trying to claim operational fee for delco with ID {app_id}.
+
+calling_claim_operational_fee:
+  level: 10
+  module: Daemon
+  description: >
+    The daemon will call the function to claim the used up operational fee of a delegator contract in live state.
+  action: >
+    NA.
+  message: >
+    Calling claim operational fee for delco with ID {app_id}.
+
+trying_to_claim_operational_fee:
+  level: 10
+  module: Daemon
+  description: >
+    The daemon will try to claim the used up operational fee of a delegator contract in live state.
+  action: >
+    NA.
+  message: >
+    Trying to claim operational fee for delco with ID {app_id}.
+
+successfully_claimed_operational_fee:
+  level: 20
+  module: Daemon
+  description: >
+    The daemon has successfully claimed the used up operational fee of a delegator contract in live state.
+  action: >
+    NA.
+  message: >
+    Claimed operational fee for delco with ID {app_id}.
+
+will_not_claim_operational_fee_of_not_live:
+  level: 10
+  module: Daemon
+  description: >
+    The daemon will skip trying to claim the operational fee of a delegator contract that is not in live state.
+  action: >
+    NA.
+  message: >
+    Skipping claiming of operational fee for non-live delco with ID {app_id}.
+
 
 ########################################################################################################################
 ### AppWrapper #########################################################################################################
