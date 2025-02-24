@@ -53,6 +53,7 @@
         "strerror",
         "Struct",
         "taskkill",
+        "unknownerror",
         "urlerror",
         "valad",
         "valads",

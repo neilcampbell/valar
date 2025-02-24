@@ -3,6 +3,26 @@
 Below is a summary of changes per Valar Daemon version (newest at the top).
 
 
+## v0.4.0
+
+- None (propagating to version release).
+
+
+## v0.4.0-rc3
+
+- Added default time period to claiming of operational fee.
+
+
+## v0.4.0-rc2
+
+- Fixed iteration of delegator contracts in daemon.
+
+
+## v0.4.0-rc1
+
+- Added claiming of used up operational fee.
+
+
 ## v0.3.2
 
 - None (propagating to version release).

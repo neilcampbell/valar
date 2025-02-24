@@ -1002,6 +1002,71 @@ class Logger():
             self.log_messages["could_not_sleep"]["message"].format(duration_s=duration_s, e=e)
         )
 
+    def log_generic_claim_operational_fee_error(
+        self,
+        e: Exception
+    ):
+        self._log(
+            self.log_messages["generic_claim_operational_fee_error"]["level"],
+            self.log_messages["generic_claim_operational_fee_error"]["message"].format(e=e)
+        )
+
+    def log_attributeerror_claim_operational_fee(
+        self,
+        app_id: int
+    ):
+        self._log(
+            self.log_messages["attributeerror_claim_operational_fee"]["level"],
+            self.log_messages["attributeerror_claim_operational_fee"]["message"].format(app_id=app_id)
+        )
+
+    def log_unknownerror_claim_operational_fee(
+        self,
+        app_id: int,
+        e: Exception
+    ):
+        self._log(
+            self.log_messages["unknownerror_claim_operational_fee"]["level"],
+            self.log_messages["unknownerror_claim_operational_fee"]["message"].format(app_id=app_id, e=e)
+        )
+
+    def log_calling_claim_operational_fee(
+        self,
+        app_id: int
+    ):
+        self._log(
+            self.log_messages["calling_claim_operational_fee"]["level"],
+            self.log_messages["calling_claim_operational_fee"]["message"].format(app_id=app_id)
+        )
+
+    def log_trying_to_claim_operational_fee(
+        self,
+        app_id: int
+    ):
+        self._log(
+            self.log_messages["trying_to_claim_operational_fee"]["level"],
+            self.log_messages["trying_to_claim_operational_fee"]["message"].format(app_id=app_id)
+        )
+
+    def log_successfully_claimed_operational_fee(
+        self,
+        app_id: int
+    ):
+        self._log(
+            self.log_messages["successfully_claimed_operational_fee"]["level"],
+            self.log_messages["successfully_claimed_operational_fee"]["message"].format(app_id=app_id)
+        )
+
+    def log_will_not_claim_operational_fee_of_not_live(
+        self,
+        app_id: int
+    ):
+        self._log(
+            self.log_messages["will_not_claim_operational_fee_of_not_live"]["level"],
+            self.log_messages["will_not_claim_operational_fee_of_not_live"]["message"].format(app_id=app_id)
+        )
+
+
     ############################################################################
     ### AppWrapper #############################################################
     ############################################################################

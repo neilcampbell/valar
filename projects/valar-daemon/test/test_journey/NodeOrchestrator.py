@@ -2,13 +2,15 @@ import os
 import threading
 from typing import Tuple
 from pathlib import Path
+from copy import deepcopy
 # from multiprocessing import Process
 
 from algosdk import mnemonic
 from algokit_utils.beta.account_manager import AddressAndSigner
 
 from valar_daemon.Daemon import Daemon
-from valar_daemon.DaemonConfig import DaemonConfig
+
+from test.utils import default_config_params, create_daemon_config_file
 
 
 def prep_daemon_config(
@@ -40,23 +42,22 @@ def prep_daemon_config(
         config_path = Path(Path(__file__).parent, 'tmp')
         try: os.makedirs(str(config_path))
         except: pass
-    config_name = 'daemon.config'
-    # Initialize
-    daemon_config = DaemonConfig(
-        config_path,
-        config_name
-    )
+    config_filename = 'daemon.config'
     # Obtain manager mnemonic
     mne = mnemonic.from_private_key(valman.signer.private_key)
-    # Populate
-    daemon_config.update_config(
-        validator_ad_id_list=[valad_id],
-        validator_manager_mnemonic=mne,
-        loop_period_s=daemon_loop_period_s
+    # Populate ID list and manager mnemonic in default parameters
+    config_params = deepcopy(default_config_params) 
+    config_params['validator_ad_id_list']=[valad_id]
+    config_params['validator_manager_mnemonic']=mne
+    config_params['loop_period_s']=daemon_loop_period_s
+    # Write config
+    create_daemon_config_file(
+        config_path,
+        config_filename,
+        config_params,
+        True
     )
-    # Write to file
-    daemon_config.write_config()
-    return config_path, config_name
+    return config_path, config_filename
 
 
 class NodeOrchestrator():

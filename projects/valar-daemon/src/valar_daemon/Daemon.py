@@ -23,6 +23,7 @@ from valar_daemon.AppWrapper import ValadAppWrapperList, DelcoAppWrapperList, Va
 from valar_daemon.DaemonConfig import DaemonConfig
 from valar_daemon.PartkeyManager import PartkeyManager, PARTKEY_GENERATION_REQUEST_OK_ADDED
 from valar_daemon.Logger import Logger
+from valar_daemon.Timer import Timer
 from valar_daemon.utils import (
     get_algorand_client,
     set_valad_ready, 
@@ -32,7 +33,8 @@ from valar_daemon.utils import (
     report_unconfirmed_partkeys,
     report_contract_expired,
     report_delben_breach_limits,
-    report_contract_expiry_soon
+    report_contract_expiry_soon,
+    claim_used_up_operational_fee
 )
 from valar_daemon.constants import (
     VALAD_NOT_READY_STATUS_CHANGE_OK,
@@ -54,7 +56,10 @@ from valar_daemon.constants import (
     DELCO_LIVE_STATUS_EXPIRES_SOON,
     DELCO_LIVE_STATUS_BREACH_LIMITS,
     DELCO_LIVE_STATUS_BREACH_PAY,
-    DELCO_LIVE_STATUS_NO_CHANGE
+    DELCO_LIVE_STATUS_NO_CHANGE,
+    CLAIM_OPERATIONAL_FEE_ERROR,
+    CLAIM_OPERATIONAL_FEE_SUCCESS,
+    CLAIM_OPERATIONAL_FEE_NOT_LIVE
 ) 
 
 
@@ -80,7 +85,7 @@ class Daemon(object):
         self,
         log_path: str,
         config_path: str
-    ):
+    ) -> None:
         """Valar Daemon master class.
 
         Parameters
@@ -108,13 +113,14 @@ class Daemon(object):
         delco_app_list : DelcoAppWrapperList
             List of Delegator Contract and relevant info.
         """
+
         ### Read config ################################################################################################
         config_filename = Path(config_path).name
         self.daemon_config = DaemonConfig(
             Path(config_path).parent,
             config_filename
         )
-        self.daemon_config.read_config() # Read and load up config values.
+        config_read_warning = self.daemon_config.read_config() # Read and load up config values.
         self.daemon_config.create_swap() # In case of intermediate config reading, allow the user to edit the original.
 
         ### Initialize logger ##########################################################################################
@@ -123,6 +129,9 @@ class Daemon(object):
             log_max_size_bytes=self.daemon_config.max_log_file_size_B,
             log_file_count=self.daemon_config.num_of_log_files_per_level
         )
+        # Display config read warning if applicable (e.g. taking a default value, which was not found in the config).
+        if config_read_warning is not None:
+            self.logger.warning(config_read_warning)
 
         ### Configure client ###########################################################################################
         self.algorand_client = get_algorand_client(
@@ -166,6 +175,12 @@ class Daemon(object):
         self.partkey_manager.try_adding_generated_keys_to_buffer(
             self.delco_app_list.get_partkey_params_list()
         )
+
+        ### Set up claim timer #########################################################################################
+        self.claim_timer = Timer(
+            period_s=self.daemon_config.claim_period_s
+        )
+        self.claim_timer.reset_timer()
         
 
     @staticmethod
@@ -213,7 +228,7 @@ class Daemon(object):
 
     def maintain_valads(
         self
-    ):
+    ) -> None:
         """Maintain validator ads (try to change state from `NOT READY` to `READY` where applicable).
         """
         self.logger.log_maintaining_valads(num_of_valads=len(self.valad_app_list.get_app_list()))
@@ -270,7 +285,7 @@ class Daemon(object):
 
     def maintain_delcos(
         self
-    ):
+    ) -> None:
         """Maintain delegator contracts.
         """
         self.logger.log_maintaining_delcos(num_of_delcos=len(self.delco_app_list.get_app_list()))
@@ -294,13 +309,21 @@ class Daemon(object):
         delco_app: DelcoAppWrapper,
         partkey_manager: PartkeyManager,
         logger: Logger,
-    ):
+    ) -> None:
         """Maintain a single delegator contract.
 
         Parameters
         ----------
+        algorand_client : AlgorandClient
+            Algorand client.
+        valman : AddressAndSigner
+            Validator Ad manager.
         delco_app : DelcoAppWrapper
-            Delegator contract app wrapper.
+            Delegator Contract app wrapper.
+        partkey_manager : PartkeyManager
+            Participation key manager.
+        logger : Logger
+            Message logger.
         """
         try:
             delco_state = delco_app.state
@@ -354,12 +377,21 @@ class Daemon(object):
         delco_app: DelcoAppWrapper,
         partkey_manager: PartkeyManager,
         logger: Logger,
-    ):
+    ) -> int:
         """Handle a ready delegator contract (generate and submit keys).
 
         Parameters
         ----------
+        algorand_client : AlgorandClient
+            Algorand client.
+        valman : AddressAndSigner
+            Validator Ad manager.
         delco_app : DelcoAppWrapper
+            Delegator Contract app wrapper.
+        partkey_manager : PartkeyManager
+            Participation key manager.
+        logger : Logger
+            Message logger.
 
         Returns
         -------
@@ -485,12 +517,19 @@ class Daemon(object):
         valman: AddressAndSigner,
         delco_app: DelcoAppWrapper,
         logger: Logger,
-    ):
+    ) -> None:
         """Handle a delegator contract with submitted keys (report unconfirmed keys).
 
         Parameters
         ----------
+        algorand_client : AlgorandClient
+            Algorand client.
+        valman : AddressAndSigner
+            Validator Ad manager.
         delco_app : DelcoAppWrapper
+            Delegator Contract app wrapper.
+        logger : Logger
+            Message logger.
         """
         logger.debug(f'In submitted state handler for delco with ID {delco_app.app_id}.')
         try:
@@ -527,7 +566,14 @@ class Daemon(object):
 
         Parameters
         ----------
+        algorand_client : AlgorandClient
+            Algorand client.
+        valman : AddressAndSigner
+            Validator Ad manager.
         delco_app : DelcoAppWrapper
+            Delegator Contract app wrapper.
+        logger : Logger
+            Message logger.
 
         Returns
         -------
@@ -634,14 +680,19 @@ class Daemon(object):
         partkey_manager: PartkeyManager,
         delco_app: DelcoAppWrapper,
         logger: Logger,
-    ):
+    ) -> None:
         """Handle an ended delegator contract (delete partkeys).
 
         Parameters
         ----------
         algorand_client : AlgorandClient
-        partkey_manager : PartkeyManager
+            Algorand client.
+        valman : AddressAndSigner
+            Validator Ad manager.
         delco_app : DelcoAppWrapper
+            Delegator Contract app wrapper.
+        logger : Logger
+            Message logger.
         """
         # logger.debug(f'In ended state handler for delco with ID {delco_app.app_id}.')
         logger.log_delco_in_ended_handler(app_id=delco_app.app_id)
@@ -687,13 +738,19 @@ class Daemon(object):
         partkey_manager: PartkeyManager,
         delco_app: DelcoAppWrapper,
         logger: Logger,
-    ):
+    ) -> None:
         """Handle an ended delegator contract (delete partkeys).
 
         Parameters
         ----------
-        partkey_manager : PartkeyManager
+        algorand_client : AlgorandClient
+            Algorand client.
+        valman : AddressAndSigner
+            Validator Ad manager.
         delco_app : DelcoAppWrapper
+            Delegator Contract app wrapper.
+        logger : Logger
+            Message logger.
         """
         logger.log_delco_in_deleted_handler(app_id=delco_app.app_id)
         # Check if the partkey still exists (could be deleted at contract expiry or manually)
@@ -786,6 +843,71 @@ class Daemon(object):
         self.maintain_delcos()
 
 
+    @staticmethod
+    def claim_operational_fee_single_delco(
+        algorand_client: AlgorandClient,
+        valman: AddressAndSigner,
+        delco_app: DelcoAppWrapper,
+        logger: Logger,
+    ) -> int:
+        """Claim used up operational fee.
+
+        Parameters
+        ----------
+        algorand_client : AlgorandClient
+            Algorand client.
+        valman : AddressAndSigner
+            Validator Ad manager.
+        delco_app : DelcoAppWrapper
+            Delegator Contract app wrapper.
+        logger : Logger
+            Message logger.
+
+        Returns
+        -------
+        int
+            Indication of the executed logic.
+        """
+        # Try to claim only if in live state
+        if delco_app.state == DELCO_STATE_LIVE:
+            logger.log_trying_to_claim_operational_fee(app_id=delco_app.app_id)
+            try:
+                claim_used_up_operational_fee(
+                    algorand_client=algorand_client,
+                    valown_address=delco_app.valown_address,
+                    delman_address=delco_app.delman_address,
+                    partner_address=delco_app.partner_address,
+                    valad_id=delco_app.valad_id,
+                    delco_id=delco_app.app_id,
+                    fee_asset_id=delco_app.fee_asa_id,
+                    valman=valman,
+                    noticeboard_client=delco_app.notbd_client
+                )   
+                logger.log_successfully_claimed_operational_fee(app_id=delco_app.app_id)
+                return CLAIM_OPERATIONAL_FEE_SUCCESS
+            except AttributeError: # In case of Algod offline error.
+                logger.log_attributeerror_claim_operational_fee(app_id=delco_app.app_id)
+            except Exception as e: # Capture unknown error, i.e. other than above.
+                logger.log_unknownerror_claim_operational_fee(app_id=delco_app.app_id, e=e)
+            return CLAIM_OPERATIONAL_FEE_ERROR
+        else:
+            logger.log_will_not_claim_operational_fee_of_not_live(app_id=delco_app.app_id)
+            return CLAIM_OPERATIONAL_FEE_NOT_LIVE
+
+
+    def claim_operational_fee(self) -> None:
+        """Claim the used up operational fee for each Delegator Contract.
+        """
+        for delco_app in self.delco_app_list.get_app_list():
+            self.logger.log_calling_claim_operational_fee(app_id=delco_app.app_id)
+            self.claim_operational_fee_single_delco(
+                algorand_client=self.algorand_client,
+                valman=self.valman,
+                delco_app=delco_app,
+                logger=self.logger
+            )
+
+
     def run(
         self
     ) -> None:
@@ -808,6 +930,12 @@ class Daemon(object):
                     self.partkey_manager.refresh()  # Manage partkeys
                 except Exception as e:
                     self.logger.log_generic_partkey_manager_error(e)
+                if self.claim_timer.has_time_window_elapsed() == True:                  # Separate timer for claiming.
+                    self.claim_timer.reset_timer()                                      # Always reset timer.
+                    try:                                                                # Wrap in try statement.
+                        self.claim_operational_fee()                                    # Claim operational fee.
+                    except Exception as e:                                              # If the entire function fails.
+                        self.logger.log_generic_claim_operational_fee_error(e)          # Log generic error.
             # If not, report critical
             else:
                 self.logger.log_algod_error(algod_status.message)

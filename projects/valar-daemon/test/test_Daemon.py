@@ -13,6 +13,7 @@ At the time of writing, setting a delco with different delegator manager and ben
 import time
 import pytest
 import logging
+from copy import deepcopy
 from pathlib import Path
 from typing import Tuple, Callable
 
@@ -22,7 +23,6 @@ from algokit_utils.beta.account_manager import AddressAndSigner
 from algosdk.transaction import AssetFreezeTxn
 from algosdk.atomic_transaction_composer import AtomicTransactionComposer, TransactionWithSigner
 
-from valar_daemon.DaemonConfig import DaemonConfig
 from valar_daemon.utils import DelegatorContractGlobalState
 from valar_daemon.Daemon import Daemon
 from valar_daemon.PartkeyManager import PartkeyManager
@@ -42,6 +42,9 @@ from valar_daemon.constants import (
     DELCO_READY_STATUS_URL_ERROR,
     DELCO_LIVE_STATUS_EXPIRES_SOON,
     DELCO_LIVE_STATUS_NO_CHANGE,
+    CLAIM_OPERATIONAL_FEE_ERROR,
+    CLAIM_OPERATIONAL_FEE_NOT_LIVE,
+    CLAIM_OPERATIONAL_FEE_SUCCESS,
     VALAD_STATE_READY,
     VALAD_STATE_NOT_READY,
     VALAD_STATE_NOT_LIVE,
@@ -65,7 +68,9 @@ from test.utils import (
     send_asa,
     generate_partkey,
     calc_sleep_time_for_partkey_generation,
-    wait_for_rounds_until_not_submitted
+    wait_for_rounds_until_not_submitted,
+    create_daemon_config_file,
+    default_config_params
 )
 
 # import sys
@@ -417,21 +422,23 @@ def prepare_daemon_config(
     def _prep_daemon_config(
         valad_id: list
     ) -> Tuple[Path, str]:
-        # config_path = Path(Path(__file__).parent, 'tmp')
         config_path = tmp_path
-        config_name = 'daemon.config'
-        daemon_config = DaemonConfig(
-            config_path,
-            config_name
-        )
+        config_filename = 'daemon.config'
+        # Obtain manager mnemonic
         valad_manager = noticeboard.val_managers[0]
         mne = mnemonic.from_private_key(valad_manager.signer.private_key)
-        daemon_config.update_config(
-            validator_ad_id_list=valad_id,
-            validator_manager_mnemonic=mne
+        # Populate ID list and manager mnemonic in default parameters
+        config_params = deepcopy(default_config_params) 
+        config_params['validator_ad_id_list']=valad_id
+        config_params['validator_manager_mnemonic']=mne
+        # Write config
+        create_daemon_config_file(
+            config_path,
+            config_filename,
+            config_params,
+            True
         )
-        daemon_config.write_config()
-        return (config_path, config_name)
+        return (config_path, config_filename)
     return _prep_daemon_config
 
 
@@ -1306,14 +1313,8 @@ class TestDelcoEndedStateHandler():
         assert partkey_scheduled_deletion == expected_partkey_scheduled_deletion
 
 
-class TestDaemonDelcoHandler:
-    """Check if handling of a delco in a specific state is correct.
-    """
-    pass
-
-
 class TestDaemonMisc:
-    """Test miscellaneous Daemon methods that are not for handling delcos or the run method.
+    """Test miscellaneous Daemon methods.
     """
     
     @staticmethod
@@ -1349,6 +1350,66 @@ class TestDaemonMisc:
             algorand_client.client.algod.algod_address = "https://some.cloud"
         res = Daemon.check_algod_status(algorand_client)
         assert(res.is_ok == expected_is_ok_flag)
+    
+    
+    @staticmethod
+    @pytest.mark.parametrize(
+        "algo_fee_asset, breach_pay, breach_stake, breach_gating, delben_equal_delman, "
+        "valad_state, delco_state, break_algod, expected_result", 
+        [   
+            (
+                True, False, False, False, True, 
+                VALAD_STATE_READY, DELCO_STATE_READY, False, CLAIM_OPERATIONAL_FEE_NOT_LIVE
+            ),
+            (   
+                True, False, False, False, True, 
+                VALAD_STATE_READY, DELCO_STATE_LIVE, False, CLAIM_OPERATIONAL_FEE_SUCCESS
+            ),
+            (   
+                True, False, False, False, True, 
+                VALAD_STATE_READY, DELCO_STATE_ENDED_EXPIRED, False, CLAIM_OPERATIONAL_FEE_NOT_LIVE
+            ),
+            (   
+                True, False, False, False, True, 
+                VALAD_STATE_READY, DELCO_STATE_LIVE, True, CLAIM_OPERATIONAL_FEE_ERROR
+            )
+        ]
+    )
+    def test_claim_operational_fee(
+        algorand_client: AlgorandClient,
+        valad_and_delco_app_wrapper_and_valman: Callable[
+            [AlgorandClient, Noticeboard, ActionInputs, bytes], 
+            Tuple[ValadAppWrapper, DelcoAppWrapper, AddressAndSigner]
+        ],
+        logger_mockup: logging.Logger,
+        break_algod: bool,
+        expected_result: int
+    ):
+        """Test claiming the used up operational fee of a delegator contract.
+
+        Parameters
+        ----------
+        algorand_client : AlgorandClient
+            [fixture] Algorand client.
+        valad_and_delco_app_wrapper_and_valman : Callable[ ..., Tuple[...] ]
+            [fixture] Function to make a validator ad and delegator contract in the desired state.
+        logger_mockup : logging.Logger
+            [fixture] Logger
+        break_algod : bool
+            [param] Flag whether to break the algod configuration (through URL).
+        expected_result : bytes
+            [param] Expected result of trying to claim.
+        """
+        _, delco_app, valman = valad_and_delco_app_wrapper_and_valman
+        if break_algod:
+            algorand_client.client.algod.algod_address = "https://some.cloud"
+        result = Daemon.claim_operational_fee_single_delco(
+            algorand_client=algorand_client,
+            valman=valman,
+            delco_app=delco_app,
+            logger=logger_mockup
+        )
+        assert result == expected_result
 
 
 class TestDaemonConnectivityReliability:

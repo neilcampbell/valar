@@ -1,5 +1,5 @@
 """
-Run the Valar Daemon. For more information see https://pypi.com.
+Run the Valar Daemon. For more information see https://github.com/ValarStaking/valar.
 
 Options:
   - `--config_path`,  Path to the config file. Defaults to `./daemon.config`.
@@ -11,7 +11,7 @@ if __name__ == '__main__':
     from pathlib import Path
     from valar_daemon.Daemon import Daemon
 
-    repo_link = 'https://pypi.com'
+    repo_link = 'https://github.com/ValarStaking/valar'
     parser = argparse.ArgumentParser(description=
         f"Run the Valar Daemon. For more information see {repo_link}."
     )
